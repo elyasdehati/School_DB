@@ -13,6 +13,19 @@
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
 
+        {{-- Icons link --}}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Select2 CSS اضافه شد -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+        <!-- Datatables css -->
+        <link href="{{ asset('backend/assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('backend/assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('backend/assets/libs/datatables.net-keytable-bs5/css/keyTable.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('backend/assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('backend/assets/libs/datatables.net-select-bs5/css/select.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
+
         <!-- App css -->
         <link href="{{ asset('backend/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
 
@@ -22,7 +35,7 @@
     </head>
 
     <!-- body start -->
-    <body data-menu-color="light" data-sidebar="default">
+    <body data-menu-color="dark" data-sidebar="default">
 
         <!-- Begin page -->
         <div id="app-layout">
@@ -73,8 +86,63 @@
         <!-- Widgets Init Js -->
         <script src="{{ asset('backend/assets/js/pages/analytics-dashboard.init.js') }}"></script>
 
+        <script src="{{ asset('backend/assets/js/code.js') }}"></script>
+        <script src="{{ asset('backend/assets/js/custome.js') }}"></script>
+        <script src="{{ asset('backend/assets/js/validate.min.js') }}"></script>
+
         <!-- App js-->
         <script src="{{ asset('backend/assets/js/app.js') }}"></script>
+
+        <!-- Sweet Alert -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> 
+
+        <!-- Datatables js -->
+        <script src="{{ asset('backend/assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+
+        <!-- dataTables.bootstrap5 -->
+        <script src="{{ asset('backend/assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('backend/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+
+         <!-- Datatable Demo App Js -->
+        <script src="{{ asset('backend/assets/js/pages/datatable.init.js') }}"></script>
+
+        <!-- Select2 JS اضافه شد -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+        {{-- Sweet Alert --}}
+        <script>
+            $(document).on('click', '.delete-confirm', function(e){
+                e.preventDefault();
+                var link = $(this).attr("href");
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This action cannot be undone!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if(result.isConfirmed){
+                        window.location.href = link;
+                    }
+                });
+            });
+        </script>
+
+        <!-- Select2 init -->
+        <script>
+            $(document).ready(function() {
+                $('.select2').select2({
+                    placeholder: "",
+                    allowClear: true
+                    // width: 'resolve'
+                    // dir: 'rtl'
+                });
+            });
+        </script>
 
     </body>
 </html>
