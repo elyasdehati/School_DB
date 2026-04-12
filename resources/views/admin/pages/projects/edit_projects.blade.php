@@ -29,8 +29,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('add.project') ? 'active' : '' }}" 
-                href="{{ route('add.project') }}">
+                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
+                href="{{ route('all.projects.teachers', $project->id) }}">
                     <i class="bi bi-person-video3 me-1"></i> Teachers
                 </a>
             </li>
