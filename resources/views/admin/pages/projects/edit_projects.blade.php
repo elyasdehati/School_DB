@@ -36,8 +36,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" 
-                href="#">
+                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
+                href="{{ route('all.projects.class', $project->id) }}">
                     <i class="bi bi-easel2 me-1"></i> Classes
                 </a>
             </li>

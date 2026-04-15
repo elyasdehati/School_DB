@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\ProjectClass;
 use App\Models\ProjectTeacher;
 use Illuminate\Http\Request;
 
@@ -142,6 +143,111 @@ class ProjectsController extends Controller
     public function DeleteProjectTeacher($id){
         $teacher = ProjectTeacher::findOrFail($id);
         $teacher->delete();
+
+        return back()->with('success','Deleted successfully');
+    }
+
+        // --------------- All Project Classes ---------------
+    public function AllProjectsClass($id){
+        $project = Project::findOrFail($id);
+        $class = ProjectClass::where('project_id', $id)->get();
+        return view('admin.pages.projects.classes.all_classes', compact('project', 'class'));
+    }
+
+    public function StoreProjectClass(Request $request, $id){
+        ProjectClass::create([
+            'project_id' => $id,
+            'registration_date' => $request->registration_date,
+            'class_id' => $request->class_id,
+            'class_name' => $request->class_name,
+            'grades' => $request->grades ? json_encode($request->grades) : null,
+            'class_type' => $request->class_type,
+            'province' => $request->province,
+            'district' => $request->district,
+            'village' => $request->village,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'climate' => $request->climate,
+            'infrastructure' => $request->infrastructure,
+            'boys_enrolled' => $request->boys_enrolled,
+            'girls_enrolled' => $request->girls_enrolled,
+            'total_enrolled' => $request->total_enrolled,
+            'demographic' => $request->demographic,
+            'language' => $request->language,
+            'class_status' => $request->class_status,
+            'establishment_date' => $request->establishment_date,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            'shift' => $request->shift,
+            'is_cluster' => $request->is_cluster ?? 0,
+            'female_teachers' => $request->female_teachers,
+            'male_teachers' => $request->male_teachers,
+            'cbe_teachers' => $request->cbe_teachers,
+            'is_closed' => $request->is_closed ?? 0,
+            'closure_date' => $request->closure_date,
+            'closure_reason' => $request->closure_reason,
+            'female_sms_members' => $request->female_sms_members,
+            'male_sms_members' => $request->male_sms_members,
+            'sms_members' => $request->sms_members,
+            'has_hub_school' => $request->has_hub_school ?? 0,
+            'hub_school_name' => $request->hub_school_name,
+            'hub_distance_km' => $request->hub_distance_km,
+            'sip_completed' => $request->sip_completed ?? 0,
+            'remarks' => $request->remarks,
+        ]);
+
+        return back()->with('success', 'Class added successfully');
+    }
+
+    public function UpdateProjectClass(Request $request, $id){
+        $class = ProjectClass::findOrFail($id);
+
+        $class->update([
+            'registration_date' => $request->registration_date,
+            'class_id' => $request->class_id,
+            'class_name' => $request->class_name,
+            'grades' => $request->grades,
+            'class_type' => $request->class_type,
+            'province' => $request->province,
+            'district' => $request->district,
+            'village' => $request->village,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'climate' => $request->climate,
+            'infrastructure' => $request->infrastructure,
+            'boys_enrolled' => $request->boys_enrolled,
+            'girls_enrolled' => $request->girls_enrolled,
+            'total_enrolled' => $request->total_enrolled,
+            'demographic' => $request->demographic,
+            'language' => $request->language,
+            'class_status' => $request->class_status ?? 0,
+            'establishment_date' => $request->establishment_date,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            'shift' => $request->shift,
+            'is_cluster' => $request->is_cluster ?? 0,
+            'female_teachers' => $request->female_teachers,
+            'male_teachers' => $request->male_teachers,
+            'cbe_teachers' => $request->cbe_teachers,
+            'is_closed' => $request->is_closed ?? 0,
+            'closure_date' => $request->closure_date,
+            'closure_reason' => $request->closure_reason,
+            'female_sms_members' => $request->female_sms_members,
+            'male_sms_members' => $request->male_sms_members,
+            'sms_members' => $request->sms_members,
+            'has_hub_school' => $request->has_hub_school ?? 0,
+            'hub_school_name' => $request->hub_school_name,
+            'hub_distance_km' => $request->hub_distance_km,
+            'sip_completed' => $request->sip_completed ?? 0,
+            'remarks' => $request->remarks,
+        ]);
+
+        return back()->with('success', 'Class updated successfully');
+    }
+
+    public function DeleteProjectClass($id){
+        $class = ProjectClass::findOrFail($id);
+        $class->delete();
 
         return back()->with('success','Deleted successfully');
     }

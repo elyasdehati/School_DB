@@ -12,4 +12,8 @@ class Project extends Model
         return $this->hasMany(ProjectTeacher::class);
     }
 
+    public function class(){
+        return $this->hasMany(ProjectClass::class);
+    }
+
 }
