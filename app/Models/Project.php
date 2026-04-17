@@ -16,4 +16,7 @@ class Project extends Model
         return $this->hasMany(ProjectClass::class);
     }
 
+    public function students(){
+        return $this->hasMany(ProjectClass::class);
+    }
 }

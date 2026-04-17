@@ -24,6 +24,13 @@
                     <i class="bi bi-easel2 me-1"></i> Classes
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.projects.students') ? 'active' : '' }}" 
+                href="{{ route('all.projects.students', $project->id) }}">
+                    <i class="bi bi-people-fill me-1"></i> Students
+                </a>
+            </li>
         </ul>
     </div>
 </div>
@@ -753,19 +760,19 @@
                 valid = false;
             }
 
-            let boys = document.querySelector("[name='boys_enrolled']").value || 0;
-            let girls = document.querySelector("[name='girls_enrolled']").value || 0;
-            let total = document.querySelector("[name='total_enrolled']");
+            // let boys = document.querySelector("[name='boys_enrolled']").value || 0;
+            // let girls = document.querySelector("[name='girls_enrolled']").value || 0;
+            // let total = document.querySelector("[name='total_enrolled']");
 
-            if (parseInt(boys) + parseInt(girls) != total.value) {
-                total.classList.add("is-invalid");
-                valid = false;
-            }
+            // if (parseInt(boys) + parseInt(girls) != total.value) {
+            //     total.classList.add("is-invalid");
+            //     valid = false;
+            // }
 
-            if (!valid) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
+            // if (!valid) {
+            //     e.preventDefault();
+            //     e.stopPropagation();
+            // }
 
         });
 
@@ -841,19 +848,19 @@
                     valid = false;
                 }
 
-                let boys = form.querySelector("[name='boys_enrolled']")?.value || 0;
-                let girls = form.querySelector("[name='girls_enrolled']")?.value || 0;
-                let total = form.querySelector("[name='total_enrolled']");
+                // let boys = form.querySelector("[name='boys_enrolled']")?.value || 0;
+                // let girls = form.querySelector("[name='girls_enrolled']")?.value || 0;
+                // let total = form.querySelector("[name='total_enrolled']");
 
-                if (total && parseInt(boys) + parseInt(girls) != total.value) {
-                    total.classList.add("is-invalid");
-                    valid = false;
-                }
+                // if (total && parseInt(boys) + parseInt(girls) != total.value) {
+                //     total.classList.add("is-invalid");
+                //     valid = false;
+                // }
 
-                if (!valid) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
+                // if (!valid) {
+                //     e.preventDefault();
+                //     e.stopPropagation();
+                // }
 
             });
 

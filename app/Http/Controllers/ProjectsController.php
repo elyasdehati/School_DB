@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\ProjectClass;
+use App\Models\ProjectStudent;
 use App\Models\ProjectTeacher;
 use Illuminate\Http\Request;
 
@@ -252,4 +253,83 @@ class ProjectsController extends Controller
         return back()->with('success','Deleted successfully');
     }
 
+    // --------------- All Project Teachers ---------------
+    public function AllProjectsStudents($id){
+        $project = Project::findOrFail($id);
+        $classes = ProjectClass::where('project_id', $id)->get();
+        $std = ProjectStudent::with('class')->where('project_id', $id)->get();
+        return view('admin.pages.projects.students.all_students', compact('project', 'classes', 'std'));
+    }
+
+    public function StoreProjectStudents(Request $request, $id){
+        ProjectStudent::create([
+            'student_id' => $request->student_id,
+            'project_id' => $request->project_id,
+            'province' => $request->province,
+            'district' => $request->district,
+            'village' => $request->village,
+            'class_id' => $request->class_id,
+            'asas_no' => $request->asas_no,
+            'enrollment_date' => $request->enrollment_date,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'father_name' => $request->father_name,
+            'tazkira_no' => $request->tazkira_no,
+            'year_of_birth' => $request->year_of_birth,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'native_language' => $request->native_language,
+            'residence_type' => $request->residence_type,
+            'is_disabled' => $request->is_disabled,
+            'disability_type' => $request->disability_type,
+            'guardian_phone' => $request->guardian_phone,
+            'guardian_relation' => $request->guardian_relation,
+            'status' => $request->status,
+            'status_change_date' => $request->status_change_date,
+            'status_change_reason' => $request->status_change_reason,
+            'remarks' => $request->remarks,
+        ]);
+
+        return redirect()->back()->with('success','Student Added Successfully');
+    }
+
+    public function UpdateProjectStudents(Request $request, $id){
+        $student = ProjectStudent::findOrFail($id);
+
+        $student->update([
+            'student_id' => $request->student_id,
+            'project_id' => $request->project_id,
+            'province' => $request->province,
+            'district' => $request->district,
+            'village' => $request->village,
+            'class_id' => $request->class_id,
+            'asas_no' => $request->asas_no,
+            'enrollment_date' => $request->enrollment_date,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'father_name' => $request->father_name,
+            'tazkira_no' => $request->tazkira_no,
+            'year_of_birth' => $request->year_of_birth,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'native_language' => $request->native_language,
+            'residence_type' => $request->residence_type,
+            'is_disabled' => $request->is_disabled,
+            'disability_type' => $request->disability_type,
+            'guardian_phone' => $request->guardian_phone,
+            'guardian_relation' => $request->guardian_relation,
+            'status' => $request->status,
+            'status_change_date' => $request->status_change_date,
+            'status_change_reason' => $request->status_change_reason,
+            'remarks' => $request->remarks,
+        ]);
+
+        return redirect()->back()->with('success', 'Student Updated Successfully');
+    }
+
+    public function DeleteProjectStudents($id){
+        ProjectStudent::findOrFail($id)->delete();
+
+        return redirect()->back()->with('success', 'Student deleted successfully');
+    }
 }

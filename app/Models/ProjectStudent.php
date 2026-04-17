@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectClass extends Model
+class ProjectStudent extends Model
 {
     protected $guarded = [];
 
@@ -12,7 +12,7 @@ class ProjectClass extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function students(){
-        return $this->hasMany(ProjectClass::class, 'class_id');
+    public function class(){
+        return $this->belongsTo(ProjectClass::class, 'class_id', 'class_id');
     }
 }

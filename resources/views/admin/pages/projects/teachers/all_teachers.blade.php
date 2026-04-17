@@ -25,6 +25,12 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.projects.students') ? 'active' : '' }}" 
+                href="{{ route('all.projects.students', $project->id) }}">
+                    <i class="bi bi-people-fill me-1"></i> Students
+                </a>
+            </li>
         </ul>
     </div>
 </div>
