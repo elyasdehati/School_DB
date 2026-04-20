@@ -31,6 +31,13 @@
                     <i class="bi bi-people-fill me-1"></i> Students
                 </a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.projects.shura') ? 'active' : '' }}" 
+                href="{{ route('all.projects.shura', $project->id) }}">
+                    <i class="bi bi-building"></i> Shura
+                </a>
+            </li>
         </ul>
     </div>
 </div>
@@ -151,7 +158,7 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Class ID</label>
-                            <select name="class_id" id="class_id" class="form-control">
+                            <select name="class_id" id="add_class_id" class="form-control">
                                 @foreach($classes as $class)
                                     <option value="{{ $class->class_id }}" data-name="{{ $class->class_name }}">
                                         {{ $class->class_id }} - {{ $class->class_name }}
@@ -162,7 +169,7 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Class Name</label>
-                            <input type="text" name="class_name" id="class_name" class="form-control" readonly>
+                            <input type="text" name="class_name" id="add_class_name" class="form-control" readonly>
                         </div>
 
                         <div class="col-md-4 mb-2">
@@ -489,22 +496,32 @@
 @endforeach
 
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Add modal
+    let classSelect = document.getElementById('add_class_id');
+    let className = document.getElementById('add_class_name');
+
+    function updateClassName() {
+        let selected = classSelect.options[classSelect.selectedIndex];
+        className.value = selected.dataset.name;
+    }
+
+    if (classSelect) {
+        classSelect.addEventListener('change', updateClassName);
+        updateClassName();
+    }
+
+    // Edit modal
     document.addEventListener('change', function (e) {
-
-        // Add modal
-        if (e.target.id === 'class_id') {
-            let selected = e.target.options[e.target.selectedIndex];
-            document.getElementById('class_name').value = selected.dataset.name;
-        }
-
-        // Edit modal
         if (e.target.classList.contains('class-select')) {
             let selected = e.target.options[e.target.selectedIndex];
             let classNameInput = e.target.closest('.row').querySelector('.class-name');
             classNameInput.value = selected.dataset.name;
         }
-
     });
+
+});
 </script>
 
 @endsection

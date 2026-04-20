@@ -84,11 +84,13 @@
         <script src="https://apexcharts.com/samples/assets/stock-prices.js"></script>
 
         <!-- Widgets Init Js -->
-        <script src="{{ asset('backend/assets/js/pages/analytics-dashboard.init.js') }}"></script>
+        @if(request()->is('admin/dashboard'))
+            <script src="{{ asset('backend/assets/js/pages/analytics-dashboard.init.js') }}"></script>
+        @endif
 
-        <script src="{{ asset('backend/assets/js/code.js') }}"></script>
+        {{-- <script src="{{ asset('backend/assets/js/code.js') }}"></script>
         <script src="{{ asset('backend/assets/js/custome.js') }}"></script>
-        <script src="{{ asset('backend/assets/js/validate.min.js') }}"></script>
+        <script src="{{ asset('backend/assets/js/validate.min.js') }}"></script> --}}
 
         <!-- App js-->
         <script src="{{ asset('backend/assets/js/app.js') }}"></script>
@@ -143,6 +145,6 @@
                 });
             });
         </script>
-
+        @stack('scripts')
     </body>
 </html>

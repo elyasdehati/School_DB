@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\ProjectClass;
+use App\Models\ProjectShura;
 use App\Models\ProjectStudent;
 use App\Models\ProjectTeacher;
 use Illuminate\Http\Request;
@@ -253,7 +254,7 @@ class ProjectsController extends Controller
         return back()->with('success','Deleted successfully');
     }
 
-    // --------------- All Project Teachers ---------------
+    // --------------- All Project Students ---------------
     public function AllProjectsStudents($id){
         $project = Project::findOrFail($id);
         $classes = ProjectClass::where('project_id', $id)->get();
@@ -331,5 +332,65 @@ class ProjectsController extends Controller
         ProjectStudent::findOrFail($id)->delete();
 
         return redirect()->back()->with('success', 'Student deleted successfully');
+    }
+
+    // --------------- All Project Shura ---------------
+    public function AllProjectsShura($id){
+        $project = Project::findOrFail($id);
+        $classes = ProjectClass::where('project_id', $id)->get();
+        $shura = ProjectShura::with('classes')->where('project_id', $id)->get();
+
+        return view('admin.pages.projects.shura.all_shura', compact('project','classes','shura'));
+    }
+
+    public function StoreProjectShura(Request $request, $id){
+        $shura = ProjectShura::create([
+            'project_id' => $id,
+            'sno' => $request->sno,
+            'shura_name' => $request->shura_name,
+            'province' => $request->province,
+            'district' => $request->district,
+            'village' => $request->village,
+            'shura_establishment_date' => $request->shura_establishment_date,
+            'status' => $request->status,
+            'status_change_date' => $request->status_change_date,
+            'status_change_reason' => $request->status_change_reason,
+            'remarks' => $request->remarks,
+        ]);
+
+        if ($request->class_ids) {
+            $shura->classes()->attach($request->class_ids);
+        }
+
+        return back()->with('success', 'Shura created successfully');
+    }
+
+    public function UpdateProjectShura(Request $request, $id){
+        $shura = ProjectShura::findOrFail($id);
+
+        $shura->update([
+            'sno' => $request->sno,
+            'shura_name' => $request->shura_name,
+            'province' => $request->province,
+            'district' => $request->district,
+            'village' => $request->village,
+            'shura_establishment_date' => $request->shura_establishment_date,
+            'status' => $request->status,
+            'status_change_date' => $request->status_change_date,
+            'status_change_reason' => $request->status_change_reason,
+            'remarks' => $request->remarks,
+        ]);
+
+        $shura->classes()->sync($request->class_ids ?? []);
+
+        return back()->with('success', 'Shura updated successfully');
+    }
+
+    public function DeleteProjectShura($id){
+        $shura = ProjectShura::findOrFail($id);
+        $shura->classes()->detach();
+        $shura->delete();
+
+        return back()->with('success', 'Shura deleted successfully');
     }
 }

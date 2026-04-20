@@ -48,6 +48,13 @@
                     <i class="bi bi-people-fill me-1"></i> Students
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.projects.shura') ? 'active' : '' }}" 
+                href="{{ route('all.projects.shura', $project->id) }}">
+                    <i class="bi bi-building"></i> Shura
+                </a>
+            </li>
         </ul>
     </div>
 </div>

@@ -53,6 +53,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/project/students/{id}', 'DeleteProjectStudents')->name('delete.projects.students');
     });
 
+     // Project Shura
+    Route::controller(ProjectsController::class)->group(function () {
+        Route::get('/all/projects/shura/{id}', 'AllProjectsShura')->name('all.projects.shura');
+        Route::post('/store/projects/shura/{id}', 'StoreProjectShura')->name('store.projects.shura');
+        Route::post('/projects/shura/{id}/update', 'UpdateProjectShura')->name('update.projects.shura');
+        Route::get('/delete/project/shura/{id}', 'DeleteProjectShura')->name('delete.projects.shura');
+    });
+
 });
 
 require __DIR__.'/auth.php';

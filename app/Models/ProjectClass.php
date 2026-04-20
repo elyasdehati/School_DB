@@ -15,4 +15,8 @@ class ProjectClass extends Model
     public function students(){
         return $this->hasMany(ProjectClass::class, 'class_id');
     }
+
+    public function shuras(){
+        return $this->belongsToMany(ProjectShura::class, 'project_shura_class');
+    }
 }
