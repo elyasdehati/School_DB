@@ -7,6 +7,7 @@ use App\Models\ProjectClass;
 use App\Models\ProjectShura;
 use App\Models\ProjectStudent;
 use App\Models\ProjectTeacher;
+use App\Models\ShuraMember;
 use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
@@ -393,4 +394,72 @@ class ProjectsController extends Controller
 
         return back()->with('success', 'Shura deleted successfully');
     }
+
+    // --------------- All Project Shura ---------------
+    public function AllProjectsShuraMembers($id){
+        $project = Project::findOrFail($id);
+        $shura = ProjectShura::where('project_id', $id)->get();
+        $members = ShuraMember::whereIn('shura_id', $shura->pluck('id'))->get();
+
+        return view('admin.pages.projects.shura_members.all_members', compact('project','shura','members'));
+    }
+
+    public function StoreProjectShuraMembers(Request $request, $id){
+        ShuraMember::create([
+            'project_id' => $id,
+            'shura_id' => $request->shura_id,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'father_name' => $request->father_name,
+            'tazkira_no' => $request->tazkira_no,
+            'year_of_birth' => $request->year_of_birth,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'education_level' => $request->education_level,
+            'language' => $request->language,
+            'residence_type' => $request->residence_type,
+            'is_disabled' => $request->is_disabled,
+            'disability_type' => $request->disability_type,
+            'role' => $request->role,
+            'phone' => $request->phone,
+            'status' => $request->status,
+            'remarks' => $request->remarks,
+        ]);
+
+        return back()->with('success', 'Member added successfully');
+    }
+
+    public function UpdateProjectShuraMembers(Request $request, $id){
+        $member = ShuraMember::findOrFail($id);
+
+        $member->update([
+            'shura_id' => $request->shura_id,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'father_name' => $request->father_name,
+            'tazkira_no' => $request->tazkira_no,
+            'year_of_birth' => $request->year_of_birth,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'education_level' => $request->education_level,
+            'language' => $request->language,
+            'residence_type' => $request->residence_type,
+            'is_disabled' => $request->is_disabled,
+            'disability_type' => $request->disability_type,
+            'role' => $request->role,
+            'phone' => $request->phone,
+            'status' => $request->status,
+            'remarks' => $request->remarks,
+        ]);
+
+        return back()->with('success', 'Member updated successfully');
+    }
+
+    public function DeleteProjectShuraMembers($id)    {
+        $member = ShuraMember::findOrFail($id);
+        $member->delete();
+
+        return back()->with('success', 'Member deleted successfully');
+    }
+
 }

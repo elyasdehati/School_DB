@@ -1,6 +1,21 @@
 @extends('admin.admin_master')
 @section('admin')
 
+<style>
+    .select2-container--default .select2-selection--multiple,
+    .select2-container--default .select2-selection--single {
+        height: calc(2.25rem + 2px);
+        padding: .375rem .75rem;
+        border: 1px solid #ced4da;
+        border-radius: .375rem;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        display: flex;
+        align-items: center;
+    }
+</style>
+
 <div class="row">
     <div class="col-md-12">
         <ul class="nav nav-tabs mb-3">
@@ -56,12 +71,12 @@
                 <div class="card-header">
                     <div class="d-flex align-items-sm-center flex-sm-row flex-column">
                         <div class="flex-grow-1">
-                            <h5>{{ $project->name }} Students</h5>
+                            <h5>{{ $project->name }} Shura Members</h5>
                         </div>
 
                         <div class="text-end">
-                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addTeacherModal">
-                                Add Student
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addShuraMemberModal">
+                                Add Member
                             </button>
                         </div>
                     </div>
@@ -70,20 +85,20 @@
                 <div class="card-body">
 
                     @php
-                        $headers = ['No','Student ID','Project Name','Class Name','First Name', 'Last Name', 'Tazkira Number', 'Status', 'Action'];
+                        $headers = ['No','Shura Sno','First Name','Last Name','Tazkira No','Role', 'Phone', 'Status', 'Action'];
 
                         $rows = [];
 
-                        foreach($std as $key => $item){
+                        foreach($members as $key => $item){
                             $rows[] = [
                                 $key + 1,
-                                $item->student_id,
-                                $project->name,
-                                $item->class->class_name ?? '',
+                                $item->shura_id,
                                 $item->first_name,
                                 $item->last_name,
                                 $item->tazkira_no,
-                                $item->status,
+                                $item->role,
+                                $item->phone,
+                                $item->status == 1 ? 'Active' : 'Inactive',
                                 '<div class="dropdown dropstart dropend dropup">
                                     <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
                                     id="dropdownMenuLink'.$item->id.'"
@@ -98,12 +113,12 @@
                                         <li>
                                             <a class="dropdown-item" href="#" 
                                             data-bs-toggle="modal" 
-                                            data-bs-target="#editStudentModal'.$item->id.'">
+                                            data-bs-target="#editShuraMembersModal'.$item->id.'">
                                                 Edit
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="' . route('delete.projects.students', $item->id) . '" 
+                                            <a href="' . route('delete.projects.shura', $item->id) . '" 
                                                 class="dropdown-item text-danger delete-confirm">
                                                     Delete
                                             </a>
@@ -123,14 +138,14 @@
 </div>
 
 {{-- ================= ADD CLASS MODAL (FULL MIGRATION) ================= --}}
-<div class="modal fade" id="addTeacherModal" tabindex="-1">
+<div class="modal fade" id="addShuraMemberModal" tabindex="-1">
     <div class="modal-dialog modal-xl">
-        <form action="{{ route('store.projects.students',$project->id) }}" method="POST">
+        <form action="{{ route('store.projects.shura.members', $project->id) }}" method="POST">
             @csrf
 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Student</h5>
+                    <h5 class="modal-title">Add Shura</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -138,55 +153,12 @@
                     <div class="row">
 
                         <div class="col-md-4 mb-2">
-                            <label>Student ID</label>
-                            <input type="text" name="student_id" class="form-control">
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>Project</label>
-                            <input type="text" class="form-control" value="{{ $project->name }}" readonly>
-                            <input type="hidden" name="project_id" value="{{ $project->id }}">
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>Province</label>
-                            <input type="text" name="province" class="form-control">
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>District</label>
-                            <input type="text" name="district" class="form-control">
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>Village</label>
-                            <input type="text" name="village" class="form-control">
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>Class ID</label>
-                            <select name="class_id" id="add_class_id" class="form-control">
-                                @foreach($classes as $class)
-                                    <option value="{{ $class->class_id }}" data-name="{{ $class->class_name }}">
-                                        {{ $class->class_id }} - {{ $class->class_name }}
-                                    </option>
+                            <label>Shura ID</label>
+                            <select name="shura_id" class="form-control">
+                                @foreach($shura as $item)
+                                    <option value="{{ $item->id }}">{{ $item->id }} - {{ $item->shura_name }}</option>
                                 @endforeach
                             </select>
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>Class Name</label>
-                            <input type="text" name="class_name" id="add_class_name" class="form-control" readonly>
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>ASAS No</label>
-                            <input type="text" name="asas_no" class="form-control">
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>Enrollment Date</label>
-                            <input type="date" name="enrollment_date" class="form-control">
                         </div>
 
                         <div class="col-md-4 mb-2">
@@ -222,17 +194,26 @@
                         <div class="col-md-4 mb-2">
                             <label>Gender</label>
                             <select name="gender" class="form-control">
-                                <option>Male</option>
-                                <option>Female</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
                             </select>
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label>Native Language</label>
-                            <select name="native_language" class="form-control">
+                            <label>Education Level</label>
+                            <select name="education_level" class="form-control">
+                                <option value="Illiterate">Illiterate</option>
+                                <option value="Grade-6">Grade-6</option>
+                                <option value="Grade-9">Grade-9</option>
+                                <option value="Grade-12">Grade-12</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Language</label>
+                            <select name="language" class="form-control">
                                 <option value="Dari">Dari</option>
                                 <option value="Pashto">Pashto</option>
-                                <option value="Uzbeki">Uzbeki</option>
                             </select>
                         </div>
 
@@ -240,11 +221,14 @@
                             <label>Residence Type</label>
                             <select name="residence_type" class="form-control">
                                 <option value="Host Community">Host Community</option>
+                                <option value="IDP">IDP</option>
+                                <option value="Returnee">Returnee</option>
+                                <option value="Refugee">Refugee</option>
                             </select>
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label>Disabled?</label>
+                            <label>Is Disabled</label>
                             <select name="is_disabled" class="form-control">
                                 <option value="0">No</option>
                                 <option value="1">Yes</option>
@@ -257,37 +241,24 @@
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label>Guardian Phone</label>
-                            <input type="text" name="guardian_phone" class="form-control">
+                            <label>Role</label>
+                            <select name="role" class="form-control">
+                                <option value="Shura Head">Shura Head</option>
+                                <option value="Member">Member</option>
+                                <option value="Assistant">Assistant</option>
+                            </select>
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label>Guardian Relation</label>
-                            <input type="text" name="guardian_relation" class="form-control">
+                            <label>Phone</label>
+                            <input type="text" name="phone" class="form-control">
                         </div>
 
                         <div class="col-md-4 mb-2">
                             <label>Status</label>
                             <select name="status" class="form-control">
-                                <option>Active</option>
-                                <option>Inactive</option>
-                                <option>Handed Over</option>
-                                <option>Transited</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>Status Change Date</label>
-                            <input type="date" name="status_change_date" class="form-control">
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>Status Change Reason</label>
-                            <select name="status_change_reason" class="form-control">
-                                <option>Active</option>
-                                <option>Inactive</option>
-                                <option>Handed Over</option>
-                                <option>Transited</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
                             </select>
                         </div>
 
@@ -310,17 +281,17 @@
 </div>
 
 {{-- ================= EDIT CLASS MODAL ================= --}}
-@foreach($std as $item)
-    <div class="modal fade" id="editStudentModal{{$item->id}}" tabindex="-1">
+@foreach($members as $item)
+    <div class="modal fade" id="editShuraMembersModal{{ $item->id }}" tabindex="-1">
         <div class="modal-dialog modal-xl">
 
-            <form action="{{ route('update.projects.students', $item->id) }}" method="POST">
+            <form action="{{ route('update.projects.shura.members', $item->id) }}" method="POST">
                 @csrf
 
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Student</h5>
+                        <h5 class="modal-title">Edit Shura Member</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -328,56 +299,14 @@
                         <div class="row">
 
                             <div class="col-md-4 mb-2">
-                                <label>Student ID</label>
-                                <input type="text" name="student_id" class="form-control" value="{{ $item->student_id }}">
-                            </div>
-
-                            <div class="col-md-4 mb-2">
-                                <label>Project</label>
-                                <input type="text" class="form-control" value="{{ $project->name }}" readonly>
-                                <input type="hidden" name="project_id" value="{{ $project->id }}">
-                            </div>
-
-                            <div class="col-md-4 mb-2">
-                                <label>Province</label>
-                                <input type="text" name="province" class="form-control" value="{{ $item->province }}">
-                            </div>
-
-                            <div class="col-md-4 mb-2">
-                                <label>District</label>
-                                <input type="text" name="district" class="form-control" value="{{ $item->district }}">
-                            </div>
-
-                            <div class="col-md-4 mb-2">
-                                <label>Village</label>
-                                <input type="text" name="village" class="form-control" value="{{ $item->village }}">
-                            </div>
-
-                            <div class="col-md-4 mb-2">
-                                <label>Class ID</label>
-                                <select name="class_id" class="form-control class-select">
-                                    @foreach($classes as $class)
-                                        <option value="{{ $class->class_id }}" data-name="{{ $class->class_name }}"
-                                            {{ $item->class_id == $class->class_id ? 'selected' : '' }}>
-                                            {{ $class->class_id }} - {{ $class->class_name }}
+                                <label>Shura ID</label>
+                                <select name="shura_id" class="form-control">
+                                    @foreach($shura as $s)
+                                        <option value="{{ $s->id }}" {{ $item->shura_id == $s->id ? 'selected' : '' }}>
+                                            {{ $s->id }} - {{ $s->shura_name }}
                                         </option>
                                     @endforeach
                                 </select>
-                            </div>
-
-                            <div class="col-md-4 mb-2">
-                                <label>Class Name</label>
-                                <input type="text" name="class_name" class="form-control class-name" value="{{ $item->class_name }}" readonly>
-                            </div>
-
-                            <div class="col-md-4 mb-2">
-                                <label>ASAS No</label>
-                                <input type="text" name="asas_no" class="form-control" value="{{ $item->asas_no }}">
-                            </div>
-
-                            <div class="col-md-4 mb-2">
-                                <label>Enrollment Date</label>
-                                <input type="date" name="enrollment_date" class="form-control" value="{{ $item->enrollment_date }}">
                             </div>
 
                             <div class="col-md-4 mb-2">
@@ -419,11 +348,20 @@
                             </div>
 
                             <div class="col-md-4 mb-2">
-                                <label>Native Language</label>
-                                <select name="native_language" class="form-control">
-                                    <option value="Dari" {{ $item->native_language == 'Dari' ? 'selected' : '' }}>Dari</option>
-                                    <option value="Pashto" {{ $item->native_language == 'Pashto' ? 'selected' : '' }}>Pashto</option>
-                                    <option value="Uzbeki" {{ $item->native_language == 'Uzbeki' ? 'selected' : '' }}>Uzbeki</option>
+                                <label>Education Level</label>
+                                <select name="education_level" class="form-control">
+                                    <option value="Illiterate" {{ $item->education_level == 'Illiterate' ? 'selected' : '' }}>Illiterate</option>
+                                    <option value="Grade-6" {{ $item->education_level == 'Grade-6' ? 'selected' : '' }}>Grade-6</option>
+                                    <option value="Grade-9" {{ $item->education_level == 'Grade-9' ? 'selected' : '' }}>Grade-9</option>
+                                    <option value="Grade-12" {{ $item->education_level == 'Grade-12' ? 'selected' : '' }}>Grade-12</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Language</label>
+                                <select name="language" class="form-control">
+                                    <option value="Dari" {{ $item->language == 'Dari' ? 'selected' : '' }}>Dari</option>
+                                    <option value="Pashto" {{ $item->language == 'Pashto' ? 'selected' : '' }}>Pashto</option>
                                 </select>
                             </div>
 
@@ -431,11 +369,14 @@
                                 <label>Residence Type</label>
                                 <select name="residence_type" class="form-control">
                                     <option value="Host Community" {{ $item->residence_type == 'Host Community' ? 'selected' : '' }}>Host Community</option>
+                                    <option value="IDP" {{ $item->residence_type == 'IDP' ? 'selected' : '' }}>IDP</option>
+                                    <option value="Returnee" {{ $item->residence_type == 'Returnee' ? 'selected' : '' }}>Returnee</option>
+                                    <option value="Refugee" {{ $item->residence_type == 'Refugee' ? 'selected' : '' }}>Refugee</option>
                                 </select>
                             </div>
 
                             <div class="col-md-4 mb-2">
-                                <label>Disabled?</label>
+                                <label>Is Disabled</label>
                                 <select name="is_disabled" class="form-control">
                                     <option value="0" {{ $item->is_disabled == 0 ? 'selected' : '' }}>No</option>
                                     <option value="1" {{ $item->is_disabled == 1 ? 'selected' : '' }}>Yes</option>
@@ -448,37 +389,24 @@
                             </div>
 
                             <div class="col-md-4 mb-2">
-                                <label>Guardian Phone</label>
-                                <input type="text" name="guardian_phone" class="form-control" value="{{ $item->guardian_phone }}">
+                                <label>Role</label>
+                                <select name="role" class="form-control">
+                                    <option value="Shura Head" {{ $item->role == 'Shura Head' ? 'selected' : '' }}>Shura Head</option>
+                                    <option value="Member" {{ $item->role == 'Member' ? 'selected' : '' }}>Member</option>
+                                    <option value="Assistant" {{ $item->role == 'Assistant' ? 'selected' : '' }}>Assistant</option>
+                                </select>
                             </div>
 
                             <div class="col-md-4 mb-2">
-                                <label>Guardian Relation</label>
-                                <input type="text" name="guardian_relation" class="form-control" value="{{ $item->guardian_relation }}">
+                                <label>Phone</label>
+                                <input type="text" name="phone" class="form-control" value="{{ $item->phone }}">
                             </div>
 
                             <div class="col-md-4 mb-2">
                                 <label>Status</label>
                                 <select name="status" class="form-control">
-                                    <option value="Active" {{ $item->status == 'Active' ? 'selected' : '' }}>Active</option>
-                                    <option value="Inactive" {{ $item->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
-                                    <option value="Handed Over" {{ $item->status == 'Handed Over' ? 'selected' : '' }}>Handed Over</option>
-                                    <option value="Transited" {{ $item->status == 'Transited' ? 'selected' : '' }}>Transited</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-4 mb-2">
-                                <label>Status Change Date</label>
-                                <input type="date" name="status_change_date" class="form-control" value="{{ $item->status_change_date }}">
-                            </div>
-
-                            <div class="col-md-4 mb-2">
-                                <label>Status Change Reason</label>
-                                <select name="status_change_reason" class="form-control">
-                                    <option value="Active" {{ $item->status_change_reason == 'Active' ? 'selected' : '' }}>Active</option>
-                                    <option value="Inactive" {{ $item->status_change_reason == 'Inactive' ? 'selected' : '' }}>Inactive</option>
-                                    <option value="Handed Over" {{ $item->status_change_reason == 'Handed Over' ? 'selected' : '' }}>Handed Over</option>
-                                    <option value="Transited" {{ $item->status_change_reason == 'Transited' ? 'selected' : '' }}>Transited</option>
+                                    <option value="1" {{ $item->status == 1 ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ $item->status == 0 ? 'selected' : '' }}>Inactive</option>
                                 </select>
                             </div>
 
@@ -502,33 +430,57 @@
     </div>
 @endforeach
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    // Add modal
-    let classSelect = document.getElementById('add_class_id');
-    let className = document.getElementById('add_class_name');
-
-    function updateClassName() {
-        let selected = classSelect.options[classSelect.selectedIndex];
-        className.value = selected.dataset.name;
-    }
-
-    if (classSelect) {
-        classSelect.addEventListener('change', updateClassName);
-        updateClassName();
-    }
-
-    // Edit modal
+{{-- <script>
     document.addEventListener('change', function (e) {
+
+        // Add modal
+        if (e.target.id === 'class_id') {
+            let selected = e.target.options[e.target.selectedIndex];
+            document.getElementById('class_name').value = selected.dataset.name;
+        }
+
+        // Edit modal
         if (e.target.classList.contains('class-select')) {
             let selected = e.target.options[e.target.selectedIndex];
             let classNameInput = e.target.closest('.row').querySelector('.class-name');
             classNameInput.value = selected.dataset.name;
         }
-    });
 
-});
+    });
+</script> --}}
+
+{{-- @push('scripts')
+<script>
+    $(document).ready(function () {
+
+        $('#class_ids').select2({
+            placeholder: "",
+            width: '100%',
+            dropdownParent: $('#addShuraModal')
+        });
+
+    });
 </script>
+
+<script>
+    $(document).ready(function () {
+
+        // ADD modal
+        $('#class_ids').select2({
+            width: '100%',
+            dropdownParent: $('#addShuraModal')
+        });
+
+        // EDIT modal
+        $('.edit-class-select').each(function () {
+            $(this).select2({
+                width: '100%',
+                dropdownParent: $(this).closest('.modal')
+            });
+        });
+
+    });
+</script> --}}
+{{-- @endpush --}}
 
 @endsection

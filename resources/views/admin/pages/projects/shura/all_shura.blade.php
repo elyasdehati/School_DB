@@ -53,6 +53,13 @@
                     <i class="bi bi-building"></i> Shura
                 </a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.projects.shura.members') ? 'active' : '' }}" 
+                href="{{ route('all.projects.shura.members', $project->id) }}">
+                    <i class="bi bi-person-lines-fill"></i> Shura Members
+                </a>
+            </li>
         </ul>
     </div>
 </div>
