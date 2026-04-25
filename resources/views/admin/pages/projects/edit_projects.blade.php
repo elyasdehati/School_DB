@@ -29,16 +29,16 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
-                href="{{ route('all.projects.teachers', $project->id) }}">
-                    <i class="bi bi-person-video3 me-1"></i> Teachers
+                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
+                href="{{ route('all.projects.class', $project->id) }}">
+                    <i class="bi bi-easel2 me-1"></i> Classes
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
-                href="{{ route('all.projects.class', $project->id) }}">
-                    <i class="bi bi-easel2 me-1"></i> Classes
+                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
+                href="{{ route('all.projects.teachers', $project->id) }}">
+                    <i class="bi bi-person-video3 me-1"></i> Teachers
                 </a>
             </li>
 
@@ -53,6 +53,13 @@
                 <a class="nav-link {{ request()->routeIs('all.projects.shura') ? 'active' : '' }}" 
                 href="{{ route('all.projects.shura', $project->id) }}">
                     <i class="bi bi-building"></i> Shura
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.projects.shura.members') ? 'active' : '' }}" 
+                href="{{ route('all.projects.shura.members', $project->id) }}">
+                    <i class="bi bi-person-lines-fill"></i> Shura Members
                 </a>
             </li>
         </ul>

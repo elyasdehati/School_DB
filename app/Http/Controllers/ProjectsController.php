@@ -83,7 +83,12 @@ class ProjectsController extends Controller
     public function AllProjectsTeachers($id){
         $project = Project::findOrFail($id);
         $teachers = ProjectTeacher::where('project_id', $id)->get();
-        return view('admin.pages.projects.teachers.all_teachers', compact('project', 'teachers'));
+
+        $lastTeacher = ProjectTeacher::latest()->first();
+        $nextNumber = $lastTeacher ? $lastTeacher->id + 1 : 1;
+        $nextSerial = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+
+        return view('admin.pages.projects.teachers.all_teachers',compact('project', 'teachers', 'nextSerial'));
     }
 
     public function StoreProjectTeacher(Request $request, $id){
@@ -92,9 +97,13 @@ class ProjectsController extends Controller
             'last_name' => 'required|string|max:255',
         ]);
 
+        $lastTeacher = ProjectTeacher::latest()->first();
+        $nextNumber = $lastTeacher ? $lastTeacher->id + 1 : 1;
+        $serialNumber = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+
         ProjectTeacher::create([
             'project_id' => $id,
-            'serial_number' => $request->serial_number,
+            'serial_number' => $request->serial_number ?: $serialNumber,
             'cbe_list' => $request->cbe_list,
             'province' => $request->province,
             'district' => $request->district,
@@ -154,14 +163,24 @@ class ProjectsController extends Controller
     public function AllProjectsClass($id){
         $project = Project::findOrFail($id);
         $class = ProjectClass::where('project_id', $id)->get();
-        return view('admin.pages.projects.classes.all_classes', compact('project', 'class'));
+
+        $lastClass = ProjectClass::latest()->first();
+        $nextNumber = $lastClass ? $lastClass->id + 1 : 1;
+        $nextClassId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+
+        return view('admin.pages.projects.classes.all_classes', compact('project', 'class', 'nextClassId'));
     }
 
     public function StoreProjectClass(Request $request, $id){
+
+        $lastClass = ProjectClass::latest()->first();
+        $nextNumber = $lastClass ? $lastClass->id + 1 : 1;
+        $classId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+
         ProjectClass::create([
             'project_id' => $id,
             'registration_date' => $request->registration_date,
-            'class_id' => $request->class_id,
+            'class_id' => $request->class_id ?: $classId,
             'class_name' => $request->class_name,
             'grades' => $request->grades ? json_encode($request->grades) : null,
             'class_type' => $request->class_type,
@@ -260,12 +279,21 @@ class ProjectsController extends Controller
         $project = Project::findOrFail($id);
         $classes = ProjectClass::where('project_id', $id)->get();
         $std = ProjectStudent::with('class')->where('project_id', $id)->get();
-        return view('admin.pages.projects.students.all_students', compact('project', 'classes', 'std'));
+
+        $lastStudent = ProjectStudent::latest()->first();
+        $nextNumber = $lastStudent ? $lastStudent->id + 1 : 1;
+        $nextStudentId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+
+        return view('admin.pages.projects.students.all_students', compact('project', 'classes', 'std', 'nextStudentId'));
     }
 
     public function StoreProjectStudents(Request $request, $id){
+        $lastStudent = ProjectStudent::latest()->first();
+        $nextNumber = $lastStudent ? $lastStudent->id + 1 : 1;
+        $studentId = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
         ProjectStudent::create([
-            'student_id' => $request->student_id,
+            'student_id' => $request->student_id ?: $studentId,
             'project_id' => $request->project_id,
             'province' => $request->province,
             'district' => $request->district,
@@ -287,8 +315,6 @@ class ProjectsController extends Controller
             'guardian_phone' => $request->guardian_phone,
             'guardian_relation' => $request->guardian_relation,
             'status' => $request->status,
-            'status_change_date' => $request->status_change_date,
-            'status_change_reason' => $request->status_change_reason,
             'remarks' => $request->remarks,
         ]);
 
@@ -299,7 +325,7 @@ class ProjectsController extends Controller
         $student = ProjectStudent::findOrFail($id);
 
         $student->update([
-            'student_id' => $request->student_id,
+            'student_id' => $request->student_id ?: $student->student_id,
             'project_id' => $request->project_id,
             'province' => $request->province,
             'district' => $request->district,
@@ -321,8 +347,6 @@ class ProjectsController extends Controller
             'guardian_phone' => $request->guardian_phone,
             'guardian_relation' => $request->guardian_relation,
             'status' => $request->status,
-            'status_change_date' => $request->status_change_date,
-            'status_change_reason' => $request->status_change_reason,
             'remarks' => $request->remarks,
         ]);
 
@@ -334,14 +358,16 @@ class ProjectsController extends Controller
 
         return redirect()->back()->with('success', 'Student deleted successfully');
     }
-
     // --------------- All Project Shura ---------------
     public function AllProjectsShura($id){
         $project = Project::findOrFail($id);
         $classes = ProjectClass::where('project_id', $id)->get();
         $shura = ProjectShura::with('classes')->where('project_id', $id)->get();
 
-        return view('admin.pages.projects.shura.all_shura', compact('project','classes','shura'));
+        $lastShura = ProjectShura::latest('id')->first();
+        $nextSno = $lastShura ? str_pad(((int)$lastShura->sno) + 1, 3, '0', STR_PAD_LEFT) : '001';
+
+        return view('admin.pages.projects.shura.all_shura', compact('project','classes','shura','nextSno'));
     }
 
     public function StoreProjectShura(Request $request, $id){

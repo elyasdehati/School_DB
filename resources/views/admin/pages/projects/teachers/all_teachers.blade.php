@@ -12,16 +12,16 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
-                href="{{ route('all.projects.teachers', $project->id) }}">
-                    <i class="bi bi-person-video3 me-1"></i> Teachers
+                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
+                href="{{ route('all.projects.class', $project->id) }}">
+                    <i class="bi bi-easel2 me-1"></i> Classes
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
-                href="{{ route('all.projects.class', $project->id) }}">
-                    <i class="bi bi-easel2 me-1"></i> Classes
+                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
+                href="{{ route('all.projects.teachers', $project->id) }}">
+                    <i class="bi bi-person-video3 me-1"></i> Teachers
                 </a>
             </li>
 
@@ -31,14 +31,14 @@
                     <i class="bi bi-people-fill me-1"></i> Students
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('all.projects.shura') ? 'active' : '' }}" 
                 href="{{ route('all.projects.shura', $project->id) }}">
                     <i class="bi bi-building"></i> Shura
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('all.projects.shura.members') ? 'active' : '' }}" 
                 href="{{ route('all.projects.shura.members', $project->id) }}">
@@ -70,13 +70,14 @@
                 <div class="card-body">
 
                     @php
-                        $headers = ['No','First Name', 'Last Name', 'Tazkira Number', 'Phone Number', 'Active', 'Action'];
+                        $headers = ['Sno','First Name', 'Last Name', 'Tazkira Number', 'Phone Number', 'Active', 'Action'];
 
                         $rows = [];
 
                         foreach($teachers as $key => $item){
                             $rows[] = [
-                                $key + 1,
+                                // $key + 1,
+                                $item->serial_number,
                                 $item->first_name,
                                 $item->last_name,
                                 $item->tazkira_number,
@@ -122,7 +123,7 @@
 
 <!-- ADD TEACHER MODAL -->
 <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <form action="{{ route('store.projects.teacher', $project->id) }}" method="POST">
             @csrf
 
@@ -136,98 +137,106 @@
                 <div class="modal-body">
                     <div class="row">
 
-                        <div class="col-md-6 mb-2">
-                            <label>Serial Number</label>
-                            <input type="text" name="serial_number" class="form-control" placeholder="Serial Number">
+                        <div class="col-md-4 mb-2">
+                            <label>Starting Date</label>
+                            <input type="date" name="starting_date" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
+                            <label>Serial Number</label>
+                            <input type="text" name="serial_number" class="form-control" value="{{ $nextSerial }}" placeholder="Serial Number">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
                             <label>CBE List</label>
                             <input type="text" name="cbe_list" class="form-control" placeholder="CBE List">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>First Name</label>
                             <input type="text" name="first_name" class="form-control" placeholder="First Name">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Last Name</label>
                             <input type="text" name="last_name" class="form-control" placeholder="Last Name">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Father Name</label>
                             <input type="text" name="father_name" class="form-control" placeholder="Father Name">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Phone</label>
                             <input type="text" name="phone" class="form-control" placeholder="Phone">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Tazkira Number</label>
                             <input type="text" name="tazkira_number" class="form-control" placeholder="Tazkira Number">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Year of Birth</label>
                             <input type="number" name="year_of_birth" class="form-control" placeholder="Year of Birth">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Qualification</label>
                             <input type="text" name="qualification" class="form-control" placeholder="Qualification">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Teacher Type</label>
                             <input type="text" name="teacher_type" class="form-control" placeholder="Teacher Type">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Province</label>
                             <input type="text" name="province" class="form-control" placeholder="Province">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>District</label>
                             <input type="text" name="district" class="form-control" placeholder="District">
                         </div>
 
-                        <div class="col-md-12 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Village</label>
                             <input type="text" name="village" class="form-control" placeholder="Village">
                         </div>
 
-                        <div class="col-md-6 mb-2">
-                            <label>Gender</label><br>
-                            <input type="radio" name="gender" value="Male"> Male
-                            <input type="radio" name="gender" value="Female"> Female
+                        <div class="col-md-4 mb-2">
+                            <label>Gender</label>
+                            <select name="gender" class="form-control">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
                         </div>
 
-                        <div class="col-md-6 mb-2">
-                            <label>Is Active?</label><br>
-                            <input type="radio" name="is_active" value="1"> Yes
-                            <input type="radio" name="is_active" value="0"> No
+                        <div class="col-md-4 mb-2">
+                            <label>Is Active?</label>
+                            <select name="is_active" class="form-control">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
                         </div>
 
-                        <div class="col-md-6 mb-2">
-                            <label>Core Training</label><br>
-                            <input type="radio" name="core_training" value="1"> Yes
-                            <input type="radio" name="core_training" value="0"> No
+                        <div class="col-md-4 mb-2">
+                            <label>Core Training</label>
+                            <select name="core_training" class="form-control">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
                         </div>
 
-                        <div class="col-md-6 mb-2">
-                            <label>Refresher Training</label><br>
-                            <input type="radio" name="refresher_training" value="1"> Yes
-                            <input type="radio" name="refresher_training" value="0"> No
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Starting Date</label>
-                            <input type="date" name="starting_date" class="form-control">
+                        <div class="col-md-4 mb-2">
+                            <label>Refresher Training</label>
+                            <select name="refresher_training" class="form-control">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
                         </div>
 
                     </div>
@@ -245,138 +254,147 @@
 
 <!-- EDIT TEACHER MODAL -->
 @foreach($teachers as $item)
-<div class="modal fade" id="editTeacherModal{{$item->id}}" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <form action="{{ route('update.projects.teacher', $item->id) }}" method="POST">
-            @csrf
+    <div class="modal fade" id="editTeacherModal{{$item->id}}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <form action="{{ route('update.projects.teacher', $item->id) }}" method="POST">
+                @csrf
 
-            <div class="modal-content">
+                <div class="modal-content">
 
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Teacher</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body">
-                    <div class="row">
-
-                        <div class="col-md-6 mb-2">
-                            <label>Serial Number</label>
-                            <input type="text" name="serial_number" class="form-control" value="{{ $item->serial_number }}">
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>CBE List</label>
-                            <input type="text" name="cbe_list" class="form-control" value="{{ $item->cbe_list }}">
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>First Name</label>
-                            <input type="text" name="first_name" class="form-control" value="{{ $item->first_name }}">
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Last Name</label>
-                            <input type="text" name="last_name" class="form-control" value="{{ $item->last_name }}">
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Father Name</label>
-                            <input type="text" name="father_name" class="form-control" value="{{ $item->father_name }}">
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Phone</label>
-                            <input type="text" name="phone" class="form-control" value="{{ $item->phone }}">
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Tazkira Number</label>
-                            <input type="text" name="tazkira_number" class="form-control" value="{{ $item->tazkira_number }}">
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Year of Birth</label>
-                            <input type="number" name="year_of_birth" class="form-control" value="{{ $item->year_of_birth }}">
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Qualification</label>
-                            <input type="text" name="qualification" class="form-control" value="{{ $item->qualification }}">
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Teacher Type</label>
-                            <input type="text" name="teacher_type" class="form-control" value="{{ $item->teacher_type }}">
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Province</label>
-                            <input type="text" name="province" class="form-control" value="{{ $item->province }}">
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>District</label>
-                            <input type="text" name="district" class="form-control" value="{{ $item->district }}">
-                        </div>
-
-                        <div class="col-md-12 mb-2">
-                            <label>Village</label>
-                            <input type="text" name="village" class="form-control" value="{{ $item->village }}">
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Gender</label><br>
-                            <input type="radio" name="gender" value="Male" {{ $item->gender == 'Male' ? 'checked' : '' }}> Male
-                            <input type="radio" name="gender" value="Female" {{ $item->gender == 'Female' ? 'checked' : '' }}> Female
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Is Active?</label><br>
-                            <input type="radio" name="is_active" value="1" {{ $item->is_active == 1 ? 'checked' : '' }}> Yes
-                            <input type="radio" name="is_active" value="0" {{ $item->is_active == 0 ? 'checked' : '' }}> No
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Core Training</label><br>
-                            <input type="radio" name="core_training" value="1" {{ $item->core_training == 1 ? 'checked' : '' }}> Yes
-                            <input type="radio" name="core_training" value="0" {{ $item->core_training == 0 ? 'checked' : '' }}> No
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Refresher Training</label><br>
-                            <input type="radio" name="refresher_training" value="1" {{ $item->refresher_training == 1 ? 'checked' : '' }}> Yes
-                            <input type="radio" name="refresher_training" value="0" {{ $item->refresher_training == 0 ? 'checked' : '' }}> No
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label>Starting Date</label>
-                            <input type="date" name="starting_date" class="form-control" value="{{ $item->starting_date }}">
-                        </div>
-
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Teacher</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
+                    <div class="modal-body">
+                        <div class="row">
 
-            </div>
-        </form>
+                            <div class="col-md-4 mb-2">
+                                <label>Starting Date</label>
+                                <input type="date" name="starting_date" class="form-control" value="{{ $item->starting_date }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Serial Number</label>
+                                <input type="text" name="serial_number" class="form-control" value="{{ $item->serial_number }}">
+                                {{-- <input type="text" name="serial_number" class="form-control" value="{{ $nextSerial }}"> --}}
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>CBE List</label>
+                                <input type="text" name="cbe_list" class="form-control" value="{{ $item->cbe_list }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>First Name</label>
+                                <input type="text" name="first_name" class="form-control" value="{{ $item->first_name }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Last Name</label>
+                                <input type="text" name="last_name" class="form-control" value="{{ $item->last_name }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Father Name</label>
+                                <input type="text" name="father_name" class="form-control" value="{{ $item->father_name }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Phone</label>
+                                <input type="text" name="phone" class="form-control" value="{{ $item->phone }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Tazkira Number</label>
+                                <input type="text" name="tazkira_number" class="form-control" value="{{ $item->tazkira_number }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Year of Birth</label>
+                                <input type="number" name="year_of_birth" class="form-control" value="{{ $item->year_of_birth }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Qualification</label>
+                                <input type="text" name="qualification" class="form-control" value="{{ $item->qualification }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Teacher Type</label>
+                                <input type="text" name="teacher_type" class="form-control" value="{{ $item->teacher_type }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Province</label>
+                                <input type="text" name="province" class="form-control" value="{{ $item->province }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>District</label>
+                                <input type="text" name="district" class="form-control" value="{{ $item->district }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Village</label>
+                                <input type="text" name="village" class="form-control" value="{{ $item->village }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Gender</label>
+                                <select name="gender" class="form-control">
+                                    <option value="Male" {{ $item->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                                    <option value="Female" {{ $item->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Is Active?</label>
+                                <select name="is_active" class="form-control">
+                                    <option value="1" {{ $item->is_active == 1 ? 'selected' : '' }}>Yes</option>
+                                    <option value="0" {{ $item->is_active == 0 ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Core Training</label>
+                                <select name="core_training" class="form-control">
+                                    <option value="1" {{ $item->core_training == 1 ? 'selected' : '' }}>Yes</option>
+                                    <option value="0" {{ $item->core_training == 0 ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Refresher Training</label>
+                                <select name="refresher_training" class="form-control">
+                                    <option value="1" {{ $item->refresher_training == 1 ? 'selected' : '' }}>Yes</option>
+                                    <option value="0" {{ $item->refresher_training == 0 ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 @endforeach
 
 @endsection
 
 @section('scripts') 
-<script>
-$(document).ready(function() {
-    $('#datatable').DataTable({
-        scrollX: true,
-        autoWidth: false
-    });
-});
-</script>
+    <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable({
+                scrollX: true,
+                autoWidth: false
+            });
+        });
+    </script>
 @endsection

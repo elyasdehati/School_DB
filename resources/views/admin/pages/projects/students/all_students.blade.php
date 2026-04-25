@@ -12,16 +12,16 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
-                href="{{ route('all.projects.teachers', $project->id) }}">
-                    <i class="bi bi-person-video3 me-1"></i> Teachers
+                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
+                href="{{ route('all.projects.class', $project->id) }}">
+                    <i class="bi bi-easel2 me-1"></i> Classes
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
-                href="{{ route('all.projects.class', $project->id) }}">
-                    <i class="bi bi-easel2 me-1"></i> Classes
+                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
+                href="{{ route('all.projects.teachers', $project->id) }}">
+                    <i class="bi bi-person-video3 me-1"></i> Teachers
                 </a>
             </li>
 
@@ -31,14 +31,14 @@
                     <i class="bi bi-people-fill me-1"></i> Students
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('all.projects.shura') ? 'active' : '' }}" 
                 href="{{ route('all.projects.shura', $project->id) }}">
                     <i class="bi bi-building"></i> Shura
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('all.projects.shura.members') ? 'active' : '' }}" 
                 href="{{ route('all.projects.shura.members', $project->id) }}">
@@ -70,13 +70,13 @@
                 <div class="card-body">
 
                     @php
-                        $headers = ['No','Student ID','Project Name','Class Name','First Name', 'Last Name', 'Tazkira Number', 'Status', 'Action'];
+                        $headers = ['Student ID','Project Name','Class Name','First Name', 'Last Name', 'Tazkira Number', 'Status', 'Action'];
 
                         $rows = [];
 
                         foreach($std as $key => $item){
                             $rows[] = [
-                                $key + 1,
+                                // $key + 1,
                                 $item->student_id,
                                 $project->name,
                                 $item->class->class_name ?? '',
@@ -139,7 +139,7 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Student ID</label>
-                            <input type="text" name="student_id" class="form-control">
+                            <input type="text" name="student_id" class="form-control" value="{{ $nextStudentId }}">
                         </div>
 
                         <div class="col-md-4 mb-2">
@@ -222,8 +222,8 @@
                         <div class="col-md-4 mb-2">
                             <label>Gender</label>
                             <select name="gender" class="form-control">
-                                <option>Male</option>
-                                <option>Female</option>
+                                <option>Girls</option>
+                                <option>Boys</option>
                             </select>
                         </div>
 
@@ -276,7 +276,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-4 mb-2">
+                        {{-- <div class="col-md-4 mb-2">
                             <label>Status Change Date</label>
                             <input type="date" name="status_change_date" class="form-control">
                         </div>
@@ -289,11 +289,11 @@
                                 <option>Handed Over</option>
                                 <option>Transited</option>
                             </select>
-                        </div>
+                        </div> --}}
 
-                        <div class="col-md-12 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Remarks</label>
-                            <textarea name="remarks" class="form-control"></textarea>
+                            <textarea name="remarks" class="form-control" cols="1" rows="1"></textarea>
                         </div>
 
                     </div>
@@ -413,8 +413,8 @@
                             <div class="col-md-4 mb-2">
                                 <label>Gender</label>
                                 <select name="gender" class="form-control">
-                                    <option value="Male" {{ $item->gender == 'Male' ? 'selected' : '' }}>Male</option>
-                                    <option value="Female" {{ $item->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                                    <option value="Girls" {{ $item->gender == 'Girls' ? 'selected' : '' }}>Girls</option>
+                                    <option value="Boys" {{ $item->gender == 'Boys' ? 'selected' : '' }}>Boys</option>
                                 </select>
                             </div>
 
@@ -468,23 +468,8 @@
                             </div>
 
                             <div class="col-md-4 mb-2">
-                                <label>Status Change Date</label>
-                                <input type="date" name="status_change_date" class="form-control" value="{{ $item->status_change_date }}">
-                            </div>
-
-                            <div class="col-md-4 mb-2">
-                                <label>Status Change Reason</label>
-                                <select name="status_change_reason" class="form-control">
-                                    <option value="Active" {{ $item->status_change_reason == 'Active' ? 'selected' : '' }}>Active</option>
-                                    <option value="Inactive" {{ $item->status_change_reason == 'Inactive' ? 'selected' : '' }}>Inactive</option>
-                                    <option value="Handed Over" {{ $item->status_change_reason == 'Handed Over' ? 'selected' : '' }}>Handed Over</option>
-                                    <option value="Transited" {{ $item->status_change_reason == 'Transited' ? 'selected' : '' }}>Transited</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-12 mb-2">
                                 <label>Remarks</label>
-                                <textarea name="remarks" class="form-control">{{ $item->remarks }}</textarea>
+                                <textarea name="remarks" class="form-control" rows="1" cols="1">{{ $item->remarks }}</textarea>
                             </div>
 
                         </div>
@@ -503,32 +488,85 @@
 @endforeach
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
 
-    // Add modal
-    let classSelect = document.getElementById('add_class_id');
-    let className = document.getElementById('add_class_name');
+        // Add modal
+        let classSelect = document.getElementById('add_class_id');
+        let className = document.getElementById('add_class_name');
 
-    function updateClassName() {
-        let selected = classSelect.options[classSelect.selectedIndex];
-        className.value = selected.dataset.name;
-    }
-
-    if (classSelect) {
-        classSelect.addEventListener('change', updateClassName);
-        updateClassName();
-    }
-
-    // Edit modal
-    document.addEventListener('change', function (e) {
-        if (e.target.classList.contains('class-select')) {
-            let selected = e.target.options[e.target.selectedIndex];
-            let classNameInput = e.target.closest('.row').querySelector('.class-name');
-            classNameInput.value = selected.dataset.name;
+        function updateClassName() {
+            let selected = classSelect.options[classSelect.selectedIndex];
+            className.value = selected.dataset.name;
         }
+
+        if (classSelect) {
+            classSelect.addEventListener('change', updateClassName);
+            updateClassName();
+        }
+
+        // Edit modal
+        document.addEventListener('change', function (e) {
+            if (e.target.classList.contains('class-select')) {
+                let selected = e.target.options[e.target.selectedIndex];
+                let classNameInput = e.target.closest('.row').querySelector('.class-name');
+                classNameInput.value = selected.dataset.name;
+            }
+        });
+
     });
 
-});
+    // ================= AUTO AGE =================
+    document.addEventListener('input', function (e) {
+
+        if (e.target.name === 'year_of_birth') {
+
+            let birthYear = parseInt(e.target.value);
+
+            if (isNaN(birthYear)) return;
+
+            let currentYear;
+
+            if (birthYear > 1500) {
+                currentYear = new Date().getFullYear(); // میلادی
+            } else {
+                currentYear = 1405; // شمسی
+            }
+
+            let age = currentYear - birthYear;
+
+            let ageInput = e.target.closest('.row').querySelector('[name="age"]');
+
+            if (ageInput) {
+                ageInput.value = age >= 0 ? age : '';
+            }
+        }
+
+    });
+
+    // ================= DISABILITY TOGGLE =================
+    document.querySelectorAll('form').forEach(function (form) {
+
+        const isDisabled = form.querySelector('[name="is_disabled"]');
+        const disabilityType = form.querySelector('[name="disability_type"]')?.closest('.col-md-4');
+
+        function toggleDisability() {
+            if (!isDisabled || !disabilityType) return;
+
+            if (isDisabled.value == "0") {
+                disabilityType.style.opacity = "0.4";
+                disabilityType.querySelector('input').disabled = true;
+            } else {
+                disabilityType.style.opacity = "1";
+                disabilityType.querySelector('input').disabled = false;
+            }
+        }
+
+        if (isDisabled) {
+            isDisabled.addEventListener('change', toggleDisability);
+            toggleDisability();
+        }
+
+    });
 </script>
 
 @endsection

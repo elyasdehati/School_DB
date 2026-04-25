@@ -27,16 +27,16 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
-                href="{{ route('all.projects.teachers', $project->id) }}">
-                    <i class="bi bi-person-video3 me-1"></i> Teachers
+                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
+                href="{{ route('all.projects.class', $project->id) }}">
+                    <i class="bi bi-easel2 me-1"></i> Classes
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
-                href="{{ route('all.projects.class', $project->id) }}">
-                    <i class="bi bi-easel2 me-1"></i> Classes
+                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
+                href="{{ route('all.projects.teachers', $project->id) }}">
+                    <i class="bi bi-person-video3 me-1"></i> Teachers
                 </a>
             </li>
 
@@ -46,14 +46,14 @@
                     <i class="bi bi-people-fill me-1"></i> Students
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('all.projects.shura') ? 'active' : '' }}" 
                 href="{{ route('all.projects.shura', $project->id) }}">
                     <i class="bi bi-building"></i> Shura
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('all.projects.shura.members') ? 'active' : '' }}" 
                 href="{{ route('all.projects.shura.members', $project->id) }}">
@@ -85,13 +85,13 @@
                 <div class="card-body">
 
                     @php
-                        $headers = ['No','Sno','Project Name','Shura Name','Province','Class Name', 'Establishment Date', 'Status', 'Action'];
+                        $headers = ['Sno','Project Name','Shura Name','Province','Class Name', 'Establishment Date', 'Status', 'Action'];
 
                         $rows = [];
 
                         foreach($shura as $key => $item){
                             $rows[] = [
-                                $key + 1,
+                                // $key + 1,
                                 $item->sno,
                                 $project->name,
                                 $item->shura_name,
@@ -154,13 +154,18 @@
 
                         <div class="col-md-4 mb-2">
                             <label>SNO</label>
-                            <input type="text" name="sno" class="form-control">
+                            <input type="text" name="sno" class="form-control" value="{{ $nextSno }}">
                         </div>
 
                         <div class="col-md-4 mb-2">
                             <label>Project</label>
                             <input type="text" class="form-control" value="{{ $project->name }}" readonly>
                             <input type="hidden" name="project_id" value="{{ $project->id }}">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Establishment Date</label>
+                            <input type="date" name="shura_establishment_date" class="form-control">
                         </div>
 
                         <div class="col-md-4 mb-2">
@@ -183,7 +188,7 @@
                             <input type="text" name="village" class="form-control">
                         </div>
 
-                        <div class="col-md-12 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Classes</label>
                             <select class="form-control select2" name="class_ids[]" id="class_ids" multiple="multiple" style="width:100%;">
                                 @foreach($classes as $class)
@@ -194,32 +199,27 @@
                             </select>
                         </div>
 
-                        <div class="col-md-3 mb-2">
-                            <label>Establishment Date</label>
-                            <input type="date" name="shura_establishment_date" class="form-control">
-                        </div>
-
-                        <div class="col-md-3 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Status</label>
-                            <select name="status" class="form-control">
+                            <select name="status" class="form-control status-select">
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
                             </select>
                         </div>
 
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-4 mb-2 status-extra">
                             <label>Status Change Date</label>
                             <input type="date" name="status_change_date" class="form-control">
                         </div>
 
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-4 mb-2 status-extra">
                             <label>Status Change Reason</label>
                             <input type="text" name="status_change_reason" class="form-control">
                         </div>
 
-                        <div class="col-md-12 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Remarks</label>
-                            <textarea name="remarks" class="form-control"></textarea>
+                            <textarea name="remarks" class="form-control" rows="1" cols="1"></textarea>
                         </div>
 
                     </div>
@@ -259,6 +259,17 @@
                             </div>
 
                             <div class="col-md-4 mb-2">
+                                <label>Project</label>
+                                <input type="text" class="form-control" value="{{ $project->name }}" readonly>
+                                <input type="hidden" name="project_id" value="{{ $project->id }}">
+                            </div>
+                            
+                            <div class="col-md-4 mb-2">
+                                <label>Establishment Date</label>
+                                <input type="date" name="shura_establishment_date" class="form-control" value="{{ $item->shura_establishment_date }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
                                 <label>Shura Name</label>
                                 <input type="text" name="shura_name" class="form-control" value="{{ $item->shura_name }}">
                             </div>
@@ -282,7 +293,7 @@
                                 $selectedClasses = $item->classes->pluck('id')->toArray();
                             @endphp
 
-                            <div class="col-md-12 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Classes</label>
                                 <select name="class_ids[]" class="form-control select2 edit-class-select" multiple>
                                     @foreach($classes as $class)
@@ -302,14 +313,19 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-4 mb-2">
-                                <label>Establishment Date</label>
-                                <input type="date" name="shura_establishment_date" class="form-control" value="{{ $item->shura_establishment_date }}">
+                            <div class="col-md-4 mb-2 status-extra">
+                                <label>Status Change Date</label>
+                                <input type="date" name="status_change_date" class="form-control" value="{{ $item->status_change_date }}">
                             </div>
 
-                            <div class="col-md-12 mb-2">
+                            <div class="col-md-4 mb-2 status-extra">
+                                <label>Status Change Reason</label>
+                                <input type="text" name="status_change_reason" class="form-control" value="{{ $item->status_change_reason }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
                                 <label>Remarks</label>
-                                <textarea name="remarks" class="form-control">{{ $item->remarks }}</textarea>
+                                <textarea name="remarks" class="form-control" rows="1" cols="1">{{ $item->remarks }}</textarea>
                             </div>
 
                         </div>
@@ -327,57 +343,66 @@
     </div>
 @endforeach
 
-{{-- <script>
-    document.addEventListener('change', function (e) {
-
-        // Add modal
-        if (e.target.id === 'class_id') {
-            let selected = e.target.options[e.target.selectedIndex];
-            document.getElementById('class_name').value = selected.dataset.name;
-        }
-
-        // Edit modal
-        if (e.target.classList.contains('class-select')) {
-            let selected = e.target.options[e.target.selectedIndex];
-            let classNameInput = e.target.closest('.row').querySelector('.class-name');
-            classNameInput.value = selected.dataset.name;
-        }
-
-    });
-</script> --}}
-
 @push('scripts')
-<script>
-    $(document).ready(function () {
+    <script>
+        $(document).ready(function () {
 
-        $('#class_ids').select2({
-            placeholder: "",
-            width: '100%',
-            dropdownParent: $('#addShuraModal')
-        });
-
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-
-        // ADD modal
-        $('#class_ids').select2({
-            width: '100%',
-            dropdownParent: $('#addShuraModal')
-        });
-
-        // EDIT modal
-        $('.edit-class-select').each(function () {
-            $(this).select2({
+            $('#class_ids').select2({
+                placeholder: "",
                 width: '100%',
-                dropdownParent: $(this).closest('.modal')
+                dropdownParent: $('#addShuraModal')
             });
+
         });
 
-    });
-</script>
+        $(document).ready(function () {
+
+            // ADD modal
+            $('#class_ids').select2({
+                width: '100%',
+                dropdownParent: $('#addShuraModal')
+            });
+
+            // EDIT modal
+            $('.edit-class-select').each(function () {
+                $(this).select2({
+                    width: '100%',
+                    dropdownParent: $(this).closest('.modal')
+                });
+            });
+
+        });
+    </script>
 @endpush
+
+<script>
+    document.querySelectorAll('form').forEach(function (form) {
+
+    const status = form.querySelector('select[name="status"]');
+    const extras = form.querySelectorAll('.status-extra');
+
+    function toggleStatusFields() {
+        if (!status) return;
+
+        if (status.value === "Active") {
+            extras.forEach(el => {
+                el.style.opacity = "0.4";
+                el.querySelector('input').disabled = true;
+            });
+        } else {
+            extras.forEach(el => {
+                el.style.opacity = "1";
+                el.querySelector('input').disabled = false;
+            });
+        }
+    }
+
+    if (status) {
+        status.addEventListener('change', toggleStatusFields);
+        toggleStatusFields();
+    }
+
+});
+</script>
 
 @endsection

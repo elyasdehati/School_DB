@@ -27,16 +27,16 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
-                href="{{ route('all.projects.teachers', $project->id) }}">
-                    <i class="bi bi-person-video3 me-1"></i> Teachers
+                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
+                href="{{ route('all.projects.class', $project->id) }}">
+                    <i class="bi bi-easel2 me-1"></i> Classes
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
-                href="{{ route('all.projects.class', $project->id) }}">
-                    <i class="bi bi-easel2 me-1"></i> Classes
+                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
+                href="{{ route('all.projects.teachers', $project->id) }}">
+                    <i class="bi bi-person-video3 me-1"></i> Teachers
                 </a>
             </li>
 
@@ -46,14 +46,14 @@
                     <i class="bi bi-people-fill me-1"></i> Students
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('all.projects.shura') ? 'active' : '' }}" 
                 href="{{ route('all.projects.shura', $project->id) }}">
                     <i class="bi bi-building"></i> Shura
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('all.projects.shura.members') ? 'active' : '' }}" 
                 href="{{ route('all.projects.shura.members', $project->id) }}">
@@ -85,13 +85,13 @@
                 <div class="card-body">
 
                     @php
-                        $headers = ['No','Shura Sno','First Name','Last Name','Tazkira No','Role', 'Phone', 'Status', 'Action'];
+                        $headers = ['Shura Sno','First Name','Last Name','Tazkira No','Role', 'Phone', 'Status', 'Action'];
 
                         $rows = [];
 
                         foreach($members as $key => $item){
                             $rows[] = [
-                                $key + 1,
+                                // $key + 1,
                                 $item->shura_id,
                                 $item->first_name,
                                 $item->last_name,
@@ -153,7 +153,7 @@
                     <div class="row">
 
                         <div class="col-md-4 mb-2">
-                            <label>Shura ID</label>
+                            <label>Sno</label>
                             <select name="shura_id" class="form-control">
                                 @foreach($shura as $item)
                                     <option value="{{ $item->id }}">{{ $item->id }} - {{ $item->shura_name }}</option>
@@ -262,9 +262,9 @@
                             </select>
                         </div>
 
-                        <div class="col-md-12 mb-2">
+                        <div class="col-md-8 mb-2">
                             <label>Remarks</label>
-                            <textarea name="remarks" class="form-control"></textarea>
+                            <textarea name="remarks" class="form-control" rows="1" cols="1"></textarea>
                         </div>
 
                     </div>
@@ -482,5 +482,60 @@
     });
 </script> --}}
 {{-- @endpush --}}
+
+<script>
+    // ================= AUTO AGE =================
+    document.addEventListener('input', function (e) {
+
+        if (e.target.name === 'year_of_birth') {
+
+            let birthYear = parseInt(e.target.value);
+
+            if (isNaN(birthYear)) return;
+
+            let currentYear;
+
+            if (birthYear > 1500) {
+                currentYear = new Date().getFullYear(); 
+            } else {
+                currentYear = 1405; 
+            }
+
+            let age = currentYear - birthYear;
+
+            let ageInput = e.target.closest('.row').querySelector('[name="age"]');
+
+            if (ageInput) {
+                ageInput.value = age >= 0 ? age : '';
+            }
+        }
+
+    });
+
+    // ================= DISABILITY TOGGLE =================
+    document.querySelectorAll('form').forEach(function (form) {
+
+        const isDisabled = form.querySelector('[name="is_disabled"]');
+        const disabilityType = form.querySelector('[name="disability_type"]')?.closest('.col-md-4');
+
+        function toggleDisability() {
+            if (!isDisabled || !disabilityType) return;
+
+            if (isDisabled.value == "0") {
+                disabilityType.style.opacity = "0.4";
+                disabilityType.querySelector('input').disabled = true;
+            } else {
+                disabilityType.style.opacity = "1";
+                disabilityType.querySelector('input').disabled = false;
+            }
+        }
+
+        if (isDisabled) {
+            isDisabled.addEventListener('change', toggleDisability);
+            toggleDisability();
+        }
+
+    });
+</script>
 
 @endsection

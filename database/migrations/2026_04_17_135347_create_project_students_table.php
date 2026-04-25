@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('tazkira_no')->nullable();
             $table->integer('year_of_birth')->nullable();
             $table->integer('age')->nullable();
-            $table->enum('gender', ['Male', 'Female'])->nullable();
+            $table->enum('gender', ['Girls', 'Boys'])->nullable();
             $table->string('native_language')->nullable();
             $table->string('residence_type')->nullable();
             $table->boolean('is_disabled')->default(false);
@@ -35,8 +35,8 @@ return new class extends Migration
             $table->string('guardian_phone')->nullable();
             $table->string('guardian_relation')->nullable();
             $table->enum('status', ['Active', 'Inactive', 'Handed Over', 'Transited'])->default('Active');
-            $table->date('status_change_date')->nullable();
-            $table->text('status_change_reason')->nullable();
+            // $table->date('status_change_date')->nullable();
+            // $table->text('status_change_reason')->nullable();
             $table->text('remarks')->nullable();
             $table->timestamps();
         });

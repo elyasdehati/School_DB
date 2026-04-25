@@ -12,16 +12,16 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
-                href="{{ route('all.projects.teachers', $project->id) }}">
-                    <i class="bi bi-person-video3 me-1"></i> Teachers
+                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
+                href="{{ route('all.projects.class', $project->id) }}">
+                    <i class="bi bi-easel2 me-1"></i> Classes
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
-                href="{{ route('all.projects.class', $project->id) }}">
-                    <i class="bi bi-easel2 me-1"></i> Classes
+                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
+                href="{{ route('all.projects.teachers', $project->id) }}">
+                    <i class="bi bi-person-video3 me-1"></i> Teachers
                 </a>
             </li>
 
@@ -31,7 +31,7 @@
                     <i class="bi bi-people-fill me-1"></i> Students
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('all.projects.shura') ? 'active' : '' }}" 
                 href="{{ route('all.projects.shura', $project->id) }}">
@@ -70,13 +70,13 @@
                 <div class="card-body">
 
                     @php
-                        $headers = ['No','Class Id','Class Name','Total Enrolled', 'Female Teachers', 'Male Teacher', 'Active', 'Action'];
+                        $headers = ['Class Id','Class Name','Total Enrolled', 'Female Teachers', 'Male Teacher', 'Active', 'Action'];
 
                         $rows = [];
 
                         foreach($class as $key => $item){
                             $rows[] = [
-                                $key + 1,
+                                // $key + 1,
                                 $item->class_id,
                                 $item->class_name,
                                 $item->total_enrolled,
@@ -123,7 +123,7 @@
 
 {{-- ================= ADD CLASS MODAL (FULL MIGRATION) ================= --}}
 <div class="modal fade" id="addClassModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
 
         <form action="{{ route('store.projects.class', $project->id) }}" method="POST" class="needs-validation" novalidate>
             @csrf
@@ -138,46 +138,37 @@
                 <div class="modal-body">
                     <div class="row">
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Registration Date</label>
                             <input type="date" name="registration_date" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label for="name">Project Name</label>
                             <input class="form-control" placeholder="Name" required="" name="name" type="text" value="{{ $project->name }}" id="name" readonly>
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label for="donnor">Donnor</label>
                             <input class="form-control" placeholder="Donnor" name="donnor" type="text" value="{{ $project->donor }}" readonly>
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Class Id</label>
-                            <input type="text" name="class_id" class="form-control">
+                            <input type="text" name="class_id" class="form-control" value="{{ $nextClassId }}">
                         </div>
 
-                        {{-- <div class="col-md-6 mb-2">
+                        {{-- <div class="col-md-4 mb-2">
                             <label>Class Name</label>
                             <input type="text" name="class_name" class="form-control">
                         </div> --}}
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label for="class_name">Class Name</label>
-                            <select class="form-control" name="class_name" id="class_name">
-                                <option value="">-- Select --</option>
-                                <option value="CBS" {{ old('class_name') == 'CBS' ? 'selected' : '' }}>CBS</option>
-                                <option value="Ongoing" {{ old('class_name') == 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
-                            </select>
+                            <input type="text" name="class_name" class="form-control">
                         </div>
 
-                        {{-- <div class="col-md-6 mb-2">
-                            <label>Grades</label>
-                            <input type="text" name="grades" class="form-control">
-                        </div> --}}
-
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label for="grades">Grades</label>
                             <select class="form-control" name="grades" id="grades">
                                 <option value="">-- Select --</option>
@@ -186,17 +177,12 @@
                             </select>
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Class Type</label>
                             <input type="text" name="class_type" class="form-control">
                         </div>
 
-                        {{-- <div class="col-md-6 mb-2">
-                            <label>Province</label>
-                            <input type="text" name="province" class="form-control">
-                        </div> --}}
-
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label for="province">Province</label>
                             <select class="form-control" name="province" id="province">
                                 <option value="">-- Select --</option>
@@ -205,12 +191,12 @@
                             </select>
                         </div>
 
-                        {{-- <div class="col-md-6 mb-2">
+                        {{-- <div class="col-md-4 mb-2">
                             <label>District</label>
                             <input type="text" name="district" class="form-control">
                         </div> --}}
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label for="district">District</label>
                             <select class="form-control" name="district" id="district">
                                 <option value="">-- Select --</option>
@@ -219,12 +205,12 @@
                             </select>
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Village</label>
                             <input type="text" name="village" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Latitude</label>
                             <input type="text" name="latitude" class="form-control latitude">
                             <div class="invalid-feedback">
@@ -232,7 +218,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Longitude</label>
                             <input type="text" name="longitude" class="form-control longitude">
                             <div class="invalid-feedback">
@@ -240,12 +226,7 @@
                             </div>
                         </div>
 
-                        {{-- <div class="col-md-6 mb-2">
-                            <label>Climate</label>
-                            <input type="text" name="climate" class="form-control">
-                        </div> --}}
-
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label for="climate">Climate</label>
                             <select class="form-control" name="climate" id="climate">
                                 <option value="">-- Select --</option>
@@ -254,12 +235,7 @@
                             </select>
                         </div>
 
-                        {{-- <div class="col-md-6 mb-2">
-                            <label>Infrastructure</label>
-                            <input type="text" name="infrastructure" class="form-control">
-                        </div> --}}
-
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label for="infrastructure">Infrastructure</label>
                             <select class="form-control" name="infrastructure" id="infrastructure">
                                 <option value="">-- Select --</option>
@@ -268,40 +244,37 @@
                             </select>
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Boys Enrolled</label>
                             <input type="number" name="boys_enrolled" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Girls Enrolled</label>
                             <input type="number" name="girls_enrolled" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Total Enrolled</label>
                             <input type="number" name="total_enrolled" class="form-control">
                         </div>
 
-                        {{-- <div class="col-md-6 mb-2">
-                            <label>Demographic</label>
-                            <input type="text" name="demographic" class="form-control">
-                        </div> --}}
-
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label for="demographic">Demographic</label>
                             <select class="form-control" name="demographic" id="demographic">
                                 <option value="">-- Select --</option>
+                                <option value="Boys" {{ old('demographic') == 'Boys' ? 'selected' : '' }}>Boys</option>
+                                <option value="Girls" {{ old('demographic') == 'Girls' ? 'selected' : '' }}>Girls</option>
                                 <option value="Mixed" {{ old('demographic') == 'Mixed' ? 'selected' : '' }}>Mixed</option>
                             </select>
                         </div>
 
-                        {{-- <div class="col-md-6 mb-2">
+                        {{-- <div class="col-md-4 mb-2">
                             <label>Language</label>
                             <input type="text" name="language" class="form-control">
                         </div> --}}
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label for="language">Language</label>
                             <select class="form-control" name="language" id="language">
                                 <option value="">-- Select --</option>
@@ -310,33 +283,30 @@
                             </select>
                         </div>
 
-                        <div class="col-md-6 mb-2">
-                            <label>Class Status</label><br>
-                            <input type="radio" name="class_status" value="1"> Active
-                            <input type="radio" name="class_status" value="0"> Inactive
+                        <div class="col-md-4 mb-2">
+                            <label>Class Status</label>
+                            <select name="class_status" class="form-control">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        {{-- <div class="col-md-4 mb-2">
                             <label>Establishment Date</label>
                             <input type="date" name="establishment_date" class="form-control">
-                        </div>
+                        </div> --}}
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Start Time</label>
                             <input type="time" name="start_time" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>End Time</label>
                             <input type="time" name="end_time" class="form-control">
                         </div>
 
-                        {{-- <div class="col-md-6 mb-2">
-                            <label>Shift</label>
-                            <input type="text" name="shift" class="form-control">
-                        </div> --}}
-
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label for="shift">Shift</label>
                             <select class="form-control" name="shift" id="shift">
                                 <option value="">-- Select --</option>
@@ -345,44 +315,48 @@
                             </select>
                         </div>
 
-                        <div class="col-md-6 mb-2">
-                            <label>Is Cluster</label><br>
-                            <input type="radio" name="is_cluster" value="1"> Yes
-                            <input type="radio" name="is_cluster" value="0"> No
+                        <div class="col-md-4 mb-2">
+                            <label>Is Cluster</label>
+                            <select name="is_cluster" class="form-control">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Female Teachers</label>
                             <input type="number" name="female_teachers" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Male Teachers</label>
                             <input type="number" name="male_teachers" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-2">
-                            <label>CBE Teachers</label>
+                        <div class="col-md-4 mb-2">
+                            <label>Total Teachers</label>
                             <input type="text" name="cbe_teachers" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-2">
-                            <label>Is Closed</label><br>
-                            <input type="radio" name="is_closed" value="1"> Yes
-                            <input type="radio" name="is_closed" value="0"> No
+                        <div class="col-md-4 mb-2">
+                            <label>Is Closed</label>
+                            <select name="is_closed" class="form-control">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Closure Date</label>
                             <input type="date" name="closure_date" class="form-control">
                         </div>
 
-                        <div class="col-md-12 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Closure Reason</label>
-                            <textarea name="closure_reason" class="form-control"></textarea>
+                            <textarea name="closure_reason" class="form-control" rows="1" cols="1"></textarea>
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Female SMS Members</label>
                             <input type="number" name="female_sms_members" class="form-control">
                             <div class="invalid-feedback">
@@ -390,7 +364,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Male SMS Members</label>
                             <input type="number" name="male_sms_members" class="form-control">
                             <div class="invalid-feedback">
@@ -398,39 +372,43 @@
                             </div>
                         </div>
 
-                        <div class="col-md-12 mb-2">
-                            <label>SMS Members</label>
+                        <div class="col-md-4 mb-2">
+                            <label>Total SMS Members</label>
                             <input type="text" name="sms_members" class="form-control">
                             <div class="invalid-feedback">
                                 Please enter SMS members information.
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-2">
-                            <label>Has Hub School</label><br>
-                            <input type="radio" name="has_hub_school" value="1"> Yes
-                            <input type="radio" name="has_hub_school" value="0"> No
+                        <div class="col-md-4 mb-2">
+                            <label>Has Hub School</label>
+                            <select name="has_hub_school" class="form-control">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Hub School Name</label>
                             <input type="text" name="hub_school_name" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-4 mb-2">
                             <label>Hub Distance KM</label>
                             <input type="number" step="0.01" name="hub_distance_km" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-2">
-                            <label>SIP Completed</label><br>
-                            <input type="radio" name="sip_completed" value="1"> Yes
-                            <input type="radio" name="sip_completed" value="0"> No
+                        <div class="col-md-4 mb-2">
+                            <label>SIP Completed</label>
+                            <select name="sip_completed" class="form-control">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
                         </div>
 
-                        <div class="col-md-12 mb-2">
+                        <div class="col-md-8 mb-2">
                             <label>Remarks</label>
-                            <textarea name="remarks" class="form-control"></textarea>
+                            <textarea name="remarks" class="form-control" rows="1" cols="1"></textarea>
                         </div>
 
                     </div>
@@ -450,7 +428,7 @@
 {{-- ================= EDIT CLASS MODAL ================= --}}
 @foreach($class as $item)
     <div class="modal fade" id="editClassModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
 
             <form action="{{ route('update.projects.class', $item->id) }}" method="POST" class="needs-validation">
                 @csrf
@@ -465,36 +443,32 @@
                     <div class="modal-body">
                         <div class="row">
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Registration Date</label>
                                 <input type="date" name="registration_date" class="form-control" value="{{ $item->registration_date }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label for="name">Project Name</label>
                                 <input class="form-control" placeholder="Name" required="" name="name" type="text" value="{{ $project->name }}" id="name" readonly>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label for="donnor">Donnor</label>
                                 <input class="form-control" placeholder="Donnor" name="donnor" type="text" value="{{ $project->donor }}" readonly>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Class Id</label>
                                 <input type="text" name="class_id" class="form-control" value="{{ $item->class_id }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label for="class_name">Class Name</label>
-                                <select class="form-control" name="class_name" id="class_name">
-                                    <option value="">-- Select --</option>
-                                    <option value="CBS" {{ $item->class_name == 'CBS' ? 'selected' : '' }}>CBS</option>
-                                    <option value="Ongoing" {{ $item->class_name == 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
-                                </select>
+                                <input type="text" name="class_name" class="form-control" value="{{ $item->class_name }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label for="grades">Grades</label>
                                 <select class="form-control" name="grades" id="grades">
                                     <option value="">-- Select --</option>
@@ -502,7 +476,7 @@
                                     <option value="grade2" {{ $item->grades == 'grade2' ? 'selected' : '' }}>Grade 2</option>
                                 </select>
                             </div>
-                            {{-- <div class="col-md-6 mb-2">
+                            {{-- <div class="col-md-4 mb-2">
                             <label for="grades">Grades</label>
                             <select class="form-control" name="grades" id="grades">
                                 <option>
@@ -513,12 +487,12 @@
                             </select>
                         </div> --}}
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Class Type</label>
                                 <input type="text" name="class_type" class="form-control" value="{{ $item->class_type }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label for="province">Province</label>
                                 <select class="form-control" name="province" id="province">
                                     <option value="">-- Select --</option>
@@ -527,7 +501,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label for="district">District</label>
                                 <select class="form-control" name="district" id="district">
                                    <option value="">-- Select --</option>
@@ -536,12 +510,12 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Village</label>
                                 <input type="text" name="village" class="form-control" value="{{ $item->village }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Latitude</label>
                                 <input type="text" name="latitude" class="form-control latitude" value="{{ $item->latitude }}">
                                 <div class="invalid-feedback">
@@ -549,7 +523,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Longitude</label>
                                 <input type="text" name="longitude" class="form-control longitude" value="{{ $item->longitude }}">
                                 <div class="invalid-feedback">
@@ -557,7 +531,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label for="climate">Climate</label>
                                 <select class="form-control" name="climate" id="climate">
                                     <option value="">-- Select --</option>
@@ -566,7 +540,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label for="infrastructure">Infrastructure</label>
                                 <select class="form-control" name="infrastructure" id="infrastructure">
                                     <option value="">-- Select --</option>
@@ -575,22 +549,22 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Boys Enrolled</label>
                                 <input type="number" name="boys_enrolled" class="form-control" value="{{ $item->boys_enrolled }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Girls Enrolled</label>
                                 <input type="number" name="girls_enrolled" class="form-control" value="{{ $item->girls_enrolled }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Total Enrolled</label>
                                 <input type="number" name="total_enrolled" class="form-control" value="{{ $item->total_enrolled }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label for="demographic">Demographic</label>
                                 <select class="form-control" name="demographic" id="demographic">
                                     <option value="">-- Select --</option>
@@ -598,7 +572,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label for="language">Language</label>
                                 <select class="form-control" name="language" id="language">
                                     <option value="">-- Select --</option>
@@ -607,28 +581,30 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6 mb-2">
-                                <label>Class Status</label><br>
-                                <input type="radio" name="class_status" value="1" {{ $item->class_status == 1 ? 'checked' : '' }}> Active
-                                <input type="radio" name="class_status" value="0" {{ $item->class_status == 0 ? 'checked' : '' }}> Inactive
+                            <div class="col-md-4 mb-2">
+                                <label>Class Status</label>
+                                <select name="class_status" class="form-control">
+                                    <option value="1" {{ $item->class_status == 1 ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ $item->class_status == 0 ? 'selected' : '' }}>Inactive</option>
+                                </select>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            {{-- <div class="col-md-4 mb-2">
                                 <label>Establishment Date</label>
                                 <input type="date" name="establishment_date" class="form-control" value="{{ $item->establishment_date }}">
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Start Time</label>
                                 <input type="time" name="start_time" class="form-control" value="{{ $item->start_time }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>End Time</label>
                                 <input type="time" name="end_time" class="form-control" value="{{ $item->end_time }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label for="shift">Shift</label>
                                 <select class="form-control" name="shift" id="shift">
                                     <option value="">-- Select --</option>
@@ -637,83 +613,91 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6 mb-2">
-                                <label>Is Cluster</label><br>
-                                <input type="radio" name="is_cluster" value="1" {{ $item->is_cluster == 1 ? 'checked' : '' }}> Yes
-                                <input type="radio" name="is_cluster" value="0" {{ $item->is_cluster == 0 ? 'checked' : '' }}> No
+                            <div class="col-md-4 mb-2">
+                                <label>Is Cluster</label>
+                                <select name="is_cluster" class="form-control">
+                                    <option value="1" {{ $item->is_cluster == 1 ? 'selected' : '' }}>Yes</option>
+                                    <option value="0" {{ $item->is_cluster == 0 ? 'selected' : '' }}>No</option>
+                                </select>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Female Teachers</label>
                                 <input type="number" name="female_teachers" class="form-control" value="{{ $item->female_teachers }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Male Teachers</label>
                                 <input type="number" name="male_teachers" class="form-control" value="{{ $item->male_teachers }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
-                                <label>CBE Teachers</label>
+                            <div class="col-md-4 mb-2">
+                                <label>Total Teachers</label>
                                 <input type="text" name="cbe_teachers" class="form-control" value="{{ $item->cbe_teachers }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
-                                <label>Is Closed</label><br>
-                                <input type="radio" name="is_closed" value="1" {{ $item->is_closed == 1 ? 'checked' : '' }}> Yes
-                                <input type="radio" name="is_closed" value="0" {{ $item->is_closed == 0 ? 'checked' : '' }}> No
+                            <div class="col-md-4 mb-2">
+                                <label>Is Closed</label>
+                                <select name="is_closed" class="form-control">
+                                    <option value="1" {{ $item->is_closed == 1 ? 'selected' : '' }}>Yes</option>
+                                    <option value="0" {{ $item->is_closed == 0 ? 'selected' : '' }}>No</option>
+                                </select>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Closure Date</label>
                                 <input type="date" name="closure_date" class="form-control" value="{{ $item->closure_date }}">
                             </div>
 
-                            <div class="col-md-12 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Closure Reason</label>
-                                <textarea name="closure_reason" class="form-control">{{ $item->closure_reason }}</textarea>
+                                <textarea name="closure_reason" class="form-control"rows="1" cols="1">{{ $item->closure_reason }}</textarea>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Female SMS Members</label>
                                 <input type="number" name="female_sms_members" class="form-control" value="{{ $item->female_sms_members }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Male SMS Members</label>
                                 <input type="number" name="male_sms_members" class="form-control" value="{{ $item->male_sms_members }}">
                             </div>
 
-                            <div class="col-md-12 mb-2">
-                                <label>SMS Members</label>
+                            <div class="col-md-4 mb-2">
+                                <label>Total SMS Members</label>
                                 <input type="text" name="sms_members" class="form-control" value="{{ $item->sms_members }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
-                                <label>Has Hub School</label><br>
-                                <input type="radio" name="has_hub_school" value="1" {{ $item->has_hub_school == 1 ? 'checked' : '' }}> Yes
-                                <input type="radio" name="has_hub_school" value="0" {{ $item->has_hub_school == 0 ? 'checked' : '' }}> No
+                            <div class="col-md-4 mb-2">
+                                <label>Has Hub School</label>
+                                <select name="has_hub_school" class="form-control">
+                                    <option value="1" {{ $item->has_hub_school == 1 ? 'selected' : '' }}>Yes</option>
+                                    <option value="0" {{ $item->has_hub_school == 0 ? 'selected' : '' }}>No</option>
+                                </select>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Hub School Name</label>
                                 <input type="text" name="hub_school_name" class="form-control" value="{{ $item->hub_school_name }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label>Hub Distance KM</label>
                                 <input type="number" step="0.01" name="hub_distance_km" class="form-control" value="{{ $item->hub_distance_km }}">
                             </div>
 
-                            <div class="col-md-6 mb-2">
-                                <label>SIP Completed</label><br>
-                                <input type="radio" name="sip_completed" value="1" {{ $item->sip_completed == 1 ? 'checked' : '' }}> Yes
-                                <input type="radio" name="sip_completed" value="0" {{ $item->sip_completed == 0 ? 'checked' : '' }}> No
+                            <div class="col-md-4 mb-2">
+                                <label>SIP Completed</label>
+                                <select name="sip_completed" class="form-control">
+                                    <option value="1" {{ $item->sip_completed == 1 ? 'selected' : '' }}>Yes</option>
+                                    <option value="0" {{ $item->sip_completed == 0 ? 'selected' : '' }}>No</option>
+                                </select>
                             </div>
 
-                            <div class="col-md-12 mb-2">
+                            <div class="col-md-8 mb-2">
                                 <label>Remarks</label>
-                                <textarea name="remarks" class="form-control">{{ $item->remarks }}</textarea>
+                                <textarea name="remarks" class="form-control" rows="1" cols="1">{{ $item->remarks }}</textarea>
                             </div>
 
                         </div>
@@ -734,98 +718,17 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
 
-        const form = document.querySelector(".needs-validation");
+        function onlyNumbers(input) {
+            input.value = input.value.replace(/[^0-9]/g, '');
+        }
 
-        const lat = document.querySelector(".latitude");
-        const lng = document.querySelector(".longitude");
-
-        // realtime latitude
-        lat.addEventListener("input", function () {
-            if (this.value >= -90 && this.value <= 90) {
-                this.classList.remove("is-invalid");
-                this.classList.add("is-valid");
-            } else {
-                this.classList.add("is-invalid");
-            }
-        });
-
-        // realtime longitude
-        lng.addEventListener("input", function () {
-            if (this.value >= -180 && this.value <= 180) {
-                this.classList.remove("is-invalid");
-                this.classList.add("is-valid");
-            } else {
-                this.classList.add("is-invalid");
-            }
-        });
-
-        // submit validation
-        form.addEventListener("submit", function (e) {
-
-            let valid = true;
-
-            if (lat.value < -90 || lat.value > 90) {
-                lat.classList.add("is-invalid");
-                valid = false;
-            }
-
-            if (lng.value < -180 || lng.value > 180) {
-                lng.classList.add("is-invalid");
-                valid = false;
-            }
-
-            // let boys = document.querySelector("[name='boys_enrolled']").value || 0;
-            // let girls = document.querySelector("[name='girls_enrolled']").value || 0;
-            // let total = document.querySelector("[name='total_enrolled']");
-
-            // if (parseInt(boys) + parseInt(girls) != total.value) {
-            //     total.classList.add("is-invalid");
-            //     valid = false;
-            // }
-
-            // if (!valid) {
-            //     e.preventDefault();
-            //     e.stopPropagation();
-            // }
-
-        });
-
-    });
-
-    function onlyNumbers(input) {
-        input.value = input.value.replace(/[^0-9]/g, '');
-    }
-
-    document.querySelector("[name='female_sms_members']")
-    .addEventListener("input", function () {
-        onlyNumbers(this);
-    });
-
-    document.querySelector("[name='male_sms_members']")
-    .addEventListener("input", function () {
-        onlyNumbers(this);
-    });
-
-    document.querySelector("[name='sms_members']")
-    .addEventListener("input", function () {
-        onlyNumbers(this);
-    });
-
-    document.querySelector("[name='hub_distance_km']")
-        .addEventListener("input", function () {
-            onlyNumbers(this);
-        });
-
-    // ================= FIX FOR EDIT MODALS (ADDED ONLY) =================
-    document.addEventListener("DOMContentLoaded", function () {
-
-        const forms = document.querySelectorAll(".needs-validation");
-
-        forms.forEach(function (form) {
+        // ================= ALL FORMS =================
+        document.querySelectorAll(".needs-validation").forEach(function (form) {
 
             const lat = form.querySelector(".latitude");
             const lng = form.querySelector(".longitude");
 
+            // Latitude validation
             if (lat) {
                 lat.addEventListener("input", function () {
                     if (this.value >= -90 && this.value <= 90) {
@@ -837,6 +740,7 @@
                 });
             }
 
+            // Longitude validation
             if (lng) {
                 lng.addEventListener("input", function () {
                     if (this.value >= -180 && this.value <= 180) {
@@ -848,6 +752,7 @@
                 });
             }
 
+            // Submit validation per form
             form.addEventListener("submit", function (e) {
 
                 let valid = true;
@@ -862,49 +767,96 @@
                     valid = false;
                 }
 
-                // let boys = form.querySelector("[name='boys_enrolled']")?.value || 0;
-                // let girls = form.querySelector("[name='girls_enrolled']")?.value || 0;
-                // let total = form.querySelector("[name='total_enrolled']");
-
-                // if (total && parseInt(boys) + parseInt(girls) != total.value) {
-                //     total.classList.add("is-invalid");
-                //     valid = false;
-                // }
-
-                // if (!valid) {
-                //     e.preventDefault();
-                //     e.stopPropagation();
-                // }
-
+                if (!valid) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
             });
+
+            // Numbers only fields
+            form.querySelectorAll("[name='female_sms_members']").forEach(el =>
+                el.addEventListener("input", function () {
+                    onlyNumbers(this);
+                })
+            );
+
+            form.querySelectorAll("[name='male_sms_members']").forEach(el =>
+                el.addEventListener("input", function () {
+                    onlyNumbers(this);
+                })
+            );
+
+            form.querySelectorAll("[name='sms_members']").forEach(el =>
+                el.addEventListener("input", function () {
+                    onlyNumbers(this);
+                })
+            );
+
+            form.querySelectorAll("[name='hub_distance_km']").forEach(el =>
+                el.addEventListener("input", function () {
+                    onlyNumbers(this);
+                })
+            );
+
+            // ================= CLOSE FIELDS TOGGLE =================
+            const isClosed = form.querySelector("[name='is_closed']");
+            const closureDate = form.querySelector("[name='closure_date']")?.closest(".col-md-4");
+            const closureReason = form.querySelector("[name='closure_reason']")?.closest(".col-md-4");
+
+            function toggleClosureFields() {
+                if (!isClosed || !closureDate || !closureReason) return;
+
+                if (isClosed.value == "0") {
+                    closureDate.style.opacity = "0.4";
+                    closureReason.style.opacity = "0.4";
+
+                    closureDate.querySelector("input").disabled = true;
+                    closureReason.querySelector("textarea").disabled = true;
+                } else {
+                    closureDate.style.opacity = "1";
+                    closureReason.style.opacity = "1";
+
+                    closureDate.querySelector("input").disabled = false;
+                    closureReason.querySelector("textarea").disabled = false;
+                }
+            }
+
+            if (isClosed) {
+                isClosed.addEventListener("change", toggleClosureFields);
+                toggleClosureFields();
+            }
+
+            // ================= HUB SCHOOL TOGGLE =================
+            const hasHub = form.querySelector("[name='has_hub_school']");
+            const hubName = form.querySelector("[name='hub_school_name']")?.closest(".col-md-4");
+            const hubKm = form.querySelector("[name='hub_distance_km']")?.closest(".col-md-4");
+
+            function toggleHub() {
+                if (!hasHub || !hubName || !hubKm) return;
+
+                if (hasHub.value == "0") {
+                    hubName.style.opacity = "0.4";
+                    hubKm.style.opacity = "0.4";
+
+                    hubName.querySelector("input").disabled = true;
+                    hubKm.querySelector("input").disabled = true;
+                } else {
+                    hubName.style.opacity = "1";
+                    hubKm.style.opacity = "1";
+
+                    hubName.querySelector("input").disabled = false;
+                    hubKm.querySelector("input").disabled = false;
+                }
+            }
+
+            if (hasHub) {
+                hasHub.addEventListener("change", toggleHub);
+                toggleHub();
+            }
 
         });
 
     });
-
-    document.querySelectorAll("[name='female_sms_members']").forEach(el =>
-        el.addEventListener("input", function () {
-            onlyNumbers(this);
-        })
-    );
-
-    document.querySelectorAll("[name='male_sms_members']").forEach(el =>
-        el.addEventListener("input", function () {
-            onlyNumbers(this);
-        })
-    );
-
-    document.querySelectorAll("[name='sms_members']").forEach(el =>
-        el.addEventListener("input", function () {
-            onlyNumbers(this);
-        })
-    );
-
-    document.querySelectorAll("[name='hub_distance_km']").forEach(el =>
-        el.addEventListener("input", function () {
-            onlyNumbers(this);
-        })
-    );
 </script>
 
 @endsection
