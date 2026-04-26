@@ -70,20 +70,60 @@
                 <div class="card-body">
 
                     @php
-                        $headers = ['Student ID','Project Name','Class Name','First Name', 'Last Name', 'Tazkira Number', 'Status', 'Action'];
+                        $headers = [
+                            'Student ID',
+                            'Project',
+                            'Class ID',
+                            'Province',
+                            'District',
+                            'Village',
+                            'ASAS No',
+                            'Enrollment Date',
+                            'First Name',
+                            'Last Name',
+                            'Father Name',
+                            'Tazkira No',
+                            'Year Birth',
+                            'Age',
+                            'Gender',
+                            'Native Language',
+                            'Residence Type',
+                            'Disabled',
+                            'Disability Type',
+                            'Guardian Phone',
+                            'Guardian Relation',
+                            'Status',
+                            'Remarks',
+                            'Action'
+                        ];
 
                         $rows = [];
 
                         foreach($std as $key => $item){
                             $rows[] = [
-                                // $key + 1,
                                 $item->student_id,
                                 $project->name,
-                                $item->class->class_name ?? '',
+                                $item->class_id,
+                                $item->province,
+                                $item->district,
+                                $item->village,
+                                $item->asas_no,
+                                $item->enrollment_date,
                                 $item->first_name,
                                 $item->last_name,
+                                $item->father_name,
                                 $item->tazkira_no,
+                                $item->year_of_birth,
+                                $item->age,
+                                $item->gender,
+                                $item->native_language,
+                                $item->residence_type,
+                                $item->is_disabled ? 'Yes' : 'No',
+                                $item->disability_type,
+                                $item->guardian_phone,
+                                $item->guardian_relation,
                                 $item->status,
+                                $item->remarks,
                                 '<div class="dropdown dropstart dropend dropup">
                                     <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
                                     id="dropdownMenuLink'.$item->id.'"

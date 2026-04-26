@@ -85,20 +85,38 @@
                 <div class="card-body">
 
                     @php
-                        $headers = ['Sno','Project Name','Shura Name','Province','Class Name', 'Establishment Date', 'Status', 'Action'];
+                        $headers = [
+                            'SNO',
+                            'Project',
+                            'Province',
+                            'District',
+                            'Village',
+                            'Shura Name',
+                            'Establishment Date',
+                            'Classes',
+                            'Status',
+                            'Status Change Date',
+                            'Status Change Reason',
+                            'Remarks',
+                            'Action'
+                        ];
 
                         $rows = [];
 
                         foreach($shura as $key => $item){
                             $rows[] = [
-                                // $key + 1,
                                 $item->sno,
                                 $project->name,
-                                $item->shura_name,
                                 $item->province,
-                                implode(', ', $item->classes->pluck('class_name')->toArray()),
+                                $item->district,
+                                $item->village,
+                                $item->shura_name,
                                 $item->shura_establishment_date,
+                                implode(', ', $item->classes->pluck('class_name')->toArray()),
                                 $item->status,
+                                $item->status_change_date,
+                                $item->status_change_reason,
+                                $item->remarks,
                                 '<div class="dropdown dropstart dropend dropup">
                                     <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
                                     id="dropdownMenuLink'.$item->id.'"

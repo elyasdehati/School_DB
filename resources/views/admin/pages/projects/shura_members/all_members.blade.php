@@ -85,20 +85,50 @@
                 <div class="card-body">
 
                     @php
-                        $headers = ['Shura Sno','First Name','Last Name','Tazkira No','Role', 'Phone', 'Status', 'Action'];
+                        $headers = [
+                            'Shura Sno',
+                            'Project',
+                            'First Name',
+                            'Last Name',
+                            'Father Name',
+                            'Tazkira No',
+                            'Year Birth',
+                            'Age',
+                            'Gender',
+                            'Education',
+                            'Language',
+                            'Residence',
+                            'Disabled',
+                            'Disability Type',
+                            'Role',
+                            'Phone',
+                            'Status',
+                            'Remarks',
+                            'Action'
+                        ];
 
                         $rows = [];
 
                         foreach($members as $key => $item){
                             $rows[] = [
-                                // $key + 1,
-                                $item->shura_id,
+                                $item->shura->sno ?? '',
+                                $project->name,
                                 $item->first_name,
                                 $item->last_name,
+                                $item->father_name,
                                 $item->tazkira_no,
+                                $item->year_of_birth,
+                                $item->age,
+                                $item->gender,
+                                $item->education_level,
+                                $item->language,
+                                $item->residence_type,
+                                $item->is_disabled ? 'Yes' : 'No',
+                                $item->disability_type,
                                 $item->role,
                                 $item->phone,
-                                $item->status == 1 ? 'Active' : 'Inactive',
+                                $item->status ? 'Active' : 'Inactive',
+                                $item->remarks,
                                 '<div class="dropdown dropstart dropend dropup">
                                     <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
                                     id="dropdownMenuLink'.$item->id.'"
@@ -156,7 +186,8 @@
                             <label>Sno</label>
                             <select name="shura_id" class="form-control">
                                 @foreach($shura as $item)
-                                    <option value="{{ $item->id }}">{{ $item->id }} - {{ $item->shura_name }}</option>
+                                    {{-- <option value="{{ $item->id }}">{{ $item->id }} - {{ $item->shura_name }}</option> --}}
+                                    <option value="{{ $item->sno }}">{{ $item->sno }} - {{ $item->shura_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -302,8 +333,8 @@
                                 <label>Shura ID</label>
                                 <select name="shura_id" class="form-control">
                                     @foreach($shura as $s)
-                                        <option value="{{ $s->id }}" {{ $item->shura_id == $s->id ? 'selected' : '' }}>
-                                            {{ $s->id }} - {{ $s->shura_name }}
+                                        <option value="{{ $s->sno }}" {{ $item->shura_id == $s->sno ? 'selected' : '' }}>
+                                            {{ $s->sno }} - {{ $s->shura_name }}
                                         </option>
                                     @endforeach
                                 </select>

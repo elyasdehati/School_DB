@@ -70,19 +70,50 @@
                 <div class="card-body">
 
                     @php
-                        $headers = ['Sno','First Name', 'Last Name', 'Tazkira Number', 'Phone Number', 'Active', 'Action'];
+                        $headers = [
+                            'Serial Number',
+                            'CBE List',
+                            'Province',
+                            'District',
+                            'Village',
+                            'First Name',
+                            'Last Name',
+                            'Father Name',
+                            'Starting Date',
+                            'Active',
+                            'Tazkira',
+                            'Year Birth',
+                            'Gender',
+                            'Teacher Type',
+                            'Qualification',
+                            'Phone',
+                            'Core Training',
+                            'Refresher Training',
+                            'Action'
+                        ];
 
                         $rows = [];
 
                         foreach($teachers as $key => $item){
                             $rows[] = [
-                                // $key + 1,
                                 $item->serial_number,
+                                $item->cbe_list,
+                                $item->province,
+                                $item->district,
+                                $item->village,
                                 $item->first_name,
                                 $item->last_name,
-                                $item->tazkira_number,
-                                $item->phone,
+                                $item->father_name,
+                                $item->starting_date,
                                 $item->is_active ? 'Yes' : 'No',
+                                $item->tazkira_number,
+                                $item->year_of_birth,
+                                $item->gender,
+                                $item->teacher_type,
+                                $item->qualification,
+                                $item->phone,
+                                $item->core_training ? 'Yes' : 'No',
+                                $item->refresher_training ? 'Yes' : 'No',
                                 '<div class="dropdown dropstart dropend dropup">
                                     <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
                                     id="dropdownMenuLink'.$item->id.'"

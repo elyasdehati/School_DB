@@ -70,7 +70,8 @@
                 <div class="card-body">
 
                     @php
-                        $headers = ['Class Id','Class Name','Total Enrolled', 'Female Teachers', 'Male Teacher', 'Active', 'Action'];
+            // $table->date('establishment_date')->nullable();
+                        $headers = ['Class Id','Class Name','grades','Class Type','Province','District','Village','Latitude','Longitude','Climate','Infrastructure','Boys Enrolled','Girls Enrolled','Total Enrolled','Demographic','Language','Establishment Date','Start Time','End Time','Shift','Is Cluster','Female Teachers','Male Teachers','CBE Teachers','Is Closed','Closure Date','Closure Reason','Female SMS Members','MaleSMS Members','SMS Members','Has Hub School','Hub School Name','Hub Distance KM','SIP Completed','Remarks','Class Status', 'Action'];
 
                         $rows = [];
 
@@ -79,10 +80,41 @@
                                 // $key + 1,
                                 $item->class_id,
                                 $item->class_name,
+                                $item->grades,
+                                $item->class_type,
+                                $item->province,
+                                $item->district,
+                                $item->village,
+                                $item->latitude,
+                                $item->longitude,
+                                $item->climate,
+                                $item->infrastructure,
+                                $item->boys_enrolled,
+                                $item->girls_enrolled,
                                 $item->total_enrolled,
+                                $item->demographic,
+                                $item->language,
+                                // $item->class_status,
+                                $item->establishment_date,
+                                $item->start_time,
+                                $item->end_time,
+                                $item->shift,
+                                $item->is_cluster ? 'Yes' : 'No',
                                 $item->female_teachers,
                                 $item->male_teachers,
-                                $item->class_status ? 'Yes' : 'No',
+                                $item->cbe_teachers,
+                                $item->is_closed ? 'Yes' : 'No',
+                                $item->closure_date,
+                                $item->closure_reason,
+                                $item->female_sms_members,
+                                $item->male_sms_members,
+                                $item->sms_members,
+                                $item->has_hub_school ? 'Yes' : 'No',
+                                $item->hub_school_name,
+                                $item->hub_distance_km,
+                                $item->sip_completed ? 'Yes' : 'No',
+                                $item->remarks,
+                                $item->class_status ? 'Active' : 'Inactive',
                                 '<div class="dropdown dropstart dropend dropup">
                                     <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
                                     id="dropdownMenuLink'.$item->id.'"
