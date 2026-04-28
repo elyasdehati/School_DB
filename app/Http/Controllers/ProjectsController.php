@@ -9,6 +9,8 @@ use App\Models\ProjectStudent;
 use App\Models\ProjectTeacher;
 use App\Models\ShuraMember;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ProjectStudentsImport;
 
 class ProjectsController extends Controller
 {
@@ -319,6 +321,16 @@ class ProjectsController extends Controller
         ]);
 
         return redirect()->back()->with('success','Student Added Successfully');
+    }
+
+    public function ImportProjectStudents(Request $request, $id){
+        $request->validate([
+            'excel_file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        Excel::import(new ProjectStudentsImport($id), $request->file('excel_file'));
+
+        return redirect()->back()->with('success', 'Students imported successfully');
     }
 
     public function UpdateProjectStudents(Request $request, $id){

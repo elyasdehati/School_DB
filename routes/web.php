@@ -53,6 +53,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/project/students/{id}', 'DeleteProjectStudents')->name('delete.projects.students');
     });
 
+    Route::post('/projects/students/import/{id}', [ProjectsController::class, 'ImportProjectStudents'])
+    ->name('import.projects.students');
+
      // Project Shura
     Route::controller(ProjectsController::class)->group(function () {
         Route::get('/all/projects/shura/{id}', 'AllProjectsShura')->name('all.projects.shura');

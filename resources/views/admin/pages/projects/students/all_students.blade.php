@@ -59,6 +59,16 @@
                             <h5>{{ $project->name }} Students</h5>
                         </div>
 
+                        <div class="text-end me-2">
+                            <form action="{{ route('import.projects.students', $project->id) }}" method="POST" enctype="multipart/form-data" class="d-inline">
+                                @csrf
+                                <input type="file" name="excel_file" class="form-control form-control-sm d-inline" style="width:220px;">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    Upload Excel
+                                </button>
+                            </form>
+                        </div>
+
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addTeacherModal">
                                 Add Student
