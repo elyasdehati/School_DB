@@ -74,6 +74,16 @@
                             <h5>{{ $project->name }} Shura Members</h5>
                         </div>
 
+                        <div class="text-end me-2">
+                            <form action="{{ route('import.projects.shura.members', $project->id) }}" method="POST" enctype="multipart/form-data" class="d-inline">
+                                @csrf
+                                <input type="file" name="excel_file" class="form-control form-control-sm d-inline" style="width:220px;">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    Upload Excel
+                                </button>
+                            </form>
+                        </div>
+
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addShuraMemberModal">
                                 Add Member
@@ -148,7 +158,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="' . route('delete.projects.shura', $item->id) . '" 
+                                            <a href="' . route('delete.projects.shura.members', $item->id) . '" 
                                                 class="dropdown-item text-danger delete-confirm">
                                                     Delete
                                             </a>

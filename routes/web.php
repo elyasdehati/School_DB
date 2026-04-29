@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/store/projects/teachers/{id}', 'StoreProjectTeacher')->name('store.projects.teacher');
         Route::post('/update/project/teacher/{id}', 'UpdateProjectTeacher')->name('update.projects.teacher');
         Route::get('/delete/project/teacher/{id}', 'DeleteProjectTeacher')->name('delete.projects.teacher');
+
+        Route::post('/import/projects/teachers/{id}', 'ImportProjectTeachers')->name('import.projects.teachers');
     });
 
     // Project Classes
@@ -43,6 +45,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/store/projects/class/{id}', 'StoreProjectClass')->name('store.projects.class');
         Route::post('/projects/classes/{id}/update', 'UpdateProjectClass')->name('update.projects.class');
         Route::get('/delete/project/class/{id}', 'DeleteProjectClass')->name('delete.projects.class');
+
+        Route::post('/projects/classes/import/{id}','ImportProjectClasses')->name('import.projects.classes');
     });
 
      // Project Students
@@ -51,10 +55,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/store/projects/students/{id}', 'StoreProjectStudents')->name('store.projects.students');
         Route::post('/projects/students/{id}/update', 'UpdateProjectStudents')->name('update.projects.students');
         Route::get('/delete/project/students/{id}', 'DeleteProjectStudents')->name('delete.projects.students');
-    });
 
-    Route::post('/projects/students/import/{id}', [ProjectsController::class, 'ImportProjectStudents'])
-    ->name('import.projects.students');
+        Route::post('/projects/students/import/{id}', 'ImportProjectStudents')->name('import.projects.students');
+    });
 
      // Project Shura
     Route::controller(ProjectsController::class)->group(function () {
@@ -62,6 +65,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/store/projects/shura/{id}', 'StoreProjectShura')->name('store.projects.shura');
         Route::post('/projects/shura/{id}/update', 'UpdateProjectShura')->name('update.projects.shura');
         Route::get('/delete/project/shura/{id}', 'DeleteProjectShura')->name('delete.projects.shura');
+
+        Route::post('/import/projects/shura/{id}', 'ImportProjectShura')->name('import.projects.shura');
     });
 
     // Project Shura Members
@@ -70,6 +75,8 @@ Route::middleware('auth')->group(function () {
          Route::post('/store/projects/shura/members/{id}', 'StoreProjectShuraMembers')->name('store.projects.shura.members');
         Route::post('/update/projects/shura/members/{id}', 'UpdateProjectShuraMembers')->name('update.projects.shura.members');
         Route::get('/delete/projects/shura/members/{id}', 'DeleteProjectShuraMembers')->name('delete.projects.shura.members');
+
+        Route::post('/import/projects/shura/members/{id}', 'ImportProjectShuraMembers')->name('import.projects.shura.members');
     });
 
 });

@@ -48,7 +48,6 @@
         </ul>
     </div>
 </div>
-
 <div class="content">
     <div class="row">
         <div class="col-md-12">
@@ -57,6 +56,16 @@
                     <div class="d-flex align-items-sm-center flex-sm-row flex-column">
                         <div class="flex-grow-1">
                             <h5>{{ $project->name }} Class</h5>
+                        </div>
+
+                        <div class="text-end me-2">
+                            <form action="{{ route('import.projects.classes', $project->id) }}" method="POST" enctype="multipart/form-data" class="d-inline">
+                                @csrf
+                                <input type="file" name="excel_file" class="form-control form-control-sm d-inline" style="width:220px;">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    Upload Excel
+                                </button>
+                            </form>
                         </div>
 
                         <div class="text-end">
@@ -152,7 +161,6 @@
         </div>
     </div>
 </div>
-
 {{-- ================= ADD CLASS MODAL (FULL MIGRATION) ================= --}}
 <div class="modal fade" id="addClassModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">

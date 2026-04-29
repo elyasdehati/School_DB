@@ -20,18 +20,32 @@ class ProjectStudentsImport implements ToModel, WithHeadingRow
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function model(array $row)
-    {
+    public function model(array $row){
         return new ProjectStudent([
             'project_id' => $this->project_id,
-            'student_id' => $row['student_id'],
-            'class_id' => $row['class_id'],
-            // 'class_name' => $row['class_name'],
-            'first_name' => $row['first_name'],
-            'last_name' => $row['last_name'],
-            'province' => $row['province'],
-            'district' => $row['district'],
-            'village' => $row['village'],
+
+            'student_id' => $row['student_id'] ?? null,
+            'class_id' => $row['class_id'] ?? null,
+            'province' => $row['province'] ?? null,
+            'district' => $row['district'] ?? null,
+            'village' => $row['village'] ?? null,
+            'asas_no' => $row['asas_no'] ?? null,
+            'enrollment_date' => $row['enrollment_date'] ?? null,
+            'first_name' => $row['first_name'] ?? null,
+            'last_name' => $row['last_name'] ?? null,
+            'father_name' => $row['father_name'] ?? null,
+            'tazkira_no' => $row['tazkira_no'] ?? null,
+            'year_of_birth' => $row['year_of_birth'] ?? null,
+            'age' => $row['age'] ?? null,
+            'gender' => $row['gender'] ?? null,
+            'native_language' => $row['native_language'] ?? null,
+            'residence_type' => $row['residence_type'] ?? null,
+            'is_disabled' => $row['is_disabled'] ?? false,
+            'disability_type' => $row['disability_type'] ?? null,
+            'guardian_phone' => $row['guardian_phone'] ?? null,
+            'guardian_relation' => $row['guardian_relation'] ?? null,
+            'status' => $row['status'] ?? 'Active',
+            'remarks' => $row['remarks'] ?? null,
         ]);
     }
 }

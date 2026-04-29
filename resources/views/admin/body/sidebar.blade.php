@@ -41,6 +41,8 @@
                     </a>
                 </li>
 
+                <li class="menu-title">Catalog Management</li>
+
             </ul>
 
         </div>

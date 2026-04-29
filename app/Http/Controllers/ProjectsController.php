@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ProjectClassesImport;
+use App\Imports\ProjectShurasImport;
 use App\Models\Project;
 use App\Models\ProjectClass;
 use App\Models\ProjectShura;
@@ -11,6 +13,9 @@ use App\Models\ShuraMember;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ProjectStudentsImport;
+use App\Imports\ProjectTeachersImport;
+use App\Imports\ShuraMembersImport;
+
 
 class ProjectsController extends Controller
 {
@@ -128,6 +133,17 @@ class ProjectsController extends Controller
         return redirect()->back()->with('success','Teacher added successfully');
     }
 
+    // Excel 
+    public function ImportProjectTeachers(Request $request, $id){
+        $request->validate([
+            'excel_file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        Excel::import(new ProjectTeachersImport($id), $request->file('excel_file'));
+
+        return back()->with('success', 'Teachers imported successfully');
+    }
+
     public function UpdateProjectTeacher(Request $request, $id){
         $teacher = ProjectTeacher::findOrFail($id);
         $teacher->update([
@@ -221,6 +237,14 @@ class ProjectsController extends Controller
         ]);
 
         return back()->with('success', 'Class added successfully');
+    }
+
+    public function ImportProjectClasses(Request $request, $id){
+        $request->validate([
+            'excel_file' => 'required|mimes:xlsx,xls'
+        ]);
+        Excel::import(new ProjectClassesImport($id), $request->file('excel_file'));
+        return back()->with('success', 'Classes imported successfully');
     }
 
     public function UpdateProjectClass(Request $request, $id){
@@ -404,6 +428,16 @@ class ProjectsController extends Controller
         return back()->with('success', 'Shura created successfully');
     }
 
+    public function ImportProjectShura(Request $request, $id){
+        $request->validate([
+            'excel_file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        Excel::import(new ProjectShurasImport($id), $request->file('excel_file'));
+
+        return back()->with('success', 'Shura imported successfully');
+    }
+
     public function UpdateProjectShura(Request $request, $id){
         $shura = ProjectShura::findOrFail($id);
 
@@ -465,6 +499,16 @@ class ProjectsController extends Controller
         ]);
 
         return back()->with('success', 'Member added successfully');
+    }
+
+    public function ImportProjectShuraMembers(Request $request, $id){
+        $request->validate([
+            'excel_file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        Excel::import(new ShuraMembersImport($id), $request->file('excel_file'));
+
+        return back()->with('success', 'Members imported successfully');
     }
 
     public function UpdateProjectShuraMembers(Request $request, $id){
