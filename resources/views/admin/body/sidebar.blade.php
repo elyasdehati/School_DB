@@ -43,6 +43,13 @@
 
                 <li class="menu-title">Catalog Management</li>
 
+                <li>
+                    <a href="{{ route('all.provinces') }}">
+                        <i data-feather="menu"></i>
+                        <span> Province </span>
+                    </a>
+                </li>
+{{-- <i class="ph-list-dashes"></i> --}}
             </ul>
 
         </div>

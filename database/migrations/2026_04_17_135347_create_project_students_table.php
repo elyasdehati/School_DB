@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('student_id')->unique();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->string('class_id')->nullable();
-            $table->string('province')->nullable();
-            $table->string('district')->nullable();
+            $table->foreignId('province_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('district_id')->nullable()->constrained()->nullOnDelete();
             $table->string('village')->nullable();
             $table->string('asas_no')->nullable();
             $table->date('enrollment_date')->nullable();
