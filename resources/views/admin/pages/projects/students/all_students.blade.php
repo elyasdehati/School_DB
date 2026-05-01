@@ -114,8 +114,8 @@
                                 $item->student_id,
                                 $project->name,
                                 $item->class_id,
-                                $item->province,
-                                $item->district,
+                                $item->province?->name ?? '',
+                                $item->district?->name ?? '',
                                 $item->village,
                                 $item->asas_no,
                                 $item->enrollment_date,
@@ -200,12 +200,22 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Province</label>
-                            <input type="text" name="province" class="form-control">
+                            <select name="province_id" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach($provinces as $province)
+                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="col-md-4 mb-2">
                             <label>District</label>
-                            <input type="text" name="district" class="form-control">
+                            <select name="district_id" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach($districts as $district)
+                                    <option value="{{ $district->id }}">{{ $district->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="col-md-4 mb-2">
@@ -390,12 +400,28 @@
 
                             <div class="col-md-4 mb-2">
                                 <label>Province</label>
-                                <input type="text" name="province" class="form-control" value="{{ $item->province }}">
+                                <select name="province_id" class="form-control">
+                                    <option value="">-- Select --</option>
+                                    @foreach($provinces as $province)
+                                        <option value="{{ $province->id }}" 
+                                            {{ $item->province_id == $province->id ? 'selected' : '' }}>
+                                            {{ $province->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="col-md-4 mb-2">
                                 <label>District</label>
-                                <input type="text" name="district" class="form-control" value="{{ $item->district }}">
+                                <select name="district_id" class="form-control">
+                                    <option value="">-- Select --</option>
+                                    @foreach($districts as $district)
+                                        <option value="{{ $district->id }}" 
+                                            {{ $item->district_id == $district->id ? 'selected' : '' }}>
+                                            {{ $district->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="col-md-4 mb-2">

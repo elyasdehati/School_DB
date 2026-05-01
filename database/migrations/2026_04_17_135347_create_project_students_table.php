@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('student_id')->unique();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->string('class_id')->nullable();
-            $table->foreignId('province_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('district_id')->nullable()->constrained()->nullOnDelete();
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->unsignedBigInteger('district_id')->nullable();
             $table->string('village')->nullable();
             $table->string('asas_no')->nullable();
             $table->date('enrollment_date')->nullable();
@@ -35,10 +35,11 @@ return new class extends Migration
             $table->string('guardian_phone')->nullable();
             $table->string('guardian_relation')->nullable();
             $table->enum('status', ['Active', 'Inactive', 'Handed Over', 'Transited'])->default('Active');
-            // $table->date('status_change_date')->nullable();
-            // $table->text('status_change_reason')->nullable();
             $table->text('remarks')->nullable();
             $table->timestamps();
+
+            $table->foreign('province_id')->references('id')->on('provinces')->nullOnDelete();
+            $table->foreign('district_id')->references('id')->on('districts')->nullOnDelete();
         });
     }
 

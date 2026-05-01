@@ -314,11 +314,14 @@ class ProjectsController extends Controller
         $classes = ProjectClass::where('project_id', $id)->get();
         $std = ProjectStudent::with('class')->where('project_id', $id)->get();
 
+        $provinces = Province::all();
+        $districts = District::all();
+
         $lastStudent = ProjectStudent::latest()->first();
         $nextNumber = $lastStudent ? $lastStudent->id + 1 : 1;
         $nextStudentId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
-        return view('admin.pages.projects.students.all_students', compact('project', 'classes', 'std', 'nextStudentId'));
+        return view('admin.pages.projects.students.all_students', compact('project', 'classes', 'std', 'nextStudentId', 'provinces', 'districts'));
     }
 
     public function StoreProjectStudents(Request $request, $id){
@@ -329,8 +332,8 @@ class ProjectsController extends Controller
         ProjectStudent::create([
             'student_id' => $request->student_id ?: $studentId,
             'project_id' => $request->project_id,
-            'province' => $request->province,
-            'district' => $request->district,
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
             'village' => $request->village,
             'class_id' => $request->class_id,
             'asas_no' => $request->asas_no,
@@ -371,8 +374,8 @@ class ProjectsController extends Controller
         $student->update([
             'student_id' => $request->student_id ?: $student->student_id,
             'project_id' => $request->project_id,
-            'province' => $request->province,
-            'district' => $request->district,
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
             'village' => $request->village,
             'class_id' => $request->class_id,
             'asas_no' => $request->asas_no,

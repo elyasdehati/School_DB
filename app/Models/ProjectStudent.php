@@ -15,4 +15,12 @@ class ProjectStudent extends Model
     public function class(){
         return $this->belongsTo(ProjectClass::class, 'class_id', 'class_id');
     }
+
+    public function province(){
+        return $this->belongsTo(Province::class);
+    }
+
+    public function district(){
+        return $this->belongsTo(District::class);
+    }
 }
