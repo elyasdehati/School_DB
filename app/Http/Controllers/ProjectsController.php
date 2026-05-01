@@ -15,7 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ProjectStudentsImport;
 use App\Imports\ProjectTeachersImport;
 use App\Imports\ShuraMembersImport;
-
+use App\Models\Province;
 
 class ProjectsController extends Controller
 {
@@ -46,7 +46,8 @@ class ProjectsController extends Controller
 
     public function EditProject($id){
         $project = Project::find($id);
-        return view('admin.pages.projects.edit_projects', compact('project'));
+        $provinces = Province::with('districts')->get();
+        return view('admin.pages.projects.edit_projects', compact('project', 'provinces'));
     }
 
     public function UpdateProject(Request $request, $id){

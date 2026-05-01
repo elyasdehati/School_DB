@@ -145,13 +145,14 @@
                             @endphp
                             <div class="form-group col-lg-12 mb-3">
                                 <label for="categories">Province</label>
-                                <select class="form-control select2" name="categories[]" id="categories" multiple="multiple" style="width: 100%;">
-                                    <option value="balkh" {{ in_array('balkh', $selectedProvinces) ? 'selected' : '' }}>Balkh</option>
-                                    <option value="badakhshan" {{ in_array('badakhshan', $selectedProvinces) ? 'selected' : '' }}>Badakhshan</option>
-                                    <option value="bamyan" {{ in_array('bamyan', $selectedProvinces) ? 'selected' : '' }}>Bamyan</option>
-                                    <option value="ghazni" {{ in_array('ghazni', $selectedProvinces) ? 'selected' : '' }}>Ghazni</option>
-                                    <option value="daikundi" {{ in_array('daikundi', $selectedProvinces) ? 'selected' : '' }}>Daikundi</option>
-                                    <option value="parwan" {{ in_array('parwan', $selectedProvinces) ? 'selected' : '' }}>Parwan</option>
+
+                                <select class="form-control select2" name="categories[]" id="categories" multiple>
+                                    @foreach($provinces as $province)
+                                        <option value="{{ $province->id }}"
+                                            {{ in_array($province->id, $selectedProvinces) ? 'selected' : '' }}>
+                                            {{ $province->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -160,16 +161,16 @@
                             @endphp
                             <div class="form-group col-lg-12 mb-3">
                                 <label for="districts">District</label>
-                                <select class="form-control select2" name="districts[]" id="districts" multiple="multiple" style="width: 100%;">
-                                    <option value="balkh" {{ in_array('balkh', $selectedDistricts) ? 'selected' : '' }}>Balkh</option>
-                                    <option value="bamyan_center" {{ in_array('bamyan_center', $selectedDistricts) ? 'selected' : '' }}>Bamyan Center</option>
-                                    <option value="kahmard" {{ in_array('kahmard', $selectedDistricts) ? 'selected' : '' }}>Kahmard</option>
-                                    <option value="panjab" {{ in_array('panjab', $selectedDistricts) ? 'selected' : '' }}>Panjab</option>
-                                    <option value="sayghan" {{ in_array('sayghan', $selectedDistricts) ? 'selected' : '' }}>Sayghan</option>
-                                    <option value="shibar" {{ in_array('shibar', $selectedDistricts) ? 'selected' : '' }}>Shibar</option>
-                                    <option value="waras" {{ in_array('waras', $selectedDistricts) ? 'selected' : '' }}>Waras</option>
-                                    <option value="shahristan" {{ in_array('shahristan', $selectedDistricts) ? 'selected' : '' }}>Shahristan</option>
-                                    <option value="shaikh_ali" {{ in_array('shaikh_ali', $selectedDistricts) ? 'selected' : '' }}>Shaikh Ali</option>
+
+                                <select class="form-control select2" name="districts[]" id="districts" multiple>
+                                    @foreach($provinces as $province)
+                                        @foreach($province->districts as $district)
+                                            <option value="{{ $district->id }}"
+                                                {{ in_array($district->id, $selectedDistricts) ? 'selected' : '' }}>
+                                                {{ $district->name }}
+                                            </option>
+                                        @endforeach
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -194,13 +195,16 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-        $('#categories').select2({
-            placeholder: "",
-            allowClear: true
-            // width: 'resolve'
-            // dir: 'rtl'
-        });
+    $('#categories').select2({
+        placeholder: "",
+        allowClear: true
     });
+
+    $('#districts').select2({
+        placeholder: "",
+        allowClear: true
+    });
+});
 </script>
 @endpush
 
