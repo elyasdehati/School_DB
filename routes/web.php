@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/project/class/{id}', 'DeleteProjectClass')->name('delete.projects.class');
 
         Route::post('/projects/classes/import/{id}','ImportProjectClasses')->name('import.projects.classes');
+        Route::get('/export/classes/{id}/{type}', 'exportClasses')->name('export.projects.classes');
     });
 
      // Project Students

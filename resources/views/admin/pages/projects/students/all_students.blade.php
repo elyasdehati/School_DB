@@ -188,6 +188,11 @@
                     <div class="row">
 
                         <div class="col-md-4 mb-2">
+                            <label>Enrollment Date</label>
+                            <input type="date" name="enrollment_date" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
                             <label>Student ID</label>
                             <input type="text" name="student_id" class="form-control" value="{{ $nextStudentId }}">
                         </div>
@@ -242,11 +247,6 @@
                         <div class="col-md-4 mb-2">
                             <label>ASAS No</label>
                             <input type="text" name="asas_no" class="form-control">
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>Enrollment Date</label>
-                            <input type="date" name="enrollment_date" class="form-control">
                         </div>
 
                         <div class="col-md-4 mb-2">
@@ -388,6 +388,11 @@
                         <div class="row">
 
                             <div class="col-md-4 mb-2">
+                                <label>Enrollment Date</label>
+                                <input type="date" name="enrollment_date" class="form-control" value="{{ $item->enrollment_date }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
                                 <label>Student ID</label>
                                 <input type="text" name="student_id" class="form-control" value="{{ $item->student_id }}">
                             </div>
@@ -449,11 +454,6 @@
                             <div class="col-md-4 mb-2">
                                 <label>ASAS No</label>
                                 <input type="text" name="asas_no" class="form-control" value="{{ $item->asas_no }}">
-                            </div>
-
-                            <div class="col-md-4 mb-2">
-                                <label>Enrollment Date</label>
-                                <input type="date" name="enrollment_date" class="form-control" value="{{ $item->enrollment_date }}">
                             </div>
 
                             <div class="col-md-4 mb-2">
