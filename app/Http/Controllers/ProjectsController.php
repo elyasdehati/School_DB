@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ProjectClassesExport;
+use App\Exports\ProjectTeachersExport;
 use App\Imports\ProjectClassesImport;
 use App\Imports\ProjectShurasImport;
 use App\Models\Project;
@@ -148,6 +149,15 @@ class ProjectsController extends Controller
         Excel::import(new ProjectTeachersImport($id), $request->file('excel_file'));
 
         return back()->with('success', 'Teachers imported successfully');
+    }
+
+    public function exportTeachers($id, $type){
+        $withData = $type === 'data';
+
+        return Excel::download(
+            new ProjectTeachersExport($id, $withData),
+            $withData ? 'teachers_with_data.xlsx' : 'teachers_template.xlsx'
+        );
     }
 
     public function UpdateProjectTeacher(Request $request, $id){

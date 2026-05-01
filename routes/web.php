@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/project/teacher/{id}', 'DeleteProjectTeacher')->name('delete.projects.teacher');
 
         Route::post('/import/projects/teachers/{id}', 'ImportProjectTeachers')->name('import.projects.teachers');
+        Route::get('/export/projects/teachers/{id}/{type}', 'exportTeachers')->name('export.projects.teachers');
     });
 
     // Project Classes

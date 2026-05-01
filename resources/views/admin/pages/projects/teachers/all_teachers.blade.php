@@ -67,6 +67,16 @@
                                     Upload Excel
                                 </button>
                             </form>
+
+                            <a href="{{ route('export.projects.teachers', [$project->id, 'template']) }}" 
+                            class="btn btn-info btn-sm">
+                                Download Template
+                            </a>
+
+                            <a href="{{ route('export.projects.teachers', [$project->id, 'data']) }}" 
+                            class="btn btn-primary btn-sm">
+                                Export Data
+                            </a>
                         </div>
 
                         <div class="text-end">
