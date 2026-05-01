@@ -15,8 +15,8 @@ return new class extends Migration
            $table->id();
            $table->string('sno')->nullable();
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
-            $table->foreignId('province_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('district_id')->nullable()->constrained()->nullOnDelete();
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->unsignedBigInteger('district_id')->nullable();
             $table->string('village')->nullable();
             $table->string('shura_name')->nullable();
             $table->date('shura_establishment_date')->nullable();
@@ -25,6 +25,9 @@ return new class extends Migration
             $table->string('status_change_reason')->nullable();
             $table->text('remarks')->nullable();
             $table->timestamps();
+
+            $table->foreign('province_id')->references('id')->on('provinces')->nullOnDelete();
+            $table->foreign('district_id')->references('id')->on('districts')->nullOnDelete();
         });
     }
 

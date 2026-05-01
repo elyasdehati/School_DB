@@ -411,10 +411,13 @@ class ProjectsController extends Controller
         $classes = ProjectClass::where('project_id', $id)->get();
         $shura = ProjectShura::with('classes')->where('project_id', $id)->get();
 
+        $provinces = Province::all();
+        $districts = District::all();
+
         $lastShura = ProjectShura::latest('id')->first();
         $nextSno = $lastShura ? str_pad(((int)$lastShura->sno) + 1, 3, '0', STR_PAD_LEFT) : '001';
 
-        return view('admin.pages.projects.shura.all_shura', compact('project','classes','shura','nextSno'));
+        return view('admin.pages.projects.shura.all_shura', compact('project','classes','shura','nextSno', 'provinces', 'districts'));
     }
 
     public function StoreProjectShura(Request $request, $id){
@@ -422,8 +425,8 @@ class ProjectsController extends Controller
             'project_id' => $id,
             'sno' => $request->sno,
             'shura_name' => $request->shura_name,
-            'province' => $request->province,
-            'district' => $request->district,
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
             'village' => $request->village,
             'shura_establishment_date' => $request->shura_establishment_date,
             'status' => $request->status,
@@ -455,8 +458,8 @@ class ProjectsController extends Controller
         $shura->update([
             'sno' => $request->sno,
             'shura_name' => $request->shura_name,
-            'province' => $request->province,
-            'district' => $request->district,
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
             'village' => $request->village,
             'shura_establishment_date' => $request->shura_establishment_date,
             'status' => $request->status,
