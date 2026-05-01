@@ -15,6 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ProjectStudentsImport;
 use App\Imports\ProjectTeachersImport;
 use App\Imports\ShuraMembersImport;
+use App\Models\District;
 use App\Models\Province;
 
 class ProjectsController extends Controller
@@ -183,11 +184,14 @@ class ProjectsController extends Controller
         $project = Project::findOrFail($id);
         $class = ProjectClass::where('project_id', $id)->get();
 
+        $provinces = Province::all();
+        $districts = District::all();
+
         $lastClass = ProjectClass::latest()->first();
         $nextNumber = $lastClass ? $lastClass->id + 1 : 1;
         $nextClassId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
-        return view('admin.pages.projects.classes.all_classes', compact('project', 'class', 'nextClassId'));
+        return view('admin.pages.projects.classes.all_classes', compact('project', 'class', 'nextClassId', 'provinces', 'districts'));
     }
 
     public function StoreProjectClass(Request $request, $id){
@@ -203,8 +207,8 @@ class ProjectsController extends Controller
             'class_name' => $request->class_name,
             'grades' => $request->grades ? json_encode($request->grades) : null,
             'class_type' => $request->class_type,
-            'province' => $request->province,
-            'district' => $request->district,
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
             'village' => $request->village,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
@@ -257,8 +261,8 @@ class ProjectsController extends Controller
             'class_name' => $request->class_name,
             'grades' => $request->grades,
             'class_type' => $request->class_type,
-            'province' => $request->province,
-            'district' => $request->district,
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
             'village' => $request->village,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('class_name')->nullable();
             $table->string('grades')->nullable();
             $table->string('class_type')->nullable();
-            $table->string('province')->nullable();
-            $table->string('district')->nullable();
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->unsignedBigInteger('district_id')->nullable();
             $table->string('village')->nullable();
             $table->decimal('latitude', 10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();
@@ -52,6 +52,9 @@ return new class extends Migration
             $table->boolean('sip_completed')->default(false);
             $table->text('remarks')->nullable();
             $table->timestamps();
+
+            $table->foreign('province_id')->references('id')->on('provinces')->nullOnDelete();
+            $table->foreign('district_id')->references('id')->on('districts')->nullOnDelete();
         });
     }
 

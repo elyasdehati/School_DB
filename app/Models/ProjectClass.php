@@ -19,4 +19,12 @@ class ProjectClass extends Model
     public function shuras(){
         return $this->belongsToMany(ProjectShura::class, 'project_shura_class');
     }
+
+    public function province(){
+        return $this->belongsTo(Province::class);
+    }
+
+    public function district(){
+        return $this->belongsTo(District::class);
+    }
 }

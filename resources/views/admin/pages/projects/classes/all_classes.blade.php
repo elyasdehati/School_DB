@@ -91,8 +91,8 @@
                                 $item->class_name,
                                 $item->grades,
                                 $item->class_type,
-                                $item->province,
-                                $item->district,
+                                $item->province?->name ?? '',
+                                $item->district?->name ?? '',
                                 $item->village,
                                 $item->latitude,
                                 $item->longitude,
@@ -223,25 +223,22 @@
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label for="province">Province</label>
-                            <select class="form-control" name="province" id="province">
+                            <label>Province</label>
+                            <select name="province_id" class="form-control">
                                 <option value="">-- Select --</option>
-                                <option value="Kunar" {{ old('province') == 'Kunar' ? 'selected' : '' }}>Kunar</option>
-                                <option value="Kabul" {{ old('province') == 'Kabul' ? 'selected' : '' }}>Kabul</option>
+                                @foreach($provinces as $province)
+                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                @endforeach
                             </select>
                         </div>
 
-                        {{-- <div class="col-md-4 mb-2">
-                            <label>District</label>
-                            <input type="text" name="district" class="form-control">
-                        </div> --}}
-
                         <div class="col-md-4 mb-2">
-                            <label for="district">District</label>
-                            <select class="form-control" name="district" id="district">
+                            <label>District</label>
+                            <select name="district_id" class="form-control">
                                 <option value="">-- Select --</option>
-                                <option value="Ghazi Abad" {{ old('district') == 'Ghazi Abad' ? 'selected' : '' }}>Ghazi Abad</option>
-                                <option value="Kabul" {{ old('district') == 'Kabul' ? 'selected' : '' }}>Kabul</option>
+                                @foreach($districts as $district)
+                                    <option value="{{ $district->id }}">{{ $district->name }}</option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -516,16 +513,6 @@
                                     <option value="grade2" {{ $item->grades == 'grade2' ? 'selected' : '' }}>Grade 2</option>
                                 </select>
                             </div>
-                            {{-- <div class="col-md-4 mb-2">
-                            <label for="grades">Grades</label>
-                            <select class="form-control" name="grades" id="grades">
-                                <option>
-                                    -- Select --
-                                </option>
-                                <option value="grade1" {{ old('grades') == 'grade1' ? 'selected' : '' }}>Grade 1</option>
-                                <option value="grade2" {{ old('grades') == 'grade2' ? 'selected' : '' }}>Grade 2</option>
-                            </select>
-                        </div> --}}
 
                             <div class="col-md-4 mb-2">
                                 <label>Class Type</label>
@@ -533,20 +520,28 @@
                             </div>
 
                             <div class="col-md-4 mb-2">
-                                <label for="province">Province</label>
-                                <select class="form-control" name="province" id="province">
+                                <label>Province</label>
+                                <select name="province_id" class="form-control">
                                     <option value="">-- Select --</option>
-                                    <option value="Kunar" {{ $item->province == 'Kunar' ? 'selected' : '' }}>Kunar</option>
-                                    <option value="Kabul" {{ $item->province == 'Kabul' ? 'selected' : '' }}>Kabul</option>
+                                    @foreach($provinces as $province)
+                                        <option value="{{ $province->id }}" 
+                                            {{ $item->province_id == $province->id ? 'selected' : '' }}>
+                                            {{ $province->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="col-md-4 mb-2">
-                                <label for="district">District</label>
-                                <select class="form-control" name="district" id="district">
-                                   <option value="">-- Select --</option>
-                                    <option value="Ghazi Abad" {{ $item->district == 'Ghazi Abad' ? 'selected' : '' }}>Ghazi Abad</option>
-                                    <option value="Kabul" {{ $item->district == 'Kabul' ? 'selected' : '' }}>Kabul</option>
+                                <label>District</label>
+                                <select name="district_id" class="form-control">
+                                    <option value="">-- Select --</option>
+                                    @foreach($districts as $district)
+                                        <option value="{{ $district->id }}" 
+                                            {{ $item->district_id == $district->id ? 'selected' : '' }}>
+                                            {{ $district->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 
