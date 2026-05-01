@@ -5,6 +5,8 @@ namespace App\Imports;
 use App\Models\ProjectStudent;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use App\Models\Province;
+use App\Models\District;
 
 class ProjectStudentsImport implements ToModel, WithHeadingRow
 {
@@ -15,19 +17,18 @@ class ProjectStudentsImport implements ToModel, WithHeadingRow
         $this->project_id = $project_id;
     }
 
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function model(array $row){
+    public function model(array $row)
+    {
+        $province = Province::where('name', $row['province'] ?? null)->first();
+        $district = District::where('name', $row['district'] ?? null)->first();
+
         return new ProjectStudent([
             'project_id' => $this->project_id,
 
             'student_id' => $row['student_id'] ?? null,
             'class_id' => $row['class_id'] ?? null,
-            'province' => $row['province'] ?? null,
-            'district' => $row['district'] ?? null,
+            'province_id' => $province?->id,
+            'district_id' => $district?->id,
             'village' => $row['village'] ?? null,
             'asas_no' => $row['asas_no'] ?? null,
             'enrollment_date' => $row['enrollment_date'] ?? null,
@@ -40,7 +41,7 @@ class ProjectStudentsImport implements ToModel, WithHeadingRow
             'gender' => $row['gender'] ?? null,
             'native_language' => $row['native_language'] ?? null,
             'residence_type' => $row['residence_type'] ?? null,
-            'is_disabled' => $row['is_disabled'] ?? false,
+            'is_disabled' => strtolower($row['is_disabled'] ?? '') == 'yes' ? 1 : 0,
             'disability_type' => $row['disability_type'] ?? null,
             'guardian_phone' => $row['guardian_phone'] ?? null,
             'guardian_relation' => $row['guardian_relation'] ?? null,

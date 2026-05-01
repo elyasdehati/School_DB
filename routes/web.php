@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/project/students/{id}', 'DeleteProjectStudents')->name('delete.projects.students');
 
         Route::post('/projects/students/import/{id}', 'ImportProjectStudents')->name('import.projects.students');
+        Route::get('/export/projects/students/{id}/{type}', 'exportStudents')->name('export.projects.students');
     });
 
      // Project Shura
