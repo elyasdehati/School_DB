@@ -11,4 +11,12 @@ class ProjectTeacher extends Model
     public function project(){
         return $this->belongsTo(Project::class);
     }
+
+    public function province(){
+        return $this->belongsTo(Province::class);
+    }
+
+    public function district(){
+        return $this->belongsTo(District::class);
+    }
 }

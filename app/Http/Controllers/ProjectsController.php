@@ -93,11 +93,14 @@ class ProjectsController extends Controller
         $project = Project::findOrFail($id);
         $teachers = ProjectTeacher::where('project_id', $id)->get();
 
+        $provinces = Province::all();
+        $districts = District::all();
+
         $lastTeacher = ProjectTeacher::latest()->first();
         $nextNumber = $lastTeacher ? $lastTeacher->id + 1 : 1;
         $nextSerial = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
-        return view('admin.pages.projects.teachers.all_teachers',compact('project', 'teachers', 'nextSerial'));
+        return view('admin.pages.projects.teachers.all_teachers',compact('project', 'teachers', 'nextSerial', 'provinces', 'districts'));
     }
 
     public function StoreProjectTeacher(Request $request, $id){
@@ -114,8 +117,8 @@ class ProjectsController extends Controller
             'project_id' => $id,
             'serial_number' => $request->serial_number ?: $serialNumber,
             'cbe_list' => $request->cbe_list,
-            'province' => $request->province,
-            'district' => $request->district,
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
             'village' => $request->village,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -151,8 +154,8 @@ class ProjectsController extends Controller
         $teacher->update([
             'serial_number' => $request->serial_number,
             'cbe_list' => $request->cbe_list,
-            'province' => $request->province,
-            'district' => $request->district,
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
             'village' => $request->village,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,

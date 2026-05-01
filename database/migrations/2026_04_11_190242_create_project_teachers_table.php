@@ -18,8 +18,8 @@ return new class extends Migration
 
             $table->string('serial_number')->nullable();
             $table->string('cbe_list')->nullable();
-            $table->string('province')->nullable();
-            $table->string('district')->nullable();
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->unsignedBigInteger('district_id')->nullable();
             $table->string('village')->nullable();
 
             $table->string('first_name');
@@ -42,6 +42,9 @@ return new class extends Migration
             $table->boolean('refresher_training')->default(false);
 
             $table->timestamps();
+
+            $table->foreign('province_id')->references('id')->on('provinces')->nullOnDelete();
+            $table->foreign('district_id')->references('id')->on('districts')->nullOnDelete();
         });
     }
 
