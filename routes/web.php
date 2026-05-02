@@ -81,6 +81,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/project/shura/{id}', 'DeleteProjectShura')->name('delete.projects.shura');
 
         Route::post('/import/projects/shura/{id}', 'ImportProjectShura')->name('import.projects.shura');
+        Route::get('/export/projects/shura/{id}/{type}', 'exportShura')->name('export.projects.shura');
     });
 
     // Project Shura Members

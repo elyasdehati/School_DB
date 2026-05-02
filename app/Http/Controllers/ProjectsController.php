@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ProjectClassesExport;
+use App\Exports\ProjectShurasExport;
 use App\Exports\ProjectStudentsExport;
 use App\Exports\ProjectTeachersExport;
 use App\Imports\ProjectClassesImport;
@@ -473,14 +474,24 @@ class ProjectsController extends Controller
         return back()->with('success', 'Shura created successfully');
     }
 
+    // Import 
     public function ImportProjectShura(Request $request, $id){
         $request->validate([
             'excel_file' => 'required|mimes:xlsx,xls'
         ]);
 
         Excel::import(new ProjectShurasImport($id), $request->file('excel_file'));
-
         return back()->with('success', 'Shura imported successfully');
+    }
+
+    // Export
+    public function exportShura($id, $type){
+        $withData = $type === 'data';
+
+        return Excel::download(
+            new ProjectShurasExport($id, $withData),
+            $withData ? 'shura_with_data.xlsx' : 'shura_template.xlsx'
+        );
     }
 
     public function UpdateProjectShura(Request $request, $id){
