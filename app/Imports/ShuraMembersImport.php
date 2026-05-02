@@ -23,7 +23,7 @@ class ShuraMembersImport implements ToCollection, WithHeadingRow
 
             ShuraMember::create([
                 'project_id' => $this->project_id,
-                'shura_id' => $row['shura_id'] ?? null,
+                'shura_id' => $row['shura_sno'] ?? null,
                 'first_name' => $row['first_name'] ?? null,
                 'last_name' => $row['last_name'] ?? null,
                 'father_name' => $row['father_name'] ?? null,
@@ -34,11 +34,11 @@ class ShuraMembersImport implements ToCollection, WithHeadingRow
                 'education_level' => $row['education_level'] ?? null,
                 'language' => $row['language'] ?? null,
                 'residence_type' => $row['residence_type'] ?? null,
-                'is_disabled' => $row['is_disabled'] ?? 0,
+                'is_disabled' => (strtolower($row['disabled'] ?? '') === 'yes') ? 1 : 0,
                 'disability_type' => $row['disability_type'] ?? null,
                 'role' => $row['role'] ?? null,
                 'phone' => $row['phone'] ?? null,
-                'status' => $row['status'] ?? 1,
+                'status' => (strtolower($row['status'] ?? '') === 'active') ? 1 : 0,
                 'remarks' => $row['remarks'] ?? null,
             ]);
         }

@@ -6,6 +6,7 @@ use App\Exports\ProjectClassesExport;
 use App\Exports\ProjectShurasExport;
 use App\Exports\ProjectStudentsExport;
 use App\Exports\ProjectTeachersExport;
+use App\Exports\ShuraMembersExport;
 use App\Imports\ProjectClassesImport;
 use App\Imports\ProjectShurasImport;
 use App\Models\Project;
@@ -527,7 +528,7 @@ class ProjectsController extends Controller
     public function AllProjectsShuraMembers($id){
         $project = Project::findOrFail($id);
         $shura = ProjectShura::where('project_id', $id)->get();
-        $members = ShuraMember::whereIn('shura_id', $shura->pluck('id'))->get();
+        $members = ShuraMember::whereIn('shura_id', $shura->pluck('sno'))->get();
 
         return view('admin.pages.projects.shura_members.all_members', compact('project','shura','members'));
     }
@@ -563,8 +564,17 @@ class ProjectsController extends Controller
         ]);
 
         Excel::import(new ShuraMembersImport($id), $request->file('excel_file'));
-
         return back()->with('success', 'Members imported successfully');
+    }
+
+    // Export
+    public function exportShuraMember($id, $type){
+        $withData = $type === 'data';
+
+        return Excel::download(
+            new ShuraMembersExport($id, $withData),
+            $withData ? 'shura_member_with_data.xlsx' : 'shura_member_template.xlsx'
+        );
     }
 
     public function UpdateProjectShuraMembers(Request $request, $id){

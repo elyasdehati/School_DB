@@ -92,6 +92,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/projects/shura/members/{id}', 'DeleteProjectShuraMembers')->name('delete.projects.shura.members');
 
         Route::post('/import/projects/shura/members/{id}', 'ImportProjectShuraMembers')->name('import.projects.shura.members');
+        Route::get('/export/projects/shura//members/{id}/{type}', 'exportShuraMember')->name('export.projects.shura.member');
     });
 
 });
