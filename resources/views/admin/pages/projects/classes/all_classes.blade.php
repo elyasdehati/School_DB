@@ -767,6 +767,63 @@
             input.value = input.value.replace(/[^0-9]/g, '');
         }
 
+        // ================= TOTAL AUTO CALC (ADDED) =================
+        function bindTotalCalculation(form) {
+            const boys = form.querySelector("input[name='boys_enrolled']");
+            const girls = form.querySelector("input[name='girls_enrolled']");
+            const total = form.querySelector("input[name='total_enrolled']");
+
+            if (!boys || !girls || !total) return;
+
+            function calc() {
+                let b = parseInt(boys.value) || 0;
+                let g = parseInt(girls.value) || 0;
+                total.value = b + g;
+            }
+
+            boys.addEventListener("input", calc);
+            girls.addEventListener("input", calc);
+        }
+        // ==========================================================
+
+        // ================= ADDED: TOTAL TEACHERS CALC =================
+        function bindTeacherTotal(form) {
+            const female = form.querySelector("input[name='female_teachers']");
+            const male = form.querySelector("input[name='male_teachers']");
+            const total = form.querySelector("input[name='cbe_teachers']");
+
+            if (!female || !male || !total) return;
+
+            function calc() {
+                let f = parseInt(female.value) || 0;
+                let m = parseInt(male.value) || 0;
+                total.value = f + m;
+            }
+
+            female.addEventListener("input", calc);
+            male.addEventListener("input", calc);
+        }
+        // ==========================================================
+
+        // ================= ADDED: TOTAL SMS CALC =================
+        function bindSmsTotal(form) {
+            const female = form.querySelector("input[name='female_sms_members']");
+            const male = form.querySelector("input[name='male_sms_members']");
+            const total = form.querySelector("input[name='sms_members']");
+
+            if (!female || !male || !total) return;
+
+            function calc() {
+                let f = parseInt(female.value) || 0;
+                let m = parseInt(male.value) || 0;
+                total.value = f + m;
+            }
+
+            female.addEventListener("input", calc);
+            male.addEventListener("input", calc);
+        }
+        // ==========================================================
+
         // ================= ALL FORMS =================
         document.querySelectorAll(".needs-validation").forEach(function (form) {
 
@@ -898,6 +955,11 @@
                 hasHub.addEventListener("change", toggleHub);
                 toggleHub();
             }
+
+            // ================= ADDED: TOTAL CALC =================
+            bindTotalCalculation(form);
+            bindTeacherTotal(form);
+            bindSmsTotal(form);
 
         });
 
