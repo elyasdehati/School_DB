@@ -385,7 +385,7 @@
 
 {{-- ================= EDIT CLASS MODAL ================= --}}
 @foreach($std as $item)
-    <div class="modal fade" id="editStudentModal{{$item->id}}" tabindex="-1">
+    <div class="modal fade editStudentModal" id="editStudentModal{{$item->id}}" tabindex="-1">
         <div class="modal-dialog modal-xl">
 
             <form action="{{ route('update.projects.students', $item->id) }}" method="POST">
@@ -659,6 +659,84 @@
             isDisabled.addEventListener('change', toggleDisability);
             toggleDisability();
         }
+
+    });
+
+    document.querySelector('[name="province_id"]').addEventListener('change', function () {
+
+        let provinceId = this.value;
+        let districtSelect = document.querySelector('[name="district_id"]');
+
+        districtSelect.innerHTML = '<option value="">Loading...</option>';
+
+        fetch('/get-student-districts/' + provinceId)
+            .then(res => res.json())
+            .then(data => {
+
+                districtSelect.innerHTML = '<option value="">-- Select --</option>';
+
+                data.forEach(d => {
+                    districtSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`;
+                });
+
+            });
+
+    });
+
+    document.addEventListener('change', function (e) {
+
+        if (e.target.name === 'province_id') {
+
+            let provinceId = e.target.value;
+            let form = e.target.closest('form');
+            let districtSelect = form.querySelector('[name="district_id"]');
+
+            districtSelect.innerHTML = '<option>Loading...</option>';
+
+            fetch('/get-student-districts/' + provinceId)
+                .then(res => res.json())
+                .then(data => {
+
+                    districtSelect.innerHTML = '<option value="">-- Select --</option>';
+
+                    data.forEach(d => {
+                        districtSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`;
+                    });
+
+                });
+        }
+
+    });
+
+    // ================= FIX EDIT SELECTED DISTRICT =================
+    document.querySelectorAll('.editStudentModal').forEach(function (modal) {
+
+        modal.addEventListener('shown.bs.modal', function () {
+
+            let province = this.querySelector('[name="province_id"]');
+            let districtSelect = this.querySelector('[name="district_id"]');
+            let selectedDistrict = districtSelect.value;
+
+            if (province && province.value) {
+
+                districtSelect.innerHTML = '<option>Loading...</option>';
+
+                fetch('/get-student-districts/' + province.value)
+                    .then(res => res.json())
+                    .then(data => {
+
+                        districtSelect.innerHTML = '<option value="">-- Select --</option>';
+
+                        data.forEach(d => {
+                            let selected = (selectedDistrict == d.id) ? 'selected' : '';
+                            districtSelect.innerHTML += `<option value="${d.id}" ${selected}>${d.name}</option>`;
+                        });
+
+                    });
+
+            }
+
+        });
 
     });
 </script>

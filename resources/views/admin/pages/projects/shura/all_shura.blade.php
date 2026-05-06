@@ -442,28 +442,56 @@
 <script>
     document.querySelectorAll('form').forEach(function (form) {
 
-    const status = form.querySelector('select[name="status"]');
-    const extras = form.querySelectorAll('.status-extra');
+        const status = form.querySelector('select[name="status"]');
+        const extras = form.querySelectorAll('.status-extra');
 
-    function toggleStatusFields() {
-        if (!status) return;
+        function toggleStatusFields() {
+            if (!status) return;
 
-        if (status.value === "Active") {
-            extras.forEach(el => {
-                el.style.opacity = "0.4";
-                el.querySelector('input').disabled = true;
-            });
-        } else {
-            extras.forEach(el => {
-                el.style.opacity = "1";
-                el.querySelector('input').disabled = false;
-            });
+            if (status.value === "Active") {
+                extras.forEach(el => {
+                    el.style.opacity = "0.4";
+                    el.querySelector('input').disabled = true;
+                });
+            } else {
+                extras.forEach(el => {
+                    el.style.opacity = "1";
+                    el.querySelector('input').disabled = false;
+                });
+            }
         }
-    }
 
-    if (status) {
-        status.addEventListener('change', toggleStatusFields);
-        toggleStatusFields();
+        if (status) {
+            status.addEventListener('change', toggleStatusFields);
+            toggleStatusFields();
+        }
+
+    });
+
+    document.addEventListener('change', function (e) {
+
+    if (e.target.name === 'province_id') {
+
+        let form = e.target.closest('form');
+        let provinceId = e.target.value;
+        let districtSelect = form.querySelector('[name="district_id"]');
+
+        if (!districtSelect) return;
+
+        districtSelect.innerHTML = '<option>Loading...</option>';
+
+        fetch('/get-shura-districts/' + provinceId)
+            .then(res => res.json())
+            .then(data => {
+
+                districtSelect.innerHTML = '<option value="">-- Select --</option>';
+
+                data.forEach(d => {
+                    districtSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`;
+                });
+
+            });
+
     }
 
 });

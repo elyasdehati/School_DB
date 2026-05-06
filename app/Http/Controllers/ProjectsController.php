@@ -358,6 +358,11 @@ class ProjectsController extends Controller
         return view('admin.pages.projects.students.all_students', compact('project', 'classes', 'std', 'nextStudentId', 'provinces', 'districts'));
     }
 
+    public function getStudentDistricts($province_id){
+        $districts = District::where('province_id', $province_id)->get();
+        return response()->json($districts);
+    }
+
     public function StoreProjectStudents(Request $request, $id){
         $lastStudent = ProjectStudent::latest()->first();
         $nextNumber = $lastStudent ? $lastStudent->id + 1 : 1;
@@ -462,6 +467,11 @@ class ProjectsController extends Controller
         $nextSno = $lastShura ? str_pad(((int)$lastShura->sno) + 1, 3, '0', STR_PAD_LEFT) : '001';
 
         return view('admin.pages.projects.shura.all_shura', compact('project','classes','shura','nextSno', 'provinces', 'districts'));
+    }
+
+    public function getShuraDistricts($province_id){
+        $districts = District::where('province_id', $province_id)->get();
+        return response()->json($districts);
     }
 
     public function StoreProjectShura(Request $request, $id){

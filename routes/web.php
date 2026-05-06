@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/store/projects/students/{id}', 'StoreProjectStudents')->name('store.projects.students');
         Route::post('/projects/students/{id}/update', 'UpdateProjectStudents')->name('update.projects.students');
         Route::get('/delete/project/students/{id}', 'DeleteProjectStudents')->name('delete.projects.students');
+        Route::get('/get-student-districts/{province_id}', 'getStudentDistricts');
 
         Route::post('/projects/students/import/{id}', 'ImportProjectStudents')->name('import.projects.students');
         Route::get('/export/projects/students/{id}/{type}', 'exportStudents')->name('export.projects.students');
@@ -80,6 +81,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/store/projects/shura/{id}', 'StoreProjectShura')->name('store.projects.shura');
         Route::post('/projects/shura/{id}/update', 'UpdateProjectShura')->name('update.projects.shura');
         Route::get('/delete/project/shura/{id}', 'DeleteProjectShura')->name('delete.projects.shura');
+        Route::get('/get-shura-districts/{province_id}',  'getShuraDistricts');
 
         Route::post('/import/projects/shura/{id}', 'ImportProjectShura')->name('import.projects.shura');
         Route::get('/export/projects/shura/{id}/{type}', 'exportShura')->name('export.projects.shura');
