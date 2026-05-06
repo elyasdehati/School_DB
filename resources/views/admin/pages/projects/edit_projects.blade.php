@@ -141,7 +141,7 @@
                             </div>
 
                             @php
-                                $selectedProvinces = json_decode($project->province ?? '[]');
+                                $selectedProvinces = json_decode($project->province ?? '[]', true) ?? [];
                             @endphp
                             <div class="form-group col-lg-12 mb-3">
                                 <label for="categories">Province</label>
@@ -157,7 +157,7 @@
                             </div>
 
                             @php
-                                $selectedDistricts = json_decode($project->district ?? '[]');
+                                $selectedDistricts = json_decode($project->district ?? '[]', true) ?? [];
                             @endphp
                             <div class="form-group col-lg-12 mb-3">
                                 <label for="districts">District</label>
@@ -193,19 +193,50 @@
 </div>
 
 @push('scripts')
-<script>
-    $(document).ready(function() {
-    $('#categories').select2({
-        placeholder: "",
-        allowClear: true
-    });
+    <script>
+        $(document).ready(function() {
+            $('#categories').select2({
+                placeholder: "",
+                allowClear: true
+            });
 
-    $('#districts').select2({
-        placeholder: "",
-        allowClear: true
-    });
-});
-</script>
+            $('#districts').select2({
+                placeholder: "",
+                allowClear: true
+            });
+
+            // added
+            $('#categories').on('change', function() {
+                let province_ids = $(this).val();
+
+                if(province_ids && province_ids.length > 0){
+                    $.ajax({
+                        url: '/get-project-districts',
+                        type: 'POST',
+                        data: {
+                            province_ids: province_ids,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(data){
+                            $('#districts').empty();
+
+                            $.each(data, function(key, value){
+                                $('#districts').append(
+                                    `<option value="${value.id}">${value.name}</option>`
+                                );
+                            });
+
+                            $('#districts').trigger('change');
+                        }
+                    });
+                }
+            });
+
+            // added (load on edit)
+            $('#categories').trigger('change');
+            // end added
+        });
+    </script>
 @endpush
 
 @endsection

@@ -199,7 +199,7 @@
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label>CBE List</label>
+                            <label>Class List</label>
                             <input type="text" name="cbe_list" class="form-control" placeholder="CBE List">
                         </div>
 
@@ -234,13 +234,27 @@
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label>Qualification</label>
-                            <input type="text" name="qualification" class="form-control" placeholder="Qualification">
+                            <label for="qualification">Qualification</label>
+                            <select class="form-control" name="qualification" id="qualification">
+                                <option value="">-- Select --</option>
+                                <option value="Grade 9" {{ old('qualification') == 'Grade 9' ? 'selected' : '' }}>Grade 9</option>
+                                <option value="Grade 12" {{ old('qualification') == 'Grade 12' ? 'selected' : '' }}>Grade 12</option>
+                                <option value="Grade 14" {{ old('qualification') == 'Grade 14' ? 'selected' : '' }}>Grade 14</option>
+                                <option value="Bachelor" {{ old('qualification') == 'Bachelor' ? 'selected' : '' }}>Bachelor</option>
+                                <option value="Master" {{ old('qualification') == 'Master' ? 'selected' : '' }}>Master</option>
+                                <option value="PhD" {{ old('qualification') == 'PhD' ? 'selected' : '' }}>PhD</option>
+                                <option value="Madrasa" {{ old('qualification') == 'Madrasa' ? 'selected' : '' }}>Madrasa</option>
+                            </select>
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label>Teacher Type</label>
-                            <input type="text" name="teacher_type" class="form-control" placeholder="Teacher Type">
+                            <label for="teacher_type">Teacher Type</label>
+                            <select class="form-control" name="teacher_type" id="teacher_type">
+                                <option value="">-- Select --</option>
+                                <option value="Permenent" {{ old('teacher_type') == 'Permenent' ? 'selected' : '' }}>Permenent</option>
+                                <option value="Assistant" {{ old('teacher_type') == 'Assistant' ? 'selected' : '' }}>Assistant</option>
+                                <option value="Voluntier" {{ old('teacher_type') == 'Voluntier' ? 'selected' : '' }}>Voluntier</option>
+                            </select>
                         </div>
 
                         <div class="col-md-4 mb-2">
@@ -287,16 +301,16 @@
                         <div class="col-md-4 mb-2">
                             <label>Core Training</label>
                             <select name="core_training" class="form-control">
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
+                                <option value="1" {{ old('core_training', 0) == 1 ? 'selected' : '' }}>Yes</option>
+                                <option value="0" {{ old('core_training', 0) == 0 ? 'selected' : '' }}>No</option>
                             </select>
                         </div>
 
                         <div class="col-md-4 mb-2">
                             <label>Refresher Training</label>
                             <select name="refresher_training" class="form-control">
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
+                                <option value="1" {{ old('refresher_training', 0) == 1 ? 'selected' : '' }}>Yes</option>
+                                <option value="0" {{ old('refresher_training', 0) == 0 ? 'selected' : '' }}>No</option>
                             </select>
                         </div>
 
@@ -342,7 +356,7 @@
                             </div>
 
                             <div class="col-md-4 mb-2">
-                                <label>CBE List</label>
+                                <label>Class List</label>
                                 <input type="text" name="cbe_list" class="form-control" value="{{ $item->cbe_list }}">
                             </div>
 
@@ -377,13 +391,27 @@
                             </div>
 
                             <div class="col-md-4 mb-2">
-                                <label>Qualification</label>
-                                <input type="text" name="qualification" class="form-control" value="{{ $item->qualification }}">
+                                <label for="qualification">Qualification</label>
+                                <select class="form-control" name="qualification" id="qualification">
+                                    <option value="">-- Select --</option>
+                                    <option value="Grade 9" {{ $item->qualification == 'Grade 9' ? 'selected' : '' }}>Grade 9</option>
+                                    <option value="Grade 12" {{ $item->qualification == 'Grade 12' ? 'selected' : '' }}>Grade 12</option>
+                                    <option value="Grade 14" {{ $item->qualification == 'Grade 14' ? 'selected' : '' }}>Grade 14</option>
+                                    <option value="Bachelor" {{ $item->qualification == 'Bachelor' ? 'selected' : '' }}>Bachelor</option>
+                                    <option value="Master" {{ $item->qualification == 'Master' ? 'selected' : '' }}>Master</option>
+                                    <option value="PhD" {{ $item->qualification == 'PhD' ? 'selected' : '' }}>PhD</option>
+                                    <option value="Madrasa" {{ $item->qualification == 'Madrasa' ? 'selected' : '' }}>Madrasa</option>
+                                </select>
                             </div>
 
                             <div class="col-md-4 mb-2">
-                                <label>Teacher Type</label>
-                                <input type="text" name="teacher_type" class="form-control" value="{{ $item->teacher_type }}">
+                                <label for="teacher_type">Teacher Type</label>
+                                <select class="form-control" name="teacher_type" id="teacher_type">
+                                    <option value="">-- Select --</option>
+                                    <option value="Permenent" {{ $item->teacher_type == 'Permenent' ? 'selected' : '' }}>Permenent</option>
+                                    <option value="Assistant" {{ $item->teacher_type == 'Assistant' ? 'selected' : '' }}>Assistant</option>
+                                    <option value="Voluntier" {{ $item->teacher_type == 'Voluntier' ? 'selected' : '' }}>Voluntier</option>
+                                </select>
                             </div>
 
                             <div class="col-md-4 mb-2">

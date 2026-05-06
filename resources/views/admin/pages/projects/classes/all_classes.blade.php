@@ -89,8 +89,7 @@
                 <div class="card-body">
 
                     @php
-            // $table->date('establishment_date')->nullable();
-                        $headers = ['Class Id','Class Name','grades','Class Type','Province','District','Village','Latitude','Longitude','Climate','Infrastructure','Boys Enrolled','Girls Enrolled','Total Enrolled','Demographic','Language','Establishment Date','Start Time','End Time','Shift','Is Cluster','Female Teachers','Male Teachers','CBE Teachers','Is Closed','Closure Date','Closure Reason','Female SMS Members','MaleSMS Members','SMS Members','Has Hub School','Hub School Name','Hub Distance KM','SIP Completed','Remarks','Class Status', 'Action'];
+                        $headers = ['Class Id','Class Name','grades','Class Type','Province','District','Village','Latitude','Longitude','Climate','Infrastructure','Boys Enrolled','Girls Enrolled','Total Enrolled','Demographic','Language','Establishment Date','Start Time','End Time','Shift','Is Cluster','Female Teachers','Male Teachers','Total Teachers','Is the Class Closed','Closure Date','Closure Reason','Female SMS Members','MaleSMS Members','SMS Members','Has Hub School','Hub School Name','Hub Distance KM','SIP Completed','Remarks','Class Status', 'Action'];
 
                         $rows = [];
 
@@ -316,11 +315,6 @@
                             </select>
                         </div>
 
-                        {{-- <div class="col-md-4 mb-2">
-                            <label>Language</label>
-                            <input type="text" name="language" class="form-control">
-                        </div> --}}
-
                         <div class="col-md-4 mb-2">
                             <label for="language">Language</label>
                             <select class="form-control" name="language" id="language">
@@ -337,11 +331,6 @@
                                 <option value="0">Inactive</option>
                             </select>
                         </div>
-
-                        {{-- <div class="col-md-4 mb-2">
-                            <label>Establishment Date</label>
-                            <input type="date" name="establishment_date" class="form-control">
-                        </div> --}}
 
                         <div class="col-md-4 mb-2">
                             <label>Start Time</label>
@@ -386,10 +375,10 @@
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label>Is Closed</label>
+                            <label>Is the Class Closed</label>
                             <select name="is_closed" class="form-control">
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
+                                <option value="1" {{ old('is_closed', 0) == 1 ? 'selected' : '' }}>Yes</option>
+                                <option value="0" {{ old('is_closed', 0) == 0 ? 'selected' : '' }}>No</option>
                             </select>
                         </div>
 
@@ -544,9 +533,14 @@
 
                             <div class="col-md-4 mb-2">
                                 <label>District</label>
+
+                                @php
+                                    $filteredDistricts = \App\Models\District::where('province_id', $item->province_id)->get();
+                                @endphp
+
                                 <select name="district_id" class="form-control">
                                     <option value="">-- Select --</option>
-                                    @foreach($districts as $district)
+                                    @foreach($filteredDistricts as $district)
                                         <option value="{{ $district->id }}" 
                                             {{ $item->district_id == $district->id ? 'selected' : '' }}>
                                             {{ $district->name }}
@@ -613,6 +607,8 @@
                                 <label for="demographic">Demographic</label>
                                 <select class="form-control" name="demographic" id="demographic">
                                     <option value="">-- Select --</option>
+                                    <option value="Girls" {{ $item->demographic == 'Girls' ? 'selected' : '' }}>Girls</option>
+                                    <option value="Boys" {{ $item->demographic == 'Boys' ? 'selected' : '' }}>Boys</option>
                                     <option value="Mixed" {{ $item->demographic == 'Mixed' ? 'selected' : '' }}>Mixed</option>
                                 </select>
                             </div>
@@ -682,7 +678,7 @@
                             </div>
 
                             <div class="col-md-4 mb-2">
-                                <label>Is Closed</label>
+                                <label>Is the Class Closed</label>
                                 <select name="is_closed" class="form-control">
                                     <option value="1" {{ $item->is_closed == 1 ? 'selected' : '' }}>Yes</option>
                                     <option value="0" {{ $item->is_closed == 0 ? 'selected' : '' }}>No</option>
@@ -824,6 +820,34 @@
         }
         // ==========================================================
 
+        // ================= ADDED: DEMOGRAPHIC AUTO =================
+        function bindDemographicAuto(form) {
+            const boys = form.querySelector("input[name='boys_enrolled']");
+            const girls = form.querySelector("input[name='girls_enrolled']");
+            const demo = form.querySelector("select[name='demographic']");
+
+            if (!boys || !girls || !demo) return;
+
+            function setDemo() {
+                let b = parseInt(boys.value) || 0;
+                let g = parseInt(girls.value) || 0;
+
+                if (b > 0 && g > 0) {
+                    demo.value = "Mixed";
+                } else if (b > 0) {
+                    demo.value = "Boys";
+                } else if (g > 0) {
+                    demo.value = "Girls";
+                } else {
+                    demo.value = "";
+                }
+            }
+
+            boys.addEventListener("input", setDemo);
+            girls.addEventListener("input", setDemo);
+        }
+        // ==========================================================
+
         // ================= ALL FORMS =================
         document.querySelectorAll(".needs-validation").forEach(function (form) {
 
@@ -956,10 +980,35 @@
                 toggleHub();
             }
 
+           // ================= PROVINCE → DISTRICT =================
+            const province = form.querySelector("[name='province_id']");
+            const district = form.querySelector("[name='district_id']");
+
+            if (province && district) {
+                province.addEventListener("change", function () {
+
+                    let province_id = this.value;
+
+                    district.innerHTML = `<option value="">-- Select --</option>`;
+
+                    if (province_id) {
+                        fetch(`/get-classes-districts/${province_id}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                district.innerHTML = `<option value="">-- Select --</option>`;
+                                data.forEach(d => {
+                                    district.innerHTML += `<option value="${d.id}">${d.name}</option>`;
+                                });
+                            })
+                            .catch(err => console.log(err));
+                    }
+                });
+            }
             // ================= ADDED: TOTAL CALC =================
             bindTotalCalculation(form);
             bindTeacherTotal(form);
             bindSmsTotal(form);
+            bindDemographicAuto(form);
 
         });
 

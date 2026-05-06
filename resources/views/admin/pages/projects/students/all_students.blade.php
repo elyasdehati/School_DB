@@ -310,6 +310,10 @@
                             <label>Residence Type</label>
                             <select name="residence_type" class="form-control">
                                 <option value="Host Community">Host Community</option>
+                                <option value="IDP">IDP</option>
+                                <option value="Refugee">Refugee</option>
+                                <option value="Returnee">Returnee</option>
+                                <option value="Kochi">Kochi</option>
                             </select>
                         </div>
 
@@ -517,6 +521,10 @@
                                 <label>Residence Type</label>
                                 <select name="residence_type" class="form-control">
                                     <option value="Host Community" {{ $item->residence_type == 'Host Community' ? 'selected' : '' }}>Host Community</option>
+                                    <option value="IDP" {{ $item->residence_type == 'IDP' ? 'selected' : '' }}>IDP</option>
+                                    <option value="Refugee" {{ $item->residence_type == 'Refugee' ? 'selected' : '' }}>Refugee</option>
+                                    <option value="Returnee" {{ $item->residence_type == 'Returnee' ? 'selected' : '' }}>Returnee</option>
+                                    <option value="Kochi" {{ $item->residence_type == 'Kochi' ? 'selected' : '' }}>Kochi</option>
                                 </select>
                             </div>
 

@@ -93,6 +93,11 @@ class ProjectsController extends Controller
         return redirect()->route('all.projects')->with('success','Project deleted successfully!');
     }
 
+    public function getProjectDistricts(Request $request){
+        $districts = District::whereIn('province_id', $request->province_ids)->get();
+        return response()->json($districts);
+    }
+
     // --------------- All Project Teachers ---------------
     public function AllProjectsTeachers($id){
         $project = Project::findOrFail($id);
@@ -209,6 +214,12 @@ class ProjectsController extends Controller
         $nextClassId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
         return view('admin.pages.projects.classes.all_classes', compact('project', 'class', 'nextClassId', 'provinces', 'districts'));
+    }
+
+    public function getClassesDistricts($province_id){
+        return response()->json(
+            District::where('province_id', $province_id)->get()
+        );
     }
 
     public function StoreProjectClass(Request $request, $id){

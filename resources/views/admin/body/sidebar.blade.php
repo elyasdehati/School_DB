@@ -41,15 +41,22 @@
                     </a>
                 </li>
 
-                <li class="menu-title">Catalog Management</li>
-
                 <li>
-                    <a href="{{ route('all.provinces') }}">
+                    <a href="#catalog" data-bs-toggle="collapse">
                         <i data-feather="menu"></i>
-                        <span> Province </span>
+                        <span> Catalog Management </span>
+                        <span class="menu-arrow"></span>
                     </a>
+                    <div class="collapse" id="catalog">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('all.provinces') }}">
+                                    <span class="px-2"> Province </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
-{{-- <i class="ph-list-dashes"></i> --}}
             </ul>
 
         </div>

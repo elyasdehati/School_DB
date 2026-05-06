@@ -253,10 +253,16 @@
                         <div class="col-md-4 mb-2">
                             <label>Education Level</label>
                             <select name="education_level" class="form-control">
-                                <option value="Illiterate">Illiterate</option>
-                                <option value="Grade-6">Grade-6</option>
-                                <option value="Grade-9">Grade-9</option>
-                                <option value="Grade-12">Grade-12</option>
+                                <option value="">-- Select --</option>
+                                <option value="Illiterate" {{ old('education_level') == 'Illiterate' ? 'selected' : '' }}>Illiterate</option>
+                                <option value="Grade 6" {{ old('education_level') == 'Grade 6' ? 'selected' : '' }}>Grade 6</option>
+                                <option value="Grade 9" {{ old('education_level') == 'Grade 9' ? 'selected' : '' }}>Grade 9</option>
+                                <option value="Grade 12" {{ old('education_level') == 'Grade 12' ? 'selected' : '' }}>Grade 12</option>
+                                <option value="Grade 14" {{ old('education_level') == 'Grade 14' ? 'selected' : '' }}>Grade 14</option>
+                                <option value="Bachelor" {{ old('education_level') == 'Bachelor' ? 'selected' : '' }}>Bachelor</option>
+                                <option value="Master" {{ old('education_level') == 'Master' ? 'selected' : '' }}>Master</option>
+                                <option value="PhD" {{ old('education_level') == 'PhD' ? 'selected' : '' }}>PhD</option>
+                                <option value="Madrasa" {{ old('education_level') == 'Madrasa' ? 'selected' : '' }}>Madrasa</option>
                             </select>
                         </div>
 
@@ -401,10 +407,16 @@
                             <div class="col-md-4 mb-2">
                                 <label>Education Level</label>
                                 <select name="education_level" class="form-control">
+                                    <option value="">-- Select --</option>
                                     <option value="Illiterate" {{ $item->education_level == 'Illiterate' ? 'selected' : '' }}>Illiterate</option>
-                                    <option value="Grade-6" {{ $item->education_level == 'Grade-6' ? 'selected' : '' }}>Grade-6</option>
-                                    <option value="Grade-9" {{ $item->education_level == 'Grade-9' ? 'selected' : '' }}>Grade-9</option>
-                                    <option value="Grade-12" {{ $item->education_level == 'Grade-12' ? 'selected' : '' }}>Grade-12</option>
+                                    <option value="Grade 6" {{ $item->education_level == 'Grade 6' ? 'selected' : '' }}>Grade 6</option>
+                                    <option value="Grade 9" {{ $item->education_level == 'Grade 9' ? 'selected' : '' }}>Grade 9</option>
+                                    <option value="Grade 12" {{ $item->education_level == 'Grade 12' ? 'selected' : '' }}>Grade 12</option>
+                                    <option value="Grade 14" {{ $item->education_level == 'Grade 14' ? 'selected' : '' }}>Grade 14</option>
+                                    <option value="Bachelor" {{ $item->education_level == 'Bachelor' ? 'selected' : '' }}>Bachelor</option>
+                                    <option value="Master" {{ $item->education_level == 'Master' ? 'selected' : '' }}>Master</option>
+                                    <option value="PhD" {{ $item->education_level == 'PhD' ? 'selected' : '' }}>PhD</option>
+                                    <option value="Madrasa" {{ $item->education_level == 'Madrasa' ? 'selected' : '' }}>Madrasa</option>
                                 </select>
                             </div>
 

@@ -84,7 +84,7 @@
         <script src="https://apexcharts.com/samples/assets/stock-prices.js"></script>
 
         <!-- Widgets Init Js -->
-        @if(request()->is('admin/dashboard'))
+        @if(request()->routeIs('dashboard'))
             <script src="{{ asset('backend/assets/js/pages/analytics-dashboard.init.js') }}"></script>
         @endif
 

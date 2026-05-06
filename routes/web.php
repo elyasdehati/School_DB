@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/project/{id}',  'UpdateProject')->name('update.project');
         Route::get('/show/project/{id}', 'ShowProject')->name('show.project');
         Route::get('/delete/project/{id}', 'DeleteProject')->name('delete.project');
+        Route::post('/get-project-districts', 'getProjectDistricts');
     });
 
     // Project Teachers
@@ -57,9 +58,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/store/projects/class/{id}', 'StoreProjectClass')->name('store.projects.class');
         Route::post('/projects/classes/{id}/update', 'UpdateProjectClass')->name('update.projects.class');
         Route::get('/delete/project/class/{id}', 'DeleteProjectClass')->name('delete.projects.class');
-
         Route::post('/projects/classes/import/{id}','ImportProjectClasses')->name('import.projects.classes');
         Route::get('/export/classes/{id}/{type}', 'exportClasses')->name('export.projects.classes');
+        Route::get('/get-classes-districts/{province_id}', 'getClassesDistricts');
     });
 
      // Project Students
