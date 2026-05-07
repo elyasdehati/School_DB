@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\Provinces;
-use App\Http\Controllers\TeachersController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,16 +18,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    // All Provinces
-    Route::controller(Provinces::class)->group(function () {
-        Route::get('/all/provinces', 'AllProvinces')->name('all.provinces');
-        Route::get('/add/province', 'AddProvince')->name('add.province');
-        Route::post('/store/province', 'StoreProvince')->name('store.province');
-        Route::get('/edit/province/{id}', 'EditProvince')->name('edit.province');
-        Route::post('/update/province/{id}', 'UpdateProvince')->name('update.province');
-        Route::get('/delete/province/{id}', 'DeleteProvince')->name('delete.province');
-    });
 
     // Projects
     Route::controller(ProjectsController::class)->group(function () {
@@ -96,6 +86,26 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/import/projects/shura/members/{id}', 'ImportProjectShuraMembers')->name('import.projects.shura.members');
         Route::get('/export/projects/shura//members/{id}/{type}', 'exportShuraMember')->name('export.projects.shura.member');
+    });
+
+    // All Provinces
+    Route::controller(Provinces::class)->group(function () {
+        Route::get('/all/provinces', 'AllProvinces')->name('all.provinces');
+        Route::get('/add/province', 'AddProvince')->name('add.province');
+        Route::post('/store/province', 'StoreProvince')->name('store.province');
+        Route::get('/edit/province/{id}', 'EditProvince')->name('edit.province');
+        Route::post('/update/province/{id}', 'UpdateProvince')->name('update.province');
+        Route::get('/delete/province/{id}', 'DeleteProvince')->name('delete.province');
+    });
+
+    // All Provinces
+    Route::controller(LanguageController::class)->group(function () {
+        Route::get('/all/language', 'AllLanguage')->name('all.language');
+        Route::get('/add/language', 'AddLanguage')->name('add.language');
+        Route::post('/store/language', 'StoreLanguage')->name('store.language');
+        Route::get('/edit/language/{id}', 'EditLanguage')->name('edit.language');
+        Route::post('/update/language/{id}', 'UpdateLanguage')->name('update.language');
+        Route::get('/delete/language/{id}', 'DeleteLanguage')->name('delete.language');
     });
 
 });

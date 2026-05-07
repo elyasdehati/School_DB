@@ -21,6 +21,7 @@ use App\Imports\ProjectStudentsImport;
 use App\Imports\ProjectTeachersImport;
 use App\Imports\ShuraMembersImport;
 use App\Models\District;
+use App\Models\Language;
 use App\Models\Province;
 
 class ProjectsController extends Controller
@@ -208,12 +209,13 @@ class ProjectsController extends Controller
 
         $provinces = Province::all();
         $districts = District::all();
+        $languages = Language::all();
 
         $lastClass = ProjectClass::latest()->first();
         $nextNumber = $lastClass ? $lastClass->id + 1 : 1;
         $nextClassId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
-        return view('admin.pages.projects.classes.all_classes', compact('project', 'class', 'nextClassId', 'provinces', 'districts'));
+        return view('admin.pages.projects.classes.all_classes', compact('project', 'class', 'nextClassId', 'provinces', 'districts', 'languages'));
     }
 
     public function getClassesDistricts($province_id){
@@ -350,12 +352,13 @@ class ProjectsController extends Controller
 
         $provinces = Province::all();
         $districts = District::all();
+        $languages = Language::all();
 
         $lastStudent = ProjectStudent::latest()->first();
         $nextNumber = $lastStudent ? $lastStudent->id + 1 : 1;
         $nextStudentId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
-        return view('admin.pages.projects.students.all_students', compact('project', 'classes', 'std', 'nextStudentId', 'provinces', 'districts'));
+        return view('admin.pages.projects.students.all_students', compact('project', 'classes', 'std', 'nextStudentId', 'provinces', 'districts', 'languages'));
     }
 
     public function getStudentDistricts($province_id){
@@ -550,8 +553,9 @@ class ProjectsController extends Controller
         $project = Project::findOrFail($id);
         $shura = ProjectShura::where('project_id', $id)->get();
         $members = ShuraMember::whereIn('shura_id', $shura->pluck('sno'))->get();
+        $languages = Language::all();
 
-        return view('admin.pages.projects.shura_members.all_members', compact('project','shura','members'));
+        return view('admin.pages.projects.shura_members.all_members', compact('project','shura','members', 'languages'));
     }
 
     public function StoreProjectShuraMembers(Request $request, $id){

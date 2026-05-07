@@ -269,8 +269,13 @@
                         <div class="col-md-4 mb-2">
                             <label>Language</label>
                             <select name="language" class="form-control">
-                                <option value="Dari">Dari</option>
-                                <option value="Pashto">Pashto</option>
+
+                                @foreach($languages as $language)
+                                    <option value="{{ $language->name }}">
+                                        {{ $language->name }}
+                                    </option>
+                                @endforeach
+
                             </select>
                         </div>
 
@@ -423,8 +428,14 @@
                             <div class="col-md-4 mb-2">
                                 <label>Language</label>
                                 <select name="language" class="form-control">
-                                    <option value="Dari" {{ $item->language == 'Dari' ? 'selected' : '' }}>Dari</option>
-                                    <option value="Pashto" {{ $item->language == 'Pashto' ? 'selected' : '' }}>Pashto</option>
+
+                                    @foreach($languages as $language)
+                                        <option value="{{ $language->name }}"
+                                            {{ $item->language == $language->name ? 'selected' : '' }}>
+                                            {{ $language->name }}
+                                        </option>
+                                    @endforeach
+
                                 </select>
                             </div>
 

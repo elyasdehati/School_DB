@@ -317,10 +317,16 @@
 
                         <div class="col-md-4 mb-2">
                             <label for="language">Language</label>
+
                             <select class="form-control" name="language" id="language">
                                 <option value="">-- Select --</option>
-                                <option value="Pashto" {{ old('language') == 'Pashto' ? 'selected' : '' }}>Pashto</option>
-                                <option value="Persian" {{ old('language') == 'Persian' ? 'selected' : '' }}>Persian</option>
+
+                                @foreach($languages as $language)
+                                    <option value="{{ $language->name }}">
+                                        {{ $language->name }}
+                                    </option>
+                                @endforeach
+
                             </select>
                         </div>
 
@@ -615,10 +621,17 @@
 
                             <div class="col-md-4 mb-2">
                                 <label for="language">Language</label>
+
                                 <select class="form-control" name="language" id="language">
                                     <option value="">-- Select --</option>
-                                    <option value="Pashto" {{ $item->language == 'Pashto' ? 'selected' : '' }}>Pashto</option>
-                                    <option value="Persian" {{ $item->language == 'Persian' ? 'selected' : '' }}>Persian</option>
+
+                                    @foreach($languages as $language)
+                                        <option value="{{ $language->name }}"
+                                            {{ $item->language == $language->name ? 'selected' : '' }}>
+                                            {{ $language->name }}
+                                        </option>
+                                    @endforeach
+
                                 </select>
                             </div>
 

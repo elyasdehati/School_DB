@@ -54,6 +54,12 @@
                                     <span class="px-2"> Province </span>
                                 </a>
                             </li>
+
+                            <li>
+                                <a href="{{ route('all.language') }}">
+                                    <span class="px-2"> Language </span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
