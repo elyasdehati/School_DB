@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClassTypeController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectsController;
@@ -88,7 +89,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/export/projects/shura//members/{id}/{type}', 'exportShuraMember')->name('export.projects.shura.member');
     });
 
-    // All Provinces
+    // All Provinces Catalog
     Route::controller(Provinces::class)->group(function () {
         Route::get('/all/provinces', 'AllProvinces')->name('all.provinces');
         Route::get('/add/province', 'AddProvince')->name('add.province');
@@ -98,7 +99,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/province/{id}', 'DeleteProvince')->name('delete.province');
     });
 
-    // All Provinces
+    // All Languages Catalog
     Route::controller(LanguageController::class)->group(function () {
         Route::get('/all/language', 'AllLanguage')->name('all.language');
         Route::get('/add/language', 'AddLanguage')->name('add.language');
@@ -106,6 +107,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/language/{id}', 'EditLanguage')->name('edit.language');
         Route::post('/update/language/{id}', 'UpdateLanguage')->name('update.language');
         Route::get('/delete/language/{id}', 'DeleteLanguage')->name('delete.language');
+    });
+
+    // All Class Types Catalog
+    Route::controller(ClassTypeController::class)->group(function () {
+        Route::get('/all/class/type', 'AllClassType')->name('all.class.type');
+        Route::get('/add/class/type', 'AddClassType')->name('add.class.type');
+        Route::post('/store/class/type', 'StoreClassType')->name('store.class.type');
+        Route::get('/edit/class/type/{id}', 'EditLanguage')->name('edit.class.type');
+        Route::post('/update/class/type/{id}', 'UpdateLanguage')->name('update.class.type');
+        Route::get('/delete/class/type/{id}', 'DeleteLanguage')->name('delete.class.type');
     });
 
 });

@@ -16,7 +16,7 @@ class LanguageController extends Controller
         return view('admin.pages.language.add_language');
     }
 
-     public function StoreLanguage(Request $request){
+    public function StoreLanguage(Request $request){
         Language::create([
             'name' => $request->name
         ]);

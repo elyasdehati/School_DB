@@ -227,8 +227,15 @@
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label>Class Type</label>
-                            <input type="text" name="class_type" class="form-control">
+                            <label for="class_type">Class Type</label>
+                            <select class="form-control" name="class_type" id="class_type">
+                                <option value="">-- Select --</option>
+                                @foreach($classtype as $item)
+                                    <option value="{{ $item->name }}">
+                                        {{ $item->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="col-md-4 mb-2">
@@ -520,8 +527,19 @@
                             </div>
 
                             <div class="col-md-4 mb-2">
-                                <label>Class Type</label>
-                                <input type="text" name="class_type" class="form-control" value="{{ $item->class_type }}">
+                                <label for="class_type">Class Type</label>
+
+                                <select class="form-control" name="class_type" id="class_type">
+                                    <option value="">-- Select --</option>
+
+                                    @foreach($classtype as $class_type)
+                                        <option value="{{ $class_type->name }}"
+    {{ $item->class_type == $class_type->name ? 'selected' : '' }}>
+    {{ $class_type->name }}
+</option>
+                                    @endforeach
+
+                                </select>
                             </div>
 
                             <div class="col-md-4 mb-2">

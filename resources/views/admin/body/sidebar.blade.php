@@ -60,6 +60,12 @@
                                     <span class="px-2"> Language </span>
                                 </a>
                             </li>
+
+                            <li>
+                                <a href="{{ route('all.class.type') }}">
+                                    <span class="px-2"> Class Type </span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
