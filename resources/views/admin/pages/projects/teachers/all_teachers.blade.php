@@ -200,7 +200,7 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Class List</label>
-                            <input type="text" name="cbe_list" class="form-control" placeholder="CBE List">
+                            <input type="text" name="cbe_list" class="form-control" placeholder="Class List">
                         </div>
 
                         <div class="col-md-4 mb-2">

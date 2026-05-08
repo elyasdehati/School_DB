@@ -1,6 +1,46 @@
 <div class="app-sidebar-menu">
     <div class="h-100" data-simplebar>
 
+        <style>
+            #side-menu li a{
+                transition: background 0.3s ease;
+                border-radius: 8px;
+                color: #fff !important;
+                position: relative;
+            }
+
+            #side-menu li a span,
+            #side-menu li a i{
+                color: #fff !important;
+            }
+
+            #side-menu li a:hover{
+                background: rgba(255,255,255,0.12);
+            }
+
+            #side-menu li a.active::before{
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 6px;
+                bottom: 6px;
+                width: 4px;
+                background: #ffffff;
+                border-radius: 10px;
+            }
+
+            #side-menu li a.active{
+                background: rgba(255,255,255,0.18);
+            }
+
+            #side-menu li a.active span,
+            #side-menu li a.active i,
+            #side-menu li a:hover span,
+            #side-menu li a:hover i{
+                color: #fff !important;
+            }
+        </style>
+
         <!--- Sidemenu -->
         <div id="sidebar-menu">
 
@@ -28,14 +68,14 @@
                 <li class="menu-title">Menu</li>
 
                 <li>
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         <i data-feather="home"></i>
                         <span> Dashboard </span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="{{ route('all.projects') }}">
+                    <a href="{{ route('all.projects') }}" class="{{ request()->routeIs('all.projects') ? 'active' : '' }}">
                         <i data-feather="file-text"></i>
                         <span> Projects </span>
                     </a>
@@ -50,20 +90,26 @@
                     <div class="collapse" id="catalog">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('all.provinces') }}">
+                                <a href="{{ route('all.provinces') }}" class="{{ request()->routeIs('all.provinces') ? 'active' : '' }}">
                                     <span class="px-2"> Province </span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="{{ route('all.language') }}">
+                                <a href="{{ route('all.language') }}" class="{{ request()->routeIs('all.language') ? 'active' : '' }}">
                                     <span class="px-2"> Language </span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="{{ route('all.class.type') }}">
+                                <a href="{{ route('all.class.type') }}" class="{{ request()->routeIs('all.class.type') ? 'active' : '' }}">
                                     <span class="px-2"> Class Type </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('all.thematic.area') }}" class="{{ request()->routeIs('all.thematic.area') ? 'active' : '' }}">
+                                    <span class="px-2"> Thematic Area </span>
                                 </a>
                             </li>
                         </ul>

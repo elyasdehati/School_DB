@@ -5,6 +5,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\Provinces;
+use App\Http\Controllers\ThematicAreaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -117,6 +118,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/class/type/{id}', 'EditLanguage')->name('edit.class.type');
         Route::post('/update/class/type/{id}', 'UpdateLanguage')->name('update.class.type');
         Route::get('/delete/class/type/{id}', 'DeleteLanguage')->name('delete.class.type');
+    });
+
+    // All Thematic Area Catalog
+    Route::controller(ThematicAreaController::class)->group(function () {
+        Route::get('/all/thematic/area', 'AllThematicArea')->name('all.thematic.area');
+        Route::get('/add/thematic/area', 'AddThematicArea')->name('add.thematic.area');
+        Route::post('/store/thematic/area', 'StoreThematicArea')->name('store.thematic.area');
+        Route::get('/edit/thematic/area/{id}', 'EditThematicArea')->name('edit.thematic.area');
+        Route::post('/update/thematic/area/{id}', 'UpdateThematicArea')->name('update.thematic.area');
+        Route::get('/delete/thematic/area/{id}', 'DeleteThematicArea')->name('delete.thematic.area');
     });
 
 });
