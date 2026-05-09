@@ -24,6 +24,8 @@ use App\Models\ClassType;
 use App\Models\District;
 use App\Models\Language;
 use App\Models\Province;
+use App\Models\Status;
+use App\Models\ThematicArea;
 
 class ProjectsController extends Controller
 {
@@ -53,9 +55,11 @@ class ProjectsController extends Controller
     }
 
     public function EditProject($id){
+        $statuses = Status::all();
         $project = Project::find($id);
+        $thematicAreas = ThematicArea::all();
         $provinces = Province::with('districts')->get();
-        return view('admin.pages.projects.edit_projects', compact('project', 'provinces'));
+        return view('admin.pages.projects.edit_projects', compact('project', 'provinces', 'statuses', 'thematicAreas'));
     }
 
     public function UpdateProject(Request $request, $id){
@@ -74,7 +78,7 @@ class ProjectsController extends Controller
             'donor' => $request->donnor,
             'partner' => $request->partner,
             'thematic_area' => $request->thematic_area,
-            'status' => $request->status,
+            'status_id' => $request->status_id,
             'province' => json_encode($request->categories),
             'district' => json_encode($request->districts),
             'description' => $request->description,
@@ -212,12 +216,13 @@ class ProjectsController extends Controller
         $districts = District::all();
         $languages = Language::all();
         $classtype = ClassType::all();
+        $statuses = Status::all();
 
         $lastClass = ProjectClass::latest()->first();
         $nextNumber = $lastClass ? $lastClass->id + 1 : 1;
         $nextClassId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
-        return view('admin.pages.projects.classes.all_classes', compact('project', 'class', 'nextClassId', 'provinces', 'districts', 'languages', 'classtype'));
+        return view('admin.pages.projects.classes.all_classes', compact('project', 'class', 'nextClassId', 'provinces', 'districts', 'languages', 'classtype', 'statuses'));
     }
 
     public function getClassesDistricts($province_id){
@@ -237,7 +242,7 @@ class ProjectsController extends Controller
             'registration_date' => $request->registration_date,
             'class_id' => $request->class_id ?: $classId,
             'class_name' => $request->class_name,
-            'grades' => $request->grades ? json_encode($request->grades) : null,
+            'grades' => json_encode($request->grades),
             'class_type' => $request->class_type,
             'province_id' => $request->province_id,
             'district_id' => $request->district_id,
@@ -251,7 +256,7 @@ class ProjectsController extends Controller
             'total_enrolled' => $request->total_enrolled,
             'demographic' => $request->demographic,
             'language' => $request->language,
-            'class_status' => $request->class_status,
+            'status_id' => $request->status_id,
             'establishment_date' => $request->establishment_date,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
@@ -300,7 +305,7 @@ class ProjectsController extends Controller
             'registration_date' => $request->registration_date,
             'class_id' => $request->class_id,
             'class_name' => $request->class_name,
-            'grades' => $request->grades,
+            'grades' => json_encode($request->grades),
             'class_type' => $request->class_type,
             'province_id' => $request->province_id,
             'district_id' => $request->district_id,
@@ -314,7 +319,7 @@ class ProjectsController extends Controller
             'total_enrolled' => $request->total_enrolled,
             'demographic' => $request->demographic,
             'language' => $request->language,
-            'class_status' => $request->class_status ?? 0,
+            'status_id' => $request->status_id,
             'establishment_date' => $request->establishment_date,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,

@@ -109,34 +109,31 @@
                             </div>
 
                             <div class="form-group col-lg-4 mb-3">
-                                <label for="partner">Thematic Area</label>
-                                <input class="form-control" placeholder="Thematic Area" name="thematic_area" type="text" value="{{ $project->thematic_area }}">
+                                <label for="thematic_area">Thematic Area</label>
+
+                                <select name="thematic_area" class="form-control">
+                                    <option value="">-- Select --</option>
+
+                                    @foreach($thematicAreas as $area)
+                                        <option value="{{ $area->name }}"
+                                            {{ $project->thematic_area == $area->name ? 'selected' : '' }}>
+                                            {{ $area->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="form-group col-lg-4 mb-3">
-                                <label for="status">Status</label>
-                                <select class="form-control" name="status" id="status">
-                                    <option>
-                                        -- Select --
-                                    </option>
-                                    <option value="Completed" {{ $project->status=='Completed' ? 'selected' : '' }}>
-                                        Completed
-                                    </option>
-                                    <option value="Ongoing" {{ $project->status=='Ongoing' ? 'selected' : '' }}>
-                                        Ongoing
-                                    </option>
-                                    <option value="Pipeline" {{ $project->status=='Pipeline' ? 'selected' : '' }}>
-                                        Pipeline
-                                    </option>
-                                    <option value="Change" {{ $project->status=='Change' ? 'selected' : '' }}>
-                                        Change
-                                    </option>
-                                    <option value="Suspend" {{ $project->status=='Suspend' ? 'selected' : '' }}>
-                                        Suspend
-                                    </option>
-                                    <option value="Cancel" {{ $project->status=='Cancel' ? 'selected' : '' }}>
-                                        Cancel
-                                    </option>
+                                <label for="status_id">Status</label>
+                                <select name="status_id" class="form-control">
+                                    <option value="">-- Select --</option>
+
+                                    @foreach($statuses as $status)
+                                        <option value="{{ $status->id }}"
+                                            {{ isset($project) && $project->status_id == $status->id ? 'selected' : '' }}>
+                                            {{ $status->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 

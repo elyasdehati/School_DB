@@ -112,6 +112,12 @@
                                     <span class="px-2"> Thematic Area </span>
                                 </a>
                             </li>
+
+                            <li>
+                                <a href="{{ route('all.status') }}" class="{{ request()->routeIs('all.status') ? 'active' : '' }}">
+                                    <span class="px-2"> Status </span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

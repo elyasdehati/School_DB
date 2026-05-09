@@ -50,7 +50,13 @@
                                                     <td>{{ \Carbon\Carbon::parse($item->start_date)->format('d M Y') }} ⇒ {{ \Carbon\Carbon::parse($item->end_date)->format('d M Y') }}</td>
                                                     <td>{{ $item->thematic_area }}</td>
                                                     <td>{{ $item->donor }}</td>
-                                                    <td>{{ $item->status }}</td>
+                                                    <td>
+                                                        @if($item->status)
+                                                            <span style="background-color: {{ $item->status->color }}; color:#000; padding:5px 10px; border-radius:6px;">
+                                                                {{ $item->status->name }}
+                                                            </span>
+                                                        @endif
+                                                    </td>
                                                     <td class="text-center">
                                                         <div class="dropdown dropstart dropend dropup">
                                                             <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"

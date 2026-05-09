@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('donor')->nullable();
             $table->string('partner')->nullable();
             $table->string('thematic_area')->nullable();
-            $table->enum('status', ['Completed', 'Ongoing', 'Pipeline', 'Change', 'Suspend', 'Cancel'])->nullable();
+            $table->unsignedBigInteger('status_id')->nullable();
             $table->json('province')->nullable();
             $table->json('district')->nullable();
             $table->text('description')->nullable();

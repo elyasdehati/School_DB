@@ -1,6 +1,46 @@
 @extends('admin.admin_master')
 @section('admin')
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<style>
+    .select2-container {
+        z-index: 9999 !important;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        min-height: 38px;
+        border: 1px solid #ced4da;
+        border-radius: 0.375rem;
+        padding: 4px 6px;
+        overflow: hidden;
+    }
+
+    .select2-container--default .select2-selection--single {
+        height: 38px;
+        border: 1px solid #ced4da;
+        border-radius: 0.375rem;
+    }
+
+    .select2-selection {
+        display: flex !important;
+        align-items: center;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .select2-selection__choice__remove {
+        display: none !important;
+    }
+
+    .select2-container--open .select2-dropdown {
+        position: absolute;
+    }
+</style>
+
 <div class="row">
     <div class="col-md-12">
         <ul class="nav nav-tabs mb-3">
@@ -98,7 +138,7 @@
                                 // $key + 1,
                                 $item->class_id,
                                 $item->class_name,
-                                $item->grades,
+                                implode(', ', json_decode($item->grades ?? '[]', true) ?? []),
                                 $item->class_type,
                                 $item->province?->name ?? '',
                                 $item->district?->name ?? '',
@@ -132,7 +172,9 @@
                                 $item->hub_distance_km,
                                 $item->sip_completed ? 'Yes' : 'No',
                                 $item->remarks,
-                                $item->class_status ? 'Active' : 'Inactive',
+                                '<span class="badge" style="background-color: '.$item->status?->color.';">
+                                    '.$item->status?->name.'
+                                </span>',
                                 '<div class="dropdown dropstart dropend dropup">
                                     <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
                                     id="dropdownMenuLink'.$item->id.'"
@@ -217,12 +259,30 @@
                             <input type="text" name="class_name" class="form-control">
                         </div>
 
+                        @php
+                            $grades = [
+                                'grade1' => 'Grade 1',
+                                'grade2' => 'Grade 2',
+                                'grade3' => 'Grade 3',
+                                'grade4' => 'Grade 4',
+                                'grade5' => 'Grade 5',
+                                'grade6' => 'Grade 6',
+                                'grade7' => 'Grade 7',
+                                'grade8' => 'Grade 8',
+                                'grade9' => 'Grade 9',
+                            ];
+
+                            $selectedGrades = old('grades', []);
+                        @endphp
+
                         <div class="col-md-4 mb-2">
-                            <label for="grades">Grades</label>
-                            <select class="form-control" name="grades" id="grades">
-                                <option value="">-- Select --</option>
-                                <option value="grade1" {{ old('grades') == 'grade1' ? 'selected' : '' }}>Grade 1</option>
-                                <option value="grade2" {{ old('grades') == 'grade2' ? 'selected' : '' }}>Grade 2</option>
+                            <label>Grades</label>
+                            <select class="form-control select2" name="grades[]" multiple style="width:100%;">
+                                @foreach($grades as $key => $label)
+                                    <option value="{{ $key }}" {{ in_array($key, old('grades', $selectedGrades ?? [])) ? 'selected' : '' }}>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -339,9 +399,13 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Class Status</label>
-                            <select name="class_status" class="form-control">
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                            <select name="status_id" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach($statuses as $status)
+                                    <option value="{{ $status->id }}">
+                                        {{ $status->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -517,12 +581,22 @@
                                 <input type="text" name="class_name" class="form-control" value="{{ $item->class_name }}">
                             </div>
 
+                            @php
+                                $selectedGrades = json_decode($item->grades ?? '[]', true);
+                            @endphp
+
                             <div class="col-md-4 mb-2">
                                 <label for="grades">Grades</label>
-                                <select class="form-control" name="grades" id="grades">
-                                    <option value="">-- Select --</option>
-                                    <option value="grade1" {{ $item->grades == 'grade1' ? 'selected' : '' }}>Grade 1</option>
-                                    <option value="grade2" {{ $item->grades == 'grade2' ? 'selected' : '' }}>Grade 2</option>
+                                <select class="form-control select2" name="grades[]" multiple="multiple" style="width:100%;">
+                                    <option value="grade1" {{ in_array('grade1', $selectedGrades) ? 'selected' : '' }}>Grade 1</option>
+                                    <option value="grade2" {{ in_array('grade2', $selectedGrades) ? 'selected' : '' }}>Grade 2</option>
+                                    <option value="grade3" {{ in_array('grade3', $selectedGrades) ? 'selected' : '' }}>Grade 3</option>
+                                    <option value="grade4" {{ in_array('grade4', $selectedGrades) ? 'selected' : '' }}>Grade 4</option>
+                                    <option value="grade5" {{ in_array('grade5', $selectedGrades) ? 'selected' : '' }}>Grade 5</option>
+                                    <option value="grade6" {{ in_array('grade6', $selectedGrades) ? 'selected' : '' }}>Grade 6</option>
+                                    <option value="grade7" {{ in_array('grade7', $selectedGrades) ? 'selected' : '' }}>Grade 7</option>
+                                    <option value="grade8" {{ in_array('grade8', $selectedGrades) ? 'selected' : '' }}>Grade 8</option>
+                                    <option value="grade9" {{ in_array('grade9', $selectedGrades) ? 'selected' : '' }}>Grade 9</option>
                                 </select>
                             </div>
 
@@ -534,9 +608,9 @@
 
                                     @foreach($classtype as $class_type)
                                         <option value="{{ $class_type->name }}"
-    {{ $item->class_type == $class_type->name ? 'selected' : '' }}>
-    {{ $class_type->name }}
-</option>
+                                            {{ $item->class_type == $class_type->name ? 'selected' : '' }}>
+                                            {{ $class_type->name }}
+                                        </option>
                                     @endforeach
 
                                 </select>
@@ -655,9 +729,14 @@
 
                             <div class="col-md-4 mb-2">
                                 <label>Class Status</label>
-                                <select name="class_status" class="form-control">
-                                    <option value="1" {{ $item->class_status == 1 ? 'selected' : '' }}>Active</option>
-                                    <option value="0" {{ $item->class_status == 0 ? 'selected' : '' }}>Inactive</option>
+                                <select name="status_id" class="form-control">
+                                    <option value="">-- Select --</option>
+                                    @foreach($statuses as $status)
+                                        <option value="{{ $status->id }}"
+                                            {{ $item->status_id == $status->id ? 'selected' : '' }}>
+                                            {{ $status->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -1043,6 +1122,13 @@
 
         });
 
+    });
+
+    $('#addClassModal').on('shown.bs.modal', function () {
+        $(this).find('.select2').select2({
+            width: '100%',
+            dropdownParent: $(this)
+        });
     });
 </script>
 

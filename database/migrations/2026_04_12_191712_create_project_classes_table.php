@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('registration_date')->nullable();
             $table->string('class_id')->nullable();
             $table->string('class_name')->nullable();
-            $table->string('grades')->nullable();
+            $table->json('grades')->nullable();
             $table->string('class_type')->nullable();
             $table->unsignedBigInteger('province_id')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->integer('total_enrolled')->nullable();
             $table->string('demographic')->nullable();
             $table->string('language')->nullable();
-            $table->boolean('class_status')->nullable();
+            $table->foreignId('status_id')->nullable()->constrained('statuses')->nullOnDelete();
             $table->date('establishment_date')->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();

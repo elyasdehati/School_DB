@@ -8,6 +8,10 @@ class ProjectClass extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'grades' => 'array',
+    ];
+
     public function project(){
         return $this->belongsTo(Project::class);
     }
@@ -26,5 +30,9 @@ class ProjectClass extends Model
 
     public function district(){
         return $this->belongsTo(District::class);
+    }
+
+    public function status(){
+        return $this->belongsTo(Status::class);
     }
 }

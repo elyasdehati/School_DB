@@ -5,6 +5,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\Provinces;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\ThematicAreaController;
 use Illuminate\Support\Facades\Route;
 
@@ -128,6 +129,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/thematic/area/{id}', 'EditThematicArea')->name('edit.thematic.area');
         Route::post('/update/thematic/area/{id}', 'UpdateThematicArea')->name('update.thematic.area');
         Route::get('/delete/thematic/area/{id}', 'DeleteThematicArea')->name('delete.thematic.area');
+    });
+
+    // All Status Catalog
+    Route::controller(StatusController::class)->group(function () {
+        Route::get('/all/status', 'AllStatus')->name('all.status');
+        Route::get('/add/status', 'AddStatus')->name('add.status');
+        Route::post('/store/status', 'StoreStatus')->name('store.status');
+        Route::get('/edit/status/{id}', 'EditStatus')->name('edit.status');
+        Route::post('/update/status/{id}', 'UpdateStatus')->name('update.status');
+        Route::get('/delete/status/{id}', 'DeleteStatus')->name('delete.status');
     });
 
 });
