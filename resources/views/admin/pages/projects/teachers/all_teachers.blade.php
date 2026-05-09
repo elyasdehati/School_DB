@@ -92,7 +92,7 @@
                     @php
                         $headers = [
                             'Serial Number',
-                            'CBE List',
+                            'Class Name',
                             'Province',
                             'District',
                             'Village',
@@ -117,7 +117,7 @@
                         foreach($teachers as $key => $item){
                             $rows[] = [
                                 $item->serial_number,
-                                $item->cbe_list,
+                                $item->class?->class_name ?? '',
                                 $item->province?->name ?? '',
                                 $item->district?->name ?? '',
                                 $item->village,
@@ -199,13 +199,22 @@
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label>Class List</label>
-                            <input type="text" name="cbe_list" class="form-control" placeholder="Class List">
+                            <label>Class Name</label>
+
+                            <select name="class_id" class="form-control" required>
+                                <option value="" disabled selected>-- Select --</option>
+
+                                @foreach($classes as $class)
+                                    <option value="{{ $class->id }}">
+                                        {{ $class->class_name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="col-md-4 mb-2">
                             <label>First Name</label>
-                            <input type="text" name="first_name" class="form-control" placeholder="First Name">
+                            <input type="text" name="first_name" class="form-control" placeholder="First Name" required>
                         </div>
 
                         <div class="col-md-4 mb-2">
@@ -352,17 +361,26 @@
                             <div class="col-md-4 mb-2">
                                 <label>Serial Number</label>
                                 <input type="text" name="serial_number" class="form-control" value="{{ $item->serial_number }}">
-                                {{-- <input type="text" name="serial_number" class="form-control" value="{{ $nextSerial }}"> --}}
                             </div>
 
                             <div class="col-md-4 mb-2">
-                                <label>Class List</label>
-                                <input type="text" name="cbe_list" class="form-control" value="{{ $item->cbe_list }}">
+                                <label>Class Name</label>
+
+                                <select name="class_id" class="form-control" required>
+                                    <option value="" disabled selected>-- Select --</option>
+
+                                    @foreach($classes as $class)
+                                        <option value="{{ $class->id }}"
+                                            {{ $item->class_id == $class->id ? 'selected' : '' }}>
+                                            {{ $class->class_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="col-md-4 mb-2">
                                 <label>First Name</label>
-                                <input type="text" name="first_name" class="form-control" value="{{ $item->first_name }}">
+                                <input type="text" name="first_name" class="form-control" value="{{ $item->first_name }}" required>
                             </div>
 
                             <div class="col-md-4 mb-2">

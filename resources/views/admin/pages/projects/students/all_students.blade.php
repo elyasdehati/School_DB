@@ -292,8 +292,8 @@
                         <div class="col-md-4 mb-2">
                             <label>Gender</label>
                             <select name="gender" class="form-control">
-                                <option>Girls</option>
-                                <option>Boys</option>
+                                <option>Girl</option>
+                                <option>Boy</option>
                             </select>
                         </div>
 
@@ -508,8 +508,8 @@
                             <div class="col-md-4 mb-2">
                                 <label>Gender</label>
                                 <select name="gender" class="form-control">
-                                    <option value="Girls" {{ $item->gender == 'Girls' ? 'selected' : '' }}>Girls</option>
-                                    <option value="Boys" {{ $item->gender == 'Boys' ? 'selected' : '' }}>Boys</option>
+                                    <option value="Girl" {{ $item->gender == 'Girl' ? 'selected' : '' }}>Girl</option>
+                                    <option value="Boy" {{ $item->gender == 'Boy' ? 'selected' : '' }}>Boy</option>
                                 </select>
                             </div>
 

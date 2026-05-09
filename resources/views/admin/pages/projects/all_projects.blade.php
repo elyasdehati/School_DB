@@ -32,9 +32,10 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <th>No</th>
-                                                <th>Contract #</th>
                                                 <th>Name</th>
                                                 <th>Date</th>
+                                                <th>Province</th>
+                                                <th>District</th>
                                                 <th>Thematic Area</th>
                                                 <th>Donnor</th>
                                                 <th>Status</th>
@@ -45,9 +46,23 @@
                                             @foreach ($project as $key=> $item)
                                                 <tr class="text-center">
                                                     <td>{{ $key+1 }}</td>
-                                                    <td>{{ $item->project_contract_no }}</td>
                                                     <td><a href="{{ route('edit.project',$item->id) }}">{{ $item->name }}</a></td>
                                                     <td>{{ \Carbon\Carbon::parse($item->start_date)->format('d M Y') }} ⇒ {{ \Carbon\Carbon::parse($item->end_date)->format('d M Y') }}</td>
+                                                    <td>
+                                                        {{
+                                                            \App\Models\Province::whereIn('id', json_decode($item->province ?? '[]'))
+                                                            ->pluck('name')
+                                                            ->implode(', ')
+                                                        }}
+                                                    </td>
+
+                                                    <td>
+                                                        {{
+                                                            \App\Models\District::whereIn('id', json_decode($item->district ?? '[]'))
+                                                            ->pluck('name')
+                                                            ->implode(', ')
+                                                        }}
+                                                    </td>
                                                     <td>{{ $item->thematic_area }}</td>
                                                     <td>{{ $item->donor }}</td>
                                                     <td>

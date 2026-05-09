@@ -249,14 +249,9 @@
                             <input type="text" name="class_id" class="form-control" value="{{ $nextClassId }}">
                         </div>
 
-                        {{-- <div class="col-md-4 mb-2">
-                            <label>Class Name</label>
-                            <input type="text" name="class_name" class="form-control">
-                        </div> --}}
-
                         <div class="col-md-4 mb-2">
                             <label for="class_name">Class Name</label>
-                            <input type="text" name="class_name" class="form-control">
+                            <input type="text" name="class_name" class="form-control" required>
                         </div>
 
                         @php
@@ -277,7 +272,7 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Grades</label>
-                            <select class="form-control select2" name="grades[]" multiple style="width:100%;">
+                            <select class="form-control select2" name="grades[]" multiple style="width:100%;" required>
                                 @foreach($grades as $key => $label)
                                     <option value="{{ $key }}" {{ in_array($key, old('grades', $selectedGrades ?? [])) ? 'selected' : '' }}>
                                         {{ $label }}
@@ -515,7 +510,7 @@
                             <label>SIP Completed</label>
                             <select name="sip_completed" class="form-control">
                                 <option value="1">Yes</option>
-                                <option value="0">No</option>
+                                <option value="0" selected>No</option>
                             </select>
                         </div>
 
@@ -842,7 +837,7 @@
                                 <label>SIP Completed</label>
                                 <select name="sip_completed" class="form-control">
                                     <option value="1" {{ $item->sip_completed == 1 ? 'selected' : '' }}>Yes</option>
-                                    <option value="0" {{ $item->sip_completed == 0 ? 'selected' : '' }}>No</option>
+                                    <option value="0" {{ $item->sip_completed == 0 || $item->sip_completed == null ? 'selected' : '' }}>No</option>
                                 </select>
                             </div>
 

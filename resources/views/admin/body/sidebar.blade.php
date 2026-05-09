@@ -45,20 +45,24 @@
         <div id="sidebar-menu">
 
             <div class="logo-box">
-                <a href="index.html" class="logo logo-light">
+                <a href="{{ route('dashboard') }}" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="" height="22">
+                        <img src="{{ asset('upload/logo/logo.png') }}" alt="" height="22">
                     </span>
-                    <span class="logo-lg">
-                        <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt="" height="24">
+                    <span class="logo-lg d-flex align-items-center">
+                        <img src="{{ asset('upload/logo/logo.png') }}" alt="" height="45">
+
+                        <span style="margin-left:10px; font-size:18px; font-weight:bold; color:rgb(212, 212, 212);">
+                            WDIO
+                        </span>
                     </span>
                 </a>
                 <a href="index.html" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="" height="22">
+                        <img src="{{ asset('upload/logo/logo.png') }}" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt="" height="24">
+                        <img src="{{ asset('upload/logo/logo.png') }}" alt="" height="24">
                     </span>
                 </a>
             </div>
