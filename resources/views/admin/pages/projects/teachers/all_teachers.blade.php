@@ -202,8 +202,6 @@
                             <label>Class Name</label>
 
                             <select name="class_id" class="form-control" required>
-                                <option value="" disabled selected>-- Select --</option>
-
                                 @foreach($classes as $class)
                                     <option value="{{ $class->id }}">
                                         {{ $class->class_name }}
@@ -367,8 +365,6 @@
                                 <label>Class Name</label>
 
                                 <select name="class_id" class="form-control" required>
-                                    <option value="" disabled selected>-- Select --</option>
-
                                     @foreach($classes as $class)
                                         <option value="{{ $class->id }}"
                                             {{ $item->class_id == $class->id ? 'selected' : '' }}>

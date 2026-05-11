@@ -5,6 +5,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\Provinces;
+use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\ThematicAreaController;
 use Illuminate\Support\Facades\Route;
@@ -129,6 +130,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/thematic/area/{id}', 'EditThematicArea')->name('edit.thematic.area');
         Route::post('/update/thematic/area/{id}', 'UpdateThematicArea')->name('update.thematic.area');
         Route::get('/delete/thematic/area/{id}', 'DeleteThematicArea')->name('delete.thematic.area');
+    });
+
+     // All Residence Type Catalog
+    Route::controller(ResidenceController::class)->group(function () {
+        Route::get('/all/residence', 'AllResidence')->name('all.residence');
+        Route::get('/add/residence', 'AddResidence')->name('add.residence');
+        Route::post('/store/residence', 'StoreResidence')->name('store.residence');
+        Route::get('/edit/residence/{id}', 'EditResidence')->name('edit.residence');
+        Route::post('/update/residence/{id}', 'UpdateResidence')->name('update.residence');
+        Route::get('/delete/residence/{id}', 'DeleteResidence')->name('delete.residence');
     });
 
     // All Status Catalog

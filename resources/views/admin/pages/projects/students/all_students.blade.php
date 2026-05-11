@@ -214,31 +214,6 @@
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label>Province</label>
-                            <select name="province_id" class="form-control">
-                                <option value="">-- Select --</option>
-                                @foreach($provinces as $province)
-                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>District</label>
-                            <select name="district_id" class="form-control">
-                                <option value="">-- Select --</option>
-                                @foreach($districts as $district)
-                                    <option value="{{ $district->id }}">{{ $district->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>Village</label>
-                            <input type="text" name="village" class="form-control">
-                        </div>
-
-                        <div class="col-md-4 mb-2">
                             <label>Class ID</label>
                             <select name="class_id" id="add_class_id" class="form-control">
                                 @foreach($classes as $class)
@@ -298,6 +273,31 @@
                         </div>
 
                         <div class="col-md-4 mb-2">
+                            <label>Province</label>
+                            <select name="province_id" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach($provinces as $province)
+                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>District</label>
+                            <select name="district_id" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach($districts as $district)
+                                    <option value="{{ $district->id }}">{{ $district->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Village</label>
+                            <input type="text" name="village" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
                             <label>Native Language</label>
                             <select name="native_language" class="form-control">
                                 <option value="">-- Select --</option>
@@ -313,12 +313,13 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Residence Type</label>
-                            <select name="residence_type" class="form-control">
-                                <option value="Host Community">Host Community</option>
-                                <option value="IDP">IDP</option>
-                                <option value="Refugee">Refugee</option>
-                                <option value="Returnee">Returnee</option>
-                                <option value="Kochi">Kochi</option>
+                            <select class="form-control" name="residence_type" id="class_type">
+                                <option value="">-- Select --</option>
+                                @foreach($res as $item)
+                                    <option value="{{ $item->name }}">
+                                        {{ $item->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -529,12 +530,15 @@
 
                             <div class="col-md-4 mb-2">
                                 <label>Residence Type</label>
-                                <select name="residence_type" class="form-control">
-                                    <option value="Host Community" {{ $item->residence_type == 'Host Community' ? 'selected' : '' }}>Host Community</option>
-                                    <option value="IDP" {{ $item->residence_type == 'IDP' ? 'selected' : '' }}>IDP</option>
-                                    <option value="Refugee" {{ $item->residence_type == 'Refugee' ? 'selected' : '' }}>Refugee</option>
-                                    <option value="Returnee" {{ $item->residence_type == 'Returnee' ? 'selected' : '' }}>Returnee</option>
-                                    <option value="Kochi" {{ $item->residence_type == 'Kochi' ? 'selected' : '' }}>Kochi</option>
+                                <select class="form-control" name="residence_type" id="class_type">
+                                    <option value="">-- Select --</option>
+
+                                    @foreach($res as $resi)
+                                        <option value="{{ $resi->name }}"
+                                            {{ old('residence_type', $item->residence_type) == $resi->name ? 'selected' : '' }}>
+                                            {{ $resi->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 

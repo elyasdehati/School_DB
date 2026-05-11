@@ -24,6 +24,7 @@ use App\Models\ClassType;
 use App\Models\District;
 use App\Models\Language;
 use App\Models\Province;
+use App\Models\Residence;
 use App\Models\Status;
 use App\Models\ThematicArea;
 
@@ -361,12 +362,13 @@ class ProjectsController extends Controller
         $provinces = Province::all();
         $districts = District::all();
         $languages = Language::all();
+        $res = Residence::all();
 
         $lastStudent = ProjectStudent::latest()->first();
         $nextNumber = $lastStudent ? $lastStudent->id + 1 : 1;
         $nextStudentId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
-        return view('admin.pages.projects.students.all_students', compact('project', 'classes', 'std', 'nextStudentId', 'provinces', 'districts', 'languages'));
+        return view('admin.pages.projects.students.all_students', compact('project', 'classes', 'std', 'nextStudentId', 'provinces', 'districts', 'languages', 'res'));
     }
 
     public function getStudentDistricts($province_id){

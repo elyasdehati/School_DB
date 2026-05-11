@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('tazkira_no')->nullable();
             $table->integer('year_of_birth')->nullable();
             $table->integer('age')->nullable();
-            $table->enum('gender', ['Girls', 'Boys'])->nullable();
+            $table->enum('gender', ['Girl', 'Boy'])->nullable();
             $table->string('native_language')->nullable();
             $table->string('residence_type')->nullable();
             $table->boolean('is_disabled')->default(false);
