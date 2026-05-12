@@ -239,6 +239,11 @@ class ProjectsController extends Controller
         $nextNumber = $lastClass ? $lastClass->id + 1 : 1;
         $classId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
+        $request->validate([
+            'class_name' => 'required',
+            'grades' => 'required',
+        ]);
+
         ProjectClass::create([
             'project_id' => $id,
             'registration_date' => $request->registration_date,
@@ -564,8 +569,9 @@ class ProjectsController extends Controller
         $shura = ProjectShura::where('project_id', $id)->get();
         $members = ShuraMember::whereIn('shura_id', $shura->pluck('sno'))->get();
         $languages = Language::all();
+        $res = Residence::all();
 
-        return view('admin.pages.projects.shura_members.all_members', compact('project','shura','members', 'languages'));
+        return view('admin.pages.projects.shura_members.all_members', compact('project','shura','members', 'languages', 'res'));
     }
 
     public function StoreProjectShuraMembers(Request $request, $id){

@@ -281,11 +281,13 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Residence Type</label>
-                            <select name="residence_type" class="form-control">
-                                <option value="Host Community">Host Community</option>
-                                <option value="IDP">IDP</option>
-                                <option value="Returnee">Returnee</option>
-                                <option value="Refugee">Refugee</option>
+                            <select class="form-control" name="residence_type" id="residence_type">
+                                <option value="">-- Select --</option>
+                                @foreach($res as $item)
+                                    <option value="{{ $item->name }}">
+                                        {{ $item->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -441,11 +443,15 @@
 
                             <div class="col-md-4 mb-2">
                                 <label>Residence Type</label>
-                                <select name="residence_type" class="form-control">
-                                    <option value="Host Community" {{ $item->residence_type == 'Host Community' ? 'selected' : '' }}>Host Community</option>
-                                    <option value="IDP" {{ $item->residence_type == 'IDP' ? 'selected' : '' }}>IDP</option>
-                                    <option value="Returnee" {{ $item->residence_type == 'Returnee' ? 'selected' : '' }}>Returnee</option>
-                                    <option value="Refugee" {{ $item->residence_type == 'Refugee' ? 'selected' : '' }}>Refugee</option>
+                                <select class="form-control" name="residence_type" id="class_type">
+                                    <option value="">-- Select --</option>
+
+                                    @foreach($res as $resi)
+                                        <option value="{{ $resi->name }}"
+                                            {{ old('residence_type', $item->residence_type) == $resi->name ? 'selected' : '' }}>
+                                            {{ $resi->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 

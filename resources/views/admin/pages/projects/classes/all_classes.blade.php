@@ -231,7 +231,7 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Registration Date</label>
-                            <input type="date" name="registration_date" class="form-control">
+                            <input type="date" name="registration_date" class="form-control" required>
                         </div>
 
                         <div class="col-md-4 mb-2">
@@ -246,7 +246,7 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Class Id</label>
-                            <input type="text" name="class_id" class="form-control" value="{{ $nextClassId }}">
+                            <input type="text" name="class_id" class="form-control" value="{{ $nextClassId }}" required>
                         </div>
 
                         <div class="col-md-4 mb-2">
@@ -283,7 +283,7 @@
 
                         <div class="col-md-4 mb-2">
                             <label for="class_type">Class Type</label>
-                            <select class="form-control" name="class_type" id="class_type">
+                            <select class="form-control" name="class_type" id="class_type" required>
                                 <option value="">-- Select --</option>
                                 @foreach($classtype as $item)
                                     <option value="{{ $item->name }}">
@@ -988,12 +988,35 @@
 
                 let valid = true;
 
-                if (lat && (lat.value < -90 || lat.value > 90)) {
+                const requiredFields = [
+                    "class_id",
+                    "class_name",
+                    "class_type"
+                ];
+
+                requiredFields.forEach(name => {
+                    const field = form.querySelector(`[name="${name}"]`);
+
+                    if (field && !field.value.trim()) {
+                        field.classList.add("is-invalid");
+                        valid = false;
+                    }
+                });
+
+                // grades validation
+                const grades = form.querySelector('[name="grades[]"]');
+
+                if (grades && $(grades).val().length === 0) {
+                    $(grades).next('.select2-container').addClass('is-invalid');
+                    valid = false;
+                }
+
+                if (lat && lat.value && (lat.value < -90 || lat.value > 90)) {
                     lat.classList.add("is-invalid");
                     valid = false;
                 }
 
-                if (lng && (lng.value < -180 || lng.value > 180)) {
+                if (lng && lng.value && (lng.value < -180 || lng.value > 180)) {
                     lng.classList.add("is-invalid");
                     valid = false;
                 }
@@ -1002,6 +1025,9 @@
                     e.preventDefault();
                     e.stopPropagation();
                 }
+
+                form.classList.add('was-validated');
+
             });
 
             // Numbers only fields
