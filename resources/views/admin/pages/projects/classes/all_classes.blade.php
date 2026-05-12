@@ -347,8 +347,12 @@
                             <label for="infrastructure">Infrastructure</label>
                             <select class="form-control" name="infrastructure" id="infrastructure">
                                 <option value="">-- Select --</option>
-                                <option value="Mosque" {{ old('infrastructure') == 'Mosque' ? 'selected' : '' }}>Mosque</option>
-                                <option value="Community Space" {{ old('infrastructure') == 'Community Space' ? 'selected' : '' }}>Community Space</option>
+                                @foreach($infrastructures as $infrastructure)
+                                    <option value="{{ $infrastructure->name }}"
+                                        {{ old('infrastructure') == $infrastructure->name ? 'selected' : '' }}>
+                                        {{ $infrastructure->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -676,8 +680,12 @@
                                 <label for="infrastructure">Infrastructure</label>
                                 <select class="form-control" name="infrastructure" id="infrastructure">
                                     <option value="">-- Select --</option>
-                                    <option value="Mosque" {{ $item->infrastructure == 'Mosque' ? 'selected' : '' }}>Mosque</option>
-                                    <option value="Community Space" {{ $item->infrastructure == 'Community Space' ? 'selected' : '' }}>Community Space</option>
+                                    @foreach($infrastructures as $infrastructure)
+                                        <option value="{{ $infrastructure->name }}"
+                                            {{ $item->infrastructure == $infrastructure->name ? 'selected' : '' }}>
+                                            {{ $infrastructure->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 

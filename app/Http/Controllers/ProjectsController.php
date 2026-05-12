@@ -22,6 +22,7 @@ use App\Imports\ProjectTeachersImport;
 use App\Imports\ShuraMembersImport;
 use App\Models\ClassType;
 use App\Models\District;
+use App\Models\Infastractor;
 use App\Models\Language;
 use App\Models\Province;
 use App\Models\Residence;
@@ -219,12 +220,13 @@ class ProjectsController extends Controller
         $languages = Language::all();
         $classtype = ClassType::all();
         $statuses = Status::all();
+        $infrastructures = Infastractor::all();
 
         $lastClass = ProjectClass::latest()->first();
         $nextNumber = $lastClass ? $lastClass->id + 1 : 1;
         $nextClassId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
-        return view('admin.pages.projects.classes.all_classes', compact('project', 'class', 'nextClassId', 'provinces', 'districts', 'languages', 'classtype', 'statuses'));
+        return view('admin.pages.projects.classes.all_classes', compact('project', 'class', 'nextClassId', 'provinces', 'districts', 'languages', 'classtype', 'statuses', 'infrastructures'));
     }
 
     public function getClassesDistricts($province_id){

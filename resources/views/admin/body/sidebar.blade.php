@@ -124,6 +124,12 @@
                             </li>
 
                             <li>
+                                <a href="{{ route('all.infas') }}" class="{{ request()->routeIs('all.residence') ? 'active' : '' }}">
+                                    <span class="px-2"> Infastractor </span>
+                                </a>
+                            </li>
+
+                            <li>
                                 <a href="{{ route('all.status') }}" class="{{ request()->routeIs('all.status') ? 'active' : '' }}">
                                     <span class="px-2"> Status </span>
                                 </a>

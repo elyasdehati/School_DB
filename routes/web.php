@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClassTypeController;
+use App\Http\Controllers\InfastractorController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectsController;
@@ -140,6 +141,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/residence/{id}', 'EditResidence')->name('edit.residence');
         Route::post('/update/residence/{id}', 'UpdateResidence')->name('update.residence');
         Route::get('/delete/residence/{id}', 'DeleteResidence')->name('delete.residence');
+    });
+
+     // All Residence Type Catalog
+    Route::controller(InfastractorController::class)->group(function () {
+        Route::get('/all/infas', 'AllInfas')->name('all.infas');
+        Route::get('/add/infas', 'AddInfas')->name('add.infas');
+        Route::post('/store/infas', 'StoreInfas')->name('store.infas');
+        Route::get('/edit/infas/{id}', 'EditInfas')->name('edit.infas');
+        Route::post('/update/infas/{id}', 'UpdateInfas')->name('update.infas');
+        Route::get('/delete/infas/{id}', 'DeleteInfas')->name('delete.infas');
     });
 
     // All Status Catalog
