@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClassTypeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InfastractorController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
@@ -18,6 +19,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('admin.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
