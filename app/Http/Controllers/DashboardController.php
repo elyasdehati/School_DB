@@ -17,23 +17,26 @@ class DashboardController extends Controller
         $teachers = ProjectTeacher::where('is_active', 1)->get();
         $maleTeachers = $teachers->where('gender', 'Male')->count();
         $femaleTeachers = $teachers->where('gender', 'Female')->count();
+        $totalTeachers = $teachers->count();
 
         $students = ProjectStudent::where('status', 'Active')->get();
         $maleStudents = $students->where('gender', 'Boy')->count();
         $femaleStudents = $students->where('gender', 'Girl')->count();
+        $totalStudents = $students->count();
 
         $shura = ProjectShura::where('status', 'Active')->count();
 
         $shuraMembers = ShuraMember::where('status', 1)->get();
         $maleShura = $shuraMembers->where('gender', 'Male')->count();
         $femaleShura = $shuraMembers->where('gender', 'Female')->count();
+        $totalShuraMembers = $shuraMembers->count();
 
         return view('admin.index', compact(
             'classes',
-            'maleTeachers','femaleTeachers',
-            'maleStudents','femaleStudents',
+            'maleTeachers','femaleTeachers','totalTeachers',
+            'maleStudents','femaleStudents','totalStudents',
             'shura',
-            'maleShura','femaleShura'
+            'maleShura','femaleShura','totalShuraMembers'
         ));
     }
 }

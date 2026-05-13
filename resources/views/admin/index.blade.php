@@ -43,7 +43,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <div class="fs-14">Teachers</div>
+                                <div class="fs-14">Total Teachers: {{ $totalTeachers }}</div>
                                 <div>Male: {{ $maleTeachers }}</div>
                                 <div>Female: {{ $femaleTeachers }}</div>
                             </div>
@@ -60,7 +60,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <div class="fs-14">Students</div>
+                                <div class="fs-14">Total Students: {{ $totalStudents }}</div>
                                 <div>Male: {{ $maleStudents }}</div>
                                 <div>Female: {{ $femaleStudents }}</div>
                             </div>
@@ -91,7 +91,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <div class="fs-14">Shura Members</div>
+                                <div class="fs-14">Total Shura Members: {{ $totalShuraMembers }}</div>
                                 <div>Male: {{ $maleShura }}</div>
                                 <div>Female: {{ $femaleShura }}</div>
                             </div>
@@ -196,7 +196,7 @@
         </div> <!-- end row --> --}}
 
         <!-- Start Monthly Sales -->
-        {{-- <div class="row">
+        <div class="row">
             <div class="col-md-6 col-xl-8">
                 <div class="card">
                     
@@ -316,7 +316,7 @@
 
                 </div>
             </div>
-        </div> --}}
+        </div>
         <!-- End Monthly Sales -->
 
         {{-- <div class="row">
