@@ -10,6 +10,7 @@ use App\Http\Controllers\Provinces;
 use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\ThematicAreaController;
+use App\Http\Controllers\TrainingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -94,6 +95,17 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/import/projects/shura/members/{id}', 'ImportProjectShuraMembers')->name('import.projects.shura.members');
         Route::get('/export/projects/shura//members/{id}/{type}', 'exportShuraMember')->name('export.projects.shura.member');
+    });
+
+    // Project Training
+    Route::controller(TrainingController::class)->group(function () {
+        Route::get('/all/training/{id}', 'AllTraining')->name('all.training');
+        //  Route::post('/store/training{id}', 'StoreProjectTraining')->name('store.training');
+        // Route::post('/update/training{id}', 'UpdateProjectTraining')->name('update.training');
+        // Route::get('/delete/training{id}', 'DeleteProjectTraining')->name('delete.training');
+
+        // Route::post('/import/training{id}', 'ImportProjectTraining')->name('import.training');
+        // Route::get('/export/training{id}/{type}', 'ExportProjectTraining')->name('export.training');
     });
 
     // All Provinces Catalog

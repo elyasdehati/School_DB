@@ -62,6 +62,13 @@
                     <i class="bi bi-person-lines-fill"></i> Shura Members
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.training') ? 'active' : '' }}" 
+                href="{{ route('all.training', $project->id) }}">
+                    <i class="bi bi-clipboard2-check-fill"></i> Training
+                </a>
+            </li>
         </ul>
     </div>
 </div>
