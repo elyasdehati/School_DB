@@ -231,6 +231,9 @@
                             });
 
                             $('#districts').trigger('change');
+
+                            let selectedDistricts = @json($selectedDistricts ?? []);
+                            $('#districts').val(selectedDistricts).trigger('change');
                         }
                     });
                 }

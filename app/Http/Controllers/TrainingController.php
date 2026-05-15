@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TrainingExport;
 use App\Models\District;
 use App\Models\Project;
 use App\Models\Province;
 use App\Models\Status;
 use App\Models\Training;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TrainingController extends Controller
 {
@@ -86,5 +88,22 @@ class TrainingController extends Controller
         }
 
         return redirect()->back()->with('success', 'Training updated successfully');
+    }
+
+    public function ExportProjectTraining($project_id, $type){
+        $withData = $type === 'data';
+
+        return Excel::download(
+            new TrainingExport($project_id, $withData),
+            $withData ? 'Training_with_data.xlsx' : 'Training_template.xlsx'
+        );
+    }
+
+    public function DeleteProjectTraining($id){
+        $training = Training::findOrFail($id);
+        $training->districts()->detach();
+        $training->delete();
+
+        return redirect()->back()->with('success', 'Training deleted successfully');
     }
 }

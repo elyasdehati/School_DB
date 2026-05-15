@@ -129,12 +129,12 @@
                                 </button>
                             </form>
 
-                            <a href="{{ route('export.projects.classes', [$project->id, 'template']) }}" 
+                            <a href="{{ route('export.training', [$project->id, 'template']) }}" 
                             class="btn btn-info btn-sm">
                                 Download Template
                             </a>
 
-                            <a href="{{ route('export.projects.classes', [$project->id, 'data']) }}" 
+                            <a href="{{ route('export.training', [$project->id, 'data']) }}"
                             class="btn btn-primary btn-sm">
                                 Export Data
                             </a>
@@ -199,7 +199,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="' . route('delete.projects.class', $item->id) . '" 
+                                            <a href="' . route('delete.training', $item->id) . '" 
                                                 class="dropdown-item text-danger delete-confirm">
                                                     Delete
                                             </a>

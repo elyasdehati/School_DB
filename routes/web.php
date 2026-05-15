@@ -106,7 +106,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/get-training-districts/{province_id}', 'getTrainingDistricts');
 
         // Route::post('/import/training{id}', 'ImportProjectTraining')->name('import.training');
-        // Route::get('/export/training{id}/{type}', 'ExportProjectTraining')->name('export.training');
+        Route::get('/export/training/{id}/{type}', 'ExportProjectTraining')->name('export.training');
     });
 
     // All Provinces Catalog
