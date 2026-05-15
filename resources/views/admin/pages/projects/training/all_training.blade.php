@@ -105,77 +105,62 @@
 
                         $rows = [];
 
-                        // foreach($class as $key => $item){
-                        //     $rows[] = [
-                        //         // $key + 1,
-                        //         $item->class_id,
-                        //         $item->class_name,
-                        //         implode(', ', json_decode($item->grades ?? '[]', true) ?? []),
-                        //         $item->class_type,
-                        //         $item->province?->name ?? '',
-                        //         $item->district?->name ?? '',
-                        //         $item->village,
-                        //         $item->latitude,
-                        //         $item->longitude,
-                        //         $item->climate,
-                        //         $item->infrastructure,
-                        //         $item->boys_enrolled,
-                        //         $item->girls_enrolled,
-                        //         $item->total_enrolled,
-                        //         $item->demographic,
-                        //         $item->language,
-                        //         // $item->class_status,
-                        //         $item->establishment_date,
-                        //         $item->start_time,
-                        //         $item->end_time,
-                        //         $item->shift,
-                        //         $item->is_cluster ? 'Yes' : 'No',
-                        //         $item->female_teachers,
-                        //         $item->male_teachers,
-                        //         $item->cbe_teachers,
-                        //         $item->is_closed ? 'Yes' : 'No',
-                        //         $item->closure_date,
-                        //         $item->closure_reason,
-                        //         $item->female_sms_members,
-                        //         $item->male_sms_members,
-                        //         $item->sms_members,
-                        //         $item->has_hub_school ? 'Yes' : 'No',
-                        //         $item->hub_school_name,
-                        //         $item->hub_distance_km,
-                        //         $item->sip_completed ? 'Yes' : 'No',
-                        //         $item->remarks,
-                        //         '<span class="badge" style="background-color: '.$item->status?->color.';">
-                        //             '.$item->status?->name.'
-                        //         </span>',
-                        //         '<div class="dropdown dropstart dropend dropup">
-                        //             <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
-                        //             id="dropdownMenuLink'.$item->id.'"
-                        //             data-bs-toggle="dropdown" 
-                        //             data-bs-auto-close="outside" 
-                        //             data-bs-display="dynamic"
-                        //             aria-expanded="false">
-                        //                 <i class="bi bi-list"></i>
-                        //             </a>
+                        foreach($train as $key => $item){
+                            $rows[] = [
+                                $key + 1,
+                                $item->project?->name ?? '',
+                                $item->province?->name ?? '',
+                                $item->district,
+                                $item->village,
+                                $item->training_venue,
+                                $item->training_type,
+                                $item->training_topic,
+                                $item->training_start_date,
+                                $item->training_end_date,
+                                $item->facilitator_name,
+                                $item->facilitator_position,
+                                $item->male_participants,
+                                $item->female_participants,
+                                $item->gov_participants,
+                                '<span class="badge" style="background-color: '.$item->status?->color.';">
+                                    '.$item->status?->name.'
+                                </span>',
 
-                        //             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink'.$item->id.'">
-                        //                 <li>
-                        //                     <a class="dropdown-item" href="#" 
-                        //                     data-bs-toggle="modal" 
-                        //                     data-bs-target="#editClassModal'.$item->id.'">
-                        //                         Edit
-                        //                     </a>
-                        //                 </li>
-                        //                 <li>
-                        //                     <a href="' . route('delete.projects.class', $item->id) . '" 
-                        //                         class="dropdown-item text-danger delete-confirm">
-                        //                             Delete
-                        //                     </a>
-                        //                 </li>
-                        //             </ul>
-                        //         </div>'
-                        //     ];
-                        // }
+                                $item->avg_pre_test,
+                                $item->avg_post_test,
+                                $item->objective,
+                                $item->remarks,
+                                
+                                '<div class="dropdown dropstart dropend dropup">
+                                    <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
+                                    id="dropdownMenuLink'.$item->id.'"
+                                    data-bs-toggle="dropdown" 
+                                    data-bs-auto-close="outside" 
+                                    data-bs-display="dynamic"
+                                    aria-expanded="false">
+                                        <i class="bi bi-list"></i>
+                                    </a>
+
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink'.$item->id.'">
+                                        <li>
+                                            <a class="dropdown-item" href="#" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#editClassModal'.$item->id.'">
+                                                Edit
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="' . route('delete.projects.class', $item->id) . '" 
+                                                class="dropdown-item text-danger delete-confirm">
+                                                    Delete
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>'
+                            ];
+                        }
                     @endphp
+
 
                     <x-table :headers="$headers" :rows="$rows" />
 
