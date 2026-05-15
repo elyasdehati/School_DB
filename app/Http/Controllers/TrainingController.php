@@ -50,11 +50,41 @@ class TrainingController extends Controller
             'remarks' => $request->remarks,
         ]);
 
-        // districts relation (many-to-many)
         if ($request->district_ids) {
             $training->districts()->sync($request->district_ids);
         }
 
         return redirect()->back()->with('success', 'Training created successfully');
+    }
+
+    public function UpdateProjectTraining(Request $request, $id){
+        $training = Training::findOrFail($id);
+
+        $training->update([
+            'project_id' => $request->project_id,
+            'province_id' => $request->province_id,
+            'village' => $request->village,
+            'training_venue' => $request->training_venue,
+            'training_type' => $request->training_type,
+            'training_topic' => $request->training_topic,
+            'training_start_date' => $request->training_start_date,
+            'training_end_date' => $request->training_end_date,
+            'facilitator_name' => $request->facilitator_name,
+            'facilitator_position' => $request->facilitator_position,
+            'male_participants' => $request->male_participants,
+            'female_participants' => $request->female_participants,
+            'gov_participants' => $request->gov_participants,
+            'status_id' => $request->status_id,
+            'avg_pre_test' => $request->avg_pre_test,
+            'avg_post_test' => $request->avg_post_test,
+            'objective' => $request->objective,
+            'remarks' => $request->remarks,
+        ]);
+
+        if ($request->district_ids) {
+            $training->districts()->sync($request->district_ids ?? []);
+        }
+
+        return redirect()->back()->with('success', 'Training updated successfully');
     }
 }

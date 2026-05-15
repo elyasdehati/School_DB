@@ -6,53 +6,53 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 <style>
-.select2-container {
-    z-index: 99999 !important;
-}
+    .select2-container {
+        z-index: 99999 !important;
+    }
 
-.select2-container--open {
-    z-index: 999999 !important;
-}
+    .select2-container--open {
+        z-index: 999999 !important;
+    }
 
-.select2-dropdown {
-    z-index: 999999 !important;
-}
+    .select2-dropdown {
+        z-index: 999999 !important;
+    }
 
-/* Move Select2 remove (X) button to LEFT side */
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
-    padding: 2px 8px 2px 25px !important;
-}
+    /* Move Select2 remove (X) button to LEFT side */
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        padding: 2px 8px 2px 25px !important;
+    }
 
-.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-    right: auto !important;
-    left: 6px !important;
-}
-.select2-container--default .select2-selection--multiple {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    align-items: center;
-}
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        right: auto !important;
+        left: 6px !important;
+    }
+    .select2-container--default .select2-selection--multiple {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center;
+    }
 
-.select2-container--default .select2-selection--multiple .select2-selection__rendered {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    align-items: center;
-}
+    .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center;
+    }
 
-.select2-container--default .select2-selection--multiple .select2-search--inline {
-    position: relative !important;
-    width: auto !important;
-    margin-top: 0 !important;
-    flex: 1;
-}
+    .select2-container--default .select2-selection--multiple .select2-search--inline {
+        position: relative !important;
+        width: auto !important;
+        margin-top: 0 !important;
+        flex: 1;
+    }
 
-.select2-container--default .select2-selection--multiple .select2-search__field {
-    width: 100% !important;
-    min-width: 120px;
-}
-.select2-search--inline {
-    width: 100% !important;
-}
+    .select2-container--default .select2-selection--multiple .select2-search__field {
+        width: 100% !important;
+        min-width: 120px;
+    }
+    .select2-search--inline {
+        width: 100% !important;
+    }
 </style>
 
 <div class="row">
@@ -151,7 +151,7 @@
                 <div class="card-body">
 
                     @php
-                        $headers = ['No','Project','Province','District','Village','Training Venue','Training Type','Training Topic','Training Start Date','Training End Date','Facilitator Name','Facilitator Position','Number of Participants (Male)','Number of Participants (Female)','Number of Participant from Gov Authorities','Status','Avg Pre Test (%)','Avg Post Test (%)','Objective','Remarks','Action'];
+                        $headers = ['No','Project','Province','District','Village','Training Venue','Training Type','Training Topic','Training Start Date','Training End Date','Facilitator Name','Facilitator Position','Number of Participants (Male)','Number of Participants (Female)','Number of Participant from Gov Authorities', 'Avg Pre Test (%)','Avg Post Test (%)','Objective','Remarks','Status','Action'];
 
                         $rows = [];
 
@@ -172,14 +172,13 @@
                                 $item->male_participants,
                                 $item->female_participants,
                                 $item->gov_participants,
-                                '<span class="badge" style="background-color: '.$item->status?->color.';">
-                                    '.$item->status?->name.'
-                                </span>',
-
                                 $item->avg_pre_test,
                                 $item->avg_post_test,
                                 $item->objective,
                                 $item->remarks,
+                                '<span class="badge" style="background-color: '.$item->status?->color.';">
+                                    '.$item->status?->name.'
+                                </span>',
                                 
                                 '<div class="dropdown dropstart dropend dropup">
                                     <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
@@ -195,7 +194,7 @@
                                         <li>
                                             <a class="dropdown-item" href="#" 
                                             data-bs-toggle="modal" 
-                                            data-bs-target="#editClassModal'.$item->id.'">
+                                            data-bs-target="#editTrainingModal'.$item->id.'">
                                                 Edit
                                             </a>
                                         </li>
@@ -228,7 +227,7 @@
 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Shura</h5>
+                    <h5 class="modal-title">Add Training</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -323,7 +322,7 @@
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label>Class Status</label>
+                            <label>Status</label>
                             <select name="status_id" class="form-control">
                                 <option value="">-- Select --</option>
                                 @foreach($statuses as $status)
@@ -367,8 +366,201 @@
     </div>
 </div>
 
+@foreach($train as $item)
+    <div class="modal fade" id="editTrainingModal{{ $item->id }}" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+
+            <form action="{{ route('update.training', $item->id) }}" method="POST">
+                @csrf
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Training</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="col-md-4 mb-2">
+                                <label>Project</label>
+                                <input type="text" class="form-control" value="{{ $project->name }}" readonly>
+                                <input type="hidden" name="project_id" value="{{ $project->id }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Training Start Date</label>
+                                <input type="date" name="training_start_date" class="form-control"
+                                    value="{{ $item->training_start_date }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Training End Date</label>
+                                <input type="date" name="training_end_date" class="form-control"
+                                    value="{{ $item->training_end_date }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Province</label>
+                                <select name="province_id" class="form-control edit-province">
+                                    <option value="">-- Select --</option>
+
+                                    @foreach($provinces as $province)
+                                        <option value="{{ $province->id }}"
+                                            {{ $item->province_id == $province->id ? 'selected' : '' }}>
+                                            {{ $province->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            @php
+                                $selectedDistricts = $item->districts->pluck('id')->toArray();
+                            @endphp
+
+                            <div class="col-md-4 mb-2">
+                                <label>District</label>
+                                <select name="district_ids[]" 
+                                    class="form-control select2" 
+                                    multiple 
+                                    style="width:100%;">
+                                    @foreach($districts as $district)
+                                        <option value="{{ $district->id }}"
+                                            {{ in_array($district->id, $selectedDistricts) ? 'selected' : '' }}>
+                                            {{ $district->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Village</label>
+                                <input type="text" name="village" class="form-control"
+                                    value="{{ $item->village }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Training Venue</label>
+                                <input type="text" name="training_venue" class="form-control"
+                                    value="{{ $item->training_venue }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Training Type</label>
+
+                                <select class="form-control" name="training_type">
+                                    <option value="">-- Select --</option>
+
+                                    <option value="Core Training"
+                                        {{ $item->training_type == 'Core Training' ? 'selected' : '' }}>
+                                        Core Training
+                                    </option>
+
+                                    <option value="Refresher Training"
+                                        {{ $item->training_type == 'Refresher Training' ? 'selected' : '' }}>
+                                        Refresher Training
+                                    </option>
+
+                                    <option value="GRM"
+                                        {{ $item->training_type == 'GRM' ? 'selected' : '' }}>
+                                        GRM
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Training Topic</label>
+                                <input type="text" name="training_topic" class="form-control"
+                                    value="{{ $item->training_topic }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Facilitator Name</label>
+                                <input type="text" name="facilitator_name" class="form-control"
+                                    value="{{ $item->facilitator_name }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Facilitator Position</label>
+                                <input type="text" name="facilitator_position" class="form-control"
+                                    value="{{ $item->facilitator_position }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Male Participants</label>
+                                <input type="number" name="male_participants" class="form-control"
+                                    value="{{ $item->male_participants }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Female Participants</label>
+                                <input type="number" name="female_participants" class="form-control"
+                                    value="{{ $item->female_participants }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Gov Participants</label>
+                                <input type="number" name="gov_participants" class="form-control"
+                                    value="{{ $item->gov_participants }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Status</label>
+
+                                <select name="status_id" class="form-control">
+                                    <option value="">-- Select --</option>
+
+                                    @foreach($statuses as $status)
+                                        <option value="{{ $status->id }}"
+                                            {{ $item->status_id == $status->id ? 'selected' : '' }}>
+                                            {{ $status->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Avg Pre Test</label>
+                                <input type="text" name="avg_pre_test" class="form-control"
+                                    value="{{ $item->avg_pre_test }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Avg Post Test</label>
+                                <input type="text" name="avg_post_test" class="form-control"
+                                    value="{{ $item->avg_post_test }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Objective</label>
+                                <textarea name="objective" class="form-control"
+                                    rows="1" cols="1">{{ $item->objective }}</textarea>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Remarks</label>
+                                <textarea name="remarks" class="form-control"
+                                    rows="1" cols="1">{{ $item->remarks }}</textarea>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+@endforeach
+
 <script>
-    $('#addTrainingModal').on('shown.bs.modal', function () {
+    $('.modal').on('shown.bs.modal', function () {
         $(this).find('.select2').select2({
             width: '100%',
             dropdownParent: $(this)
@@ -395,7 +587,34 @@
                     options += `<option value="${item.id}">${item.name}</option>`;
                 });
 
-                $('select[name="district_ids[]"]').html(options).trigger('change');
+                $('#addTrainingModal select[name="district_ids[]"]').html(options).trigger('change');
+            }
+        });
+    });
+
+    $(document).on('change', '.edit-province', function () {
+
+        let province_id = $(this).val();
+
+        let modal = $(this).closest('.modal');
+
+        if (!province_id) {
+            modal.find('select[name="district_ids[]"]').html('<option disabled>Select a province first</option>');
+            return;
+        }
+
+        $.ajax({
+            url: '/get-training-districts/' + province_id,
+            type: 'GET',
+            success: function (data) {
+
+                let options = '';
+
+                data.forEach(function (item) {
+                    options += `<option value="${item.id}">${item.name}</option>`;
+                });
+
+                modal.find('select[name="district_ids[]"]').html(options).trigger('change');
             }
         });
     });

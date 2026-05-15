@@ -100,9 +100,9 @@ Route::middleware('auth')->group(function () {
     // Project Training
     Route::controller(TrainingController::class)->group(function () {
         Route::get('/all/training/{id}', 'AllTraining')->name('all.training');
-         Route::post('/store/training{id}', 'StoreProjectTraining')->name('store.training');
-        // Route::post('/update/training{id}', 'UpdateProjectTraining')->name('update.training');
-        // Route::get('/delete/training{id}', 'DeleteProjectTraining')->name('delete.training');
+        Route::post('/store/training/{id}', 'StoreProjectTraining')->name('store.training');
+        Route::post('/update/training/{id}', 'UpdateProjectTraining')->name('update.training');
+        Route::get('/delete/training{id}', 'DeleteProjectTraining')->name('delete.training');
         Route::get('/get-training-districts/{province_id}', 'getTrainingDistricts');
 
         // Route::post('/import/training{id}', 'ImportProjectTraining')->name('import.training');
