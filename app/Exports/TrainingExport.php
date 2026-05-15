@@ -80,7 +80,6 @@ class TrainingExport implements FromCollection, WithHeadings
         ];
     }
 
-    // ✅ ADDITION: helper for template detection
     public function isTemplate()
     {
         return !$this->withData;

@@ -105,7 +105,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/training{id}', 'DeleteProjectTraining')->name('delete.training');
         Route::get('/get-training-districts/{province_id}', 'getTrainingDistricts');
 
-        // Route::post('/import/training{id}', 'ImportProjectTraining')->name('import.training');
+        Route::post('/import/training/{id}', 'ImportProjectTraining')->name('import.training');
         Route::get('/export/training/{id}/{type}', 'ExportProjectTraining')->name('export.training');
     });
 

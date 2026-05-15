@@ -121,7 +121,7 @@
                         </div>
 
                         <div class="text-end me-2">
-                            <form action="{{ route('import.projects.classes', $project->id) }}" method="POST" enctype="multipart/form-data" class="d-inline">
+                            <form action="{{ route('import.training', $project->id) }}" method="POST" enctype="multipart/form-data" class="d-inline">
                                 @csrf
                                 <input type="file" name="excel_file" class="form-control form-control-sm d-inline" style="width:220px;">
                                 <button type="submit" class="btn btn-success btn-sm">

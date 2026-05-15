@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\TrainingExport;
+use App\Imports\TrainingImport;
 use App\Models\District;
 use App\Models\Project;
 use App\Models\Province;
@@ -97,6 +98,15 @@ class TrainingController extends Controller
             new TrainingExport($project_id, $withData),
             $withData ? 'Training_with_data.xlsx' : 'Training_template.xlsx'
         );
+    }
+
+    public function ImportProjectTraining(Request $request, $id){
+        $request->validate([
+                'excel_file' => 'required|mimes:xlsx,xls'
+            ]);
+        Excel::import(new TrainingImport($id), $request->file('excel_file'));
+
+        return back()->with('success', 'Imported successfully');
     }
 
     public function DeleteProjectTraining($id){
