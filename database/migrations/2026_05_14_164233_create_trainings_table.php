@@ -16,7 +16,6 @@ return new class extends Migration
             // $table->integer('sno')->nullable();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->foreignId('province_id')->nullable()->constrained('provinces')->nullOnDelete();
-            $table->string('district')->nullable();
             $table->string('village')->nullable();
             $table->string('training_venue')->nullable();
             $table->string('training_type')->nullable();

@@ -11,4 +11,8 @@ class District extends Model
     public function province(){
         return $this->belongsTo(Province::class);
     }
+
+    public function trainings(){
+        return $this->belongsToMany(Training::class, 'training_districts');
+    }
 }

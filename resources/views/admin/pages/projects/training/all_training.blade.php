@@ -5,6 +5,56 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
+<style>
+.select2-container {
+    z-index: 99999 !important;
+}
+
+.select2-container--open {
+    z-index: 999999 !important;
+}
+
+.select2-dropdown {
+    z-index: 999999 !important;
+}
+
+/* Move Select2 remove (X) button to LEFT side */
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    padding: 2px 8px 2px 25px !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    right: auto !important;
+    left: 6px !important;
+}
+.select2-container--default .select2-selection--multiple {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center;
+}
+
+.select2-container--default .select2-selection--multiple .select2-search--inline {
+    position: relative !important;
+    width: auto !important;
+    margin-top: 0 !important;
+    flex: 1;
+}
+
+.select2-container--default .select2-selection--multiple .select2-search__field {
+    width: 100% !important;
+    min-width: 120px;
+}
+.select2-search--inline {
+    width: 100% !important;
+}
+</style>
+
 <div class="row">
     <div class="col-md-12">
         <ul class="nav nav-tabs mb-3">
@@ -91,7 +141,7 @@
                         </div>
 
                         <div class="text-end">
-                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addClassModal">
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addTrainingModal">
                                 Add Training
                             </button>
                         </div>
@@ -109,8 +159,8 @@
                             $rows[] = [
                                 $key + 1,
                                 $item->project?->name ?? '',
-                                $item->province?->name ?? '',
-                                $item->district,
+                                $item->province?->name,
+                                $item->districts->pluck('name')->implode(', '),
                                 $item->village,
                                 $item->training_venue,
                                 $item->training_type,
@@ -169,5 +219,186 @@
         </div>
     </div>
 </div>
+
+{{-- ================= ADD CLASS MODAL (FULL MIGRATION) ================= --}}
+<div class="modal fade" id="addTrainingModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <form action="{{ route('store.training',$project->id) }}" method="POST">
+            @csrf
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Shura</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-md-4 mb-2">
+                            <label>Project</label>
+                            <input type="text" class="form-control" value="{{ $project->name }}" readonly>
+                            <input type="hidden" name="project_id" value="{{ $project->id }}">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Training Start Date</label>
+                            <input type="date" name="training_start_date" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Training End Date</label>
+                            <input type="date" name="training_end_date" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Province</label>
+                            <select name="province_id" id="province_id" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach($provinces as $province)
+                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                       <div class="col-md-4 mb-2">
+                            <label>District</label>
+                            <select name="district_ids[]" class="form-control select2" multiple style="width:100%;">
+                                @foreach($districts as $district)
+                                    <option value="{{ $district->id }}">
+                                        {{ $district->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Village</label>
+                            <input type="text" name="village" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Training Venue</label>
+                            <input type="text" name="training_venue" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label for="training_type">Training Type</label>
+                            <select class="form-control" name="training_type" id="training_type">
+                                <option value="">-- Select --</option>
+                                <option value="Core Training" {{ old('training_type') == 'Core Training' ? 'selected' : '' }}>Core Training</option>
+                                <option value="Refresher Training" {{ old('training_type') == 'Refresher Training' ? 'selected' : '' }}>Refresher Training</option>
+                                <option value="GRM" {{ old('training_type') == 'GRM' ? 'selected' : '' }}>GRM</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Training Topic</label>
+                            <input type="text" name="training_topic" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2 status-extra">
+                            <label>Facilitator Name</label>
+                            <input type="text" name="facilitator_name" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2 status-extra">
+                            <label>Facilitator Position</label>
+                            <input type="text" name="facilitator_position" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2 status-extra">
+                            <label>Male Participants</label>
+                            <input type="number" name="male_participants" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2 status-extra">
+                            <label>Female Participants</label>
+                            <input type="number" name="female_participants" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2 status-extra">
+                            <label>Gov Participants</label>
+                            <input type="number" name="gov_participants" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Class Status</label>
+                            <select name="status_id" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach($statuses as $status)
+                                    <option value="{{ $status->id }}">
+                                        {{ $status->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-2 status-extra">
+                            <label>Avg Pre Test</label>
+                            <input type="text" name="avg_pre_test" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2 status-extra">
+                            <label>Avg Post Test</label>
+                            <input type="text" name="avg_post_test" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Objective</label>
+                            <textarea name="objective" class="form-control" rows="1" cols="1"></textarea>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Remarks</label>
+                            <textarea name="remarks" class="form-control" rows="1" cols="1"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $('#addTrainingModal').on('shown.bs.modal', function () {
+        $(this).find('.select2').select2({
+            width: '100%',
+            dropdownParent: $(this)
+        });
+    });
+
+    $('#province_id').on('change', function () {
+
+        let province_id = $(this).val();
+
+        if (!province_id) {
+            $('.select2').html('<option disabled>Select a province first</option>');
+            return;
+        }
+
+        $.ajax({
+            url: '/get-training-districts/' + province_id,
+            type: 'GET',
+            success: function (data) {
+
+                let options = '';
+
+                data.forEach(function (item) {
+                    options += `<option value="${item.id}">${item.name}</option>`;
+                });
+
+                $('select[name="district_ids[]"]').html(options).trigger('change');
+            }
+        });
+    });
+</script>
 
 @endsection
