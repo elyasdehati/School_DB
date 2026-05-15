@@ -60,6 +60,13 @@
                     <i class="bi bi-person-lines-fill"></i> Shura Members
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.training') ? 'active' : '' }}" 
+                href="{{ route('all.training', $project->id) }}">
+                    <i class="bi bi-clipboard2-check-fill"></i> Training
+                </a>
+            </li>
         </ul>
     </div>
 </div>
@@ -509,59 +516,6 @@
         </div>
     </div>
 @endforeach
-
-{{-- <script>
-    document.addEventListener('change', function (e) {
-
-        // Add modal
-        if (e.target.id === 'class_id') {
-            let selected = e.target.options[e.target.selectedIndex];
-            document.getElementById('class_name').value = selected.dataset.name;
-        }
-
-        // Edit modal
-        if (e.target.classList.contains('class-select')) {
-            let selected = e.target.options[e.target.selectedIndex];
-            let classNameInput = e.target.closest('.row').querySelector('.class-name');
-            classNameInput.value = selected.dataset.name;
-        }
-
-    });
-</script> --}}
-
-{{-- @push('scripts')
-<script>
-    $(document).ready(function () {
-
-        $('#class_ids').select2({
-            placeholder: "",
-            width: '100%',
-            dropdownParent: $('#addShuraModal')
-        });
-
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-
-        // ADD modal
-        $('#class_ids').select2({
-            width: '100%',
-            dropdownParent: $('#addShuraModal')
-        });
-
-        // EDIT modal
-        $('.edit-class-select').each(function () {
-            $(this).select2({
-                width: '100%',
-                dropdownParent: $(this).closest('.modal')
-            });
-        });
-
-    });
-</script> --}}
-{{-- @endpush --}}
 
 <script>
     // ================= AUTO AGE =================
