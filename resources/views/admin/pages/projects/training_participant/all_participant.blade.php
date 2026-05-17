@@ -56,7 +56,7 @@
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('all.training.participant') ? 'active' : '' }}" 
                 href="{{ route('all.training.participant', $project->id) }}">
-                    <i class="bi bi-clipboard2-check-fill"></i> Training Participant
+                    <i class="bi bi-people"></i> Training Participant
                 </a>
             </li>
         </ul>
