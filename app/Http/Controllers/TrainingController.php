@@ -178,4 +178,11 @@ class TrainingController extends Controller
 
         return redirect()->back()->with('success', 'Participant added successfully');
     }
+
+    public function DeleteTrainingParticipant($id){
+        $participant = TrainingParticipant::findOrFail($id);
+        $participant->delete();
+
+        return redirect()->back()->with('success', 'Participant added successfully');
+    }
 }

@@ -147,7 +147,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="' . route('delete.training', $item->id) . '" 
+                                            <a href="' . route('delete.training.participant', $item->id) . '" 
                                                 class="dropdown-item text-danger delete-confirm">
                                                     Delete
                                             </a>
