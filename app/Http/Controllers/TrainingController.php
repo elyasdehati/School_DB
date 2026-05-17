@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Province;
 use App\Models\Status;
 use App\Models\Training;
+use App\Models\TrainingParticipant;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -115,5 +116,16 @@ class TrainingController extends Controller
         $training->delete();
 
         return redirect()->back()->with('success', 'Training deleted successfully');
+    }
+
+    // ------ Training Participant -------
+    public function AllTrainingParticipant($id){
+        $project = Project::findOrFail($id);
+        $part = TrainingParticipant::with(['project', 'training', 'province', 'district'])->where('project_id', $id)->get();
+
+        $provinces = Province::all();
+        $districts = District::all();
+
+        return view('admin.pages.projects.training_participant.all_participant', compact('project', 'part', 'provinces', 'districts'));
     }
 }
