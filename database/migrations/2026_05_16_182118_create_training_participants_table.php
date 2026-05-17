@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('training_participants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('training_id')->constrained('trainings')->cascadeOnDelete();
+            $table->string('training_type')->nullable();
             $table->unsignedBigInteger('province_id')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();
             $table->string('village')->nullable();

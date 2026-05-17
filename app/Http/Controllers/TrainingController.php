@@ -122,10 +122,35 @@ class TrainingController extends Controller
     public function AllTrainingParticipant($id){
         $project = Project::findOrFail($id);
         $part = TrainingParticipant::with(['project', 'training', 'province', 'district'])->where('project_id', $id)->get();
+        $trainings = Training::where('project_id', $id)->get();
 
         $provinces = Province::all();
         $districts = District::all();
 
-        return view('admin.pages.projects.training_participant.all_participant', compact('project', 'part', 'provinces', 'districts'));
+        return view('admin.pages.projects.training_participant.all_participant', compact('project', 'part', 'provinces', 'districts', 'trainings'));
+    }
+
+    public function StoreTrainingParticipant(Request $request, $project_id){
+        TrainingParticipant::create([
+            'project_id' => $project_id,
+            'training_type' => $request->training_type,
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
+            'village' => $request->village,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'father_name' => $request->father_name,
+            'trainee_type' => $request->trainee_type,
+            'gender' => $request->gender,
+            'age' => $request->age,
+            'is_disabled' => $request->is_disabled,
+            'disability_type' => $request->disability_type,
+            'phone' => $request->phone,
+            'pre_test' => $request->pre_test,
+            'post_test' => $request->post_test,
+            'remarks' => $request->remarks,
+        ]);
+
+        return redirect()->back()->with('success', 'Participant added successfully');
     }
 }

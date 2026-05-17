@@ -94,7 +94,7 @@
                         </div>
 
                         <div class="text-end">
-                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addTrainingModal">
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addTrainingParticipant">
                                 Add Participant
                             </button>
                         </div>
@@ -112,7 +112,7 @@
                             $rows[] = [
                                 $key + 1,
                                 $item->project?->name ?? '',
-                                $item->training?->training_type,
+                                $item->training_type,
                                 $item->province?->name ?? '',
                                 $item->district?->name ?? '',
                                 $item->village,
@@ -164,6 +164,151 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+{{-- ================= ADD CLASS MODAL (FULL MIGRATION) ================= --}}
+<div class="modal fade" id="addTrainingParticipant" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <form action="{{ route('store.training.participant', $project->id) }}" method="POST">
+            @csrf
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Participant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-md-4 mb-2">
+                            <label for="name">Project Name</label>
+                            <input class="form-control" placeholder="Name" required="" name="name" type="text" value="{{ $project->name }}" id="name" readonly>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Training Type</label>
+                            <select class="form-control" name="training_type">
+                                <option value="">-- Select --</option>
+                                <option value="Core Training">Core Training</option>
+                                <option value="Refresher Training">
+                                    Refresher Training
+                                </option>
+                                <option value="GRM">GRM</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Province</label>
+                            <select name="province_id" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach($provinces as $province)
+                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>District</label>
+                            <select name="district_id" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach($districts as $district)
+                                    <option value="{{ $district->id }}">{{ $district->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Village</label>
+                            <input type="text" name="village" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>First Name</label>
+                            <input type="text" name="first_name" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Last Name</label>
+                            <input type="text" name="last_name" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Father Name</label>
+                            <input type="text" name="father_name" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label for="trainee_type">Trainee Type</label>
+                            <select class="form-control" name="trainee_type" id="trainee_type">
+                                <option value="">-- Select --</option>
+                                <option value="Teacher" {{ old('trainee_type') == 'Teacher' ? 'selected' : '' }}>Teacher</option>
+                                <option value="School Teacher" {{ old('trainee_type') == 'School Teacher' ? 'selected' : '' }}>School Teacher</option>
+                                <option value="PED" {{ old('trainee_type') == 'PED' ? 'selected' : '' }}>PED</option>
+                                <option value="DED" {{ old('trainee_type') == 'DED' ? 'selected' : '' }}>DED</option>
+                                <option value="PDoE" {{ old('trainee_type') == 'PDoE' ? 'selected' : '' }}>PDoE</option>
+                                <option value="SMS Member" {{ old('trainee_type') == 'SMS Member' ? 'selected' : '' }}>SMS Member</option>
+                                <option value="Community Mobilizer" {{ old('trainee_type') == 'Community Mobilizer' ? 'selected' : '' }}>Community Mobilizer</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Gender</label>
+                            <select name="gender" class="form-control">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Age</label>
+                            <input type="number" name="age" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Is Disabled</label>
+                            <select name="is_disabled" class="form-control">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Disability Type</label>
+                            <input type="text" name="disability_type" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Phone</label>
+                            <input type="text" name="phone" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2 status-extra">
+                            <label>Pre Test</label>
+                            <input type="text" name="pre_test" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2 status-extra">
+                            <label>Post Test</label>
+                            <input type="text" name="post_test" class="form-control">
+                        </div>
+
+                        <div class="col-md-8 mb-2">
+                            <label>Remarks</label>
+                            <textarea name="remarks" class="form-control" rows="1" cols="1"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+
+            </div>
+        </form>
     </div>
 </div>
 
