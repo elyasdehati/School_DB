@@ -153,4 +153,29 @@ class TrainingController extends Controller
 
         return redirect()->back()->with('success', 'Participant added successfully');
     }
+
+    public function UpdateTrainingParticipant(Request $request, $id){
+        $participant = TrainingParticipant::findOrFail($id);
+
+        $participant->update([
+            'training_type' => $request->training_type,
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
+            'village' => $request->village,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'father_name' => $request->father_name,
+            'trainee_type' => $request->trainee_type,
+            'gender' => $request->gender,
+            'age' => $request->age,
+            'is_disabled' => $request->is_disabled,
+            'disability_type' => $request->disability_type,
+            'phone' => $request->phone,
+            'pre_test' => $request->pre_test,
+            'post_test' => $request->post_test,
+            'remarks' => $request->remarks,
+        ]);
+
+        return redirect()->back()->with('success', 'Participant added successfully');
+    }
 }

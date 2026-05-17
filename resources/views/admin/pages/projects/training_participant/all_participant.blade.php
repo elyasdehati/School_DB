@@ -142,7 +142,7 @@
                                         <li>
                                             <a class="dropdown-item" href="#" 
                                             data-bs-toggle="modal" 
-                                            data-bs-target="#editTrainingModal'.$item->id.'">
+                                            data-bs-target="#editTrainingParticipant'.$item->id.'">
                                                 Edit
                                             </a>
                                         </li>
@@ -311,5 +311,182 @@
         </form>
     </div>
 </div>
+
+@foreach($part  as $item)
+    <div class="modal fade" id="editTrainingParticipant{{ $item->id }}" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+
+            <form action="{{ route('update.training.participant', $item->id) }}" method="POST">
+                @csrf
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Training</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="col-md-4 mb-2">
+                                <label>Project</label>
+                                <input type="text" class="form-control" value="{{ $project->name }}" readonly>
+                                <input type="hidden" name="project_id" value="{{ $project->id }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Training Type</label>
+
+                                <select class="form-control" name="training_type">
+                                    <option value="">-- Select --</option>
+
+                                    <option value="Core Training"
+                                        {{ $item->training_type == 'Core Training' ? 'selected' : '' }}>
+                                        Core Training
+                                    </option>
+
+                                    <option value="Refresher Training"
+                                        {{ $item->training_type == 'Refresher Training' ? 'selected' : '' }}>
+                                        Refresher Training
+                                    </option>
+
+                                    <option value="GRM"
+                                        {{ $item->training_type == 'GRM' ? 'selected' : '' }}>
+                                        GRM
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Province</label>
+                                <select name="province_id" class="form-control">
+                                    <option value="">-- Select --</option>
+
+                                    @foreach($provinces as $province)
+                                        <option value="{{ $province->id }}"
+                                            {{ $item->province_id == $province->id ? 'selected' : '' }}>
+                                            {{ $province->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>District</label>
+                                <select name="district_id" class="form-control">
+                                    <option value="">-- Select --</option>
+
+                                    @foreach($districts as $district)
+                                        <option value="{{ $district->id }}"
+                                            {{ $item->district_id == $district->id ? 'selected' : '' }}>
+                                            {{ $district->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Village</label>
+                                <input type="text" name="village" class="form-control"
+                                    value="{{ $item->village }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>First Name</label>
+                                <input type="text" name="first_name" class="form-control"
+                                    value="{{ $item->first_name }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Last Name</label>
+                                <input type="text" name="last_name" class="form-control"
+                                    value="{{ $item->last_name }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Father Name</label>
+                                <input type="text" name="father_name" class="form-control"
+                                    value="{{ $item->father_name }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Trainee Type</label>
+                                <select class="form-control" name="trainee_type">
+                                    <option value="">-- Select --</option>
+                                    <option value="Teacher" {{ $item->trainee_type == 'Teacher' ? 'selected' : '' }}>Teacher</option>
+                                    <option value="School Teacher" {{ $item->trainee_type == 'School Teacher' ? 'selected' : '' }}>School Teacher</option>
+                                    <option value="PED" {{ $item->trainee_type == 'PED' ? 'selected' : '' }}>PED</option>
+                                    <option value="DED" {{ $item->trainee_type == 'DED' ? 'selected' : '' }}>DED</option>
+                                    <option value="PDoE" {{ $item->trainee_type == 'PDoE' ? 'selected' : '' }}>PDoE</option>
+                                    <option value="SMS Member" {{ $item->trainee_type == 'SMS Member' ? 'selected' : '' }}>SMS Member</option>
+                                    <option value="Community Mobilizer" {{ $item->trainee_type == 'Community Mobilizer' ? 'selected' : '' }}>Community Mobilizer</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Gender</label>
+                                <select name="gender" class="form-control">
+                                    <option value="Male" {{ $item->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                                    <option value="Female" {{ $item->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Age</label>
+                                <input type="number" name="age" class="form-control"
+                                    value="{{ $item->age }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Is Disabled</label>
+                                <select name="is_disabled" class="form-control">
+                                    <option value="0" {{ $item->is_disabled == 0 ? 'selected' : '' }}>No</option>
+                                    <option value="1" {{ $item->is_disabled == 1 ? 'selected' : '' }}>Yes</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Disability Type</label>
+                                <input type="text" name="disability_type" class="form-control" value="{{ $item->disability_type }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Phone</label>
+                                <input type="text" name="phone" class="form-control"
+                                    value="{{ $item->phone }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Pre Test</label>
+                                <input type="text" name="pre_test" class="form-control"
+                                    value="{{ $item->pre_test }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Post Test</label>
+                                <input type="text" name="post_test" class="form-control"
+                                    value="{{ $item->post_test }}">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Remarks</label>
+                                <textarea name="remarks" class="form-control">{{ $item->remarks }}</textarea>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+@endforeach
 
 @endsection

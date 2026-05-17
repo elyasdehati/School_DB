@@ -113,7 +113,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(TrainingController::class)->group(function () {
         Route::get('/all/training/participant/{id}', 'AllTrainingParticipant')->name('all.training.participant');
         Route::post('/store/training/participant/{id}', 'StoreTrainingParticipant')->name('store.training.participant');
-        // Route::post('/update/training/participant/{id}', 'UpdateProjectTraining')->name('update.training.participant');
+        Route::post('/update/training/participant/{id}', 'UpdateTrainingParticipant')->name('update.training.participant');
         // Route::get('/delete/training/{id}', 'DeleteProjectTraining')->name('delete.training.participant');
         // Route::get('/get-training-districts/{province_id}', 'getTrainingDistricts');
 
