@@ -134,6 +134,12 @@
                                     <span class="px-2"> Status </span>
                                 </a>
                             </li>
+
+                            <li>
+                                <a href="{{ route('all.project.status') }}" class="{{ request()->routeIs('all.project.status') ? 'active' : '' }}">
+                                    <span class="px-2">Project Status </span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

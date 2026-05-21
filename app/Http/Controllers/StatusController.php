@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProjectStatus;
 use App\Models\Status;
 use Illuminate\Http\Request;
 
@@ -55,5 +56,11 @@ class StatusController extends Controller
         $status->delete();
 
         return redirect()->route('all.status');
+    }
+
+    // All Project Status
+    public function AllProjectStatus(){
+        $pstatus = ProjectStatus::all();
+        return view('admin.pages.projectstatus.all_project_status', compact('pstatus'));
     }
 }

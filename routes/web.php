@@ -191,6 +191,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/status/{id}', 'DeleteStatus')->name('delete.status');
     });
 
+    // All Project Status Catalog
+    Route::controller(StatusController::class)->group(function () {
+        Route::get('/all/project/status', 'AllProjectStatus')->name('all.project.status');
+        Route::get('/add/project/status', 'AddProjectStatus')->name('add.project.status');
+        Route::post('/store/project/status', 'StoreProjectStatus')->name('store.project.status');
+        Route::get('/edit/project/status/{id}', 'EditProjectStatus')->name('edit.project.status');
+        Route::post('/update/project/status/{id}', 'UpdateProjectStatus')->name('update.project.status');
+        Route::get('/delete/project/status/{id}', 'DeleteProjectStatus')->name('delete.project.status');
+    });
+
 });
 
 require __DIR__.'/auth.php';
