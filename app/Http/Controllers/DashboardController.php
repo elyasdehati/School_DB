@@ -7,6 +7,7 @@ use App\Models\ProjectStudent;
 use App\Models\ProjectShura;
 use App\Models\ShuraMember;
 use App\Models\Training;
+use App\Models\TrainingParticipant;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -35,12 +36,17 @@ class DashboardController extends Controller
             $q->where('name', 'Active');
         })->count();
 
+        $participants = TrainingParticipant::get();
+        $maleParticipants = $participants->where('gender', 'Male')->count();
+        $femaleParticipants = $participants->where('gender', 'Female')->count();
+        $totalParticipants = $participants->count();
+
         return view('admin.index', compact(
             'classes',
             'maleTeachers','femaleTeachers','totalTeachers',
             'maleStudents','femaleStudents','totalStudents',
             'shura',
-            'maleShura','femaleShura','totalShuraMembers', 'trainings'
+            'maleShura','femaleShura','totalShuraMembers', 'trainings', 'maleParticipants','femaleParticipants','totalParticipants',
         ));
     }
 }

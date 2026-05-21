@@ -146,6 +146,31 @@
                 </div>
             </div>
 
+            <!-- Training Participants -->
+            <div class="col-md-6 col-xl-4">
+                <div class="card text-white border-0 shadow-sm rounded-4 equal-card h-100"
+                    style="background: linear-gradient(135deg,#1e3a8a,#0f172a); min-height:130px;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center h-100">
+                            <div>
+                                <div class="d-flex align-items-center gap-2 fw-bold mb-2"
+                                    style="font-size:22px;">
+                                    Participants:
+                                    <span>{{ $totalParticipants }}</span>
+                                </div>
+                                <div style="font-size:14px;">
+                                    Male: <span class="ms-1">{{ $maleParticipants }}</span>
+                                </div>
+                                <div style="font-size:14px;">
+                                    Female: <span class="ms-1">{{ $femaleParticipants }}</span>
+                                </div>
+                            </div>
+                            <i data-feather="users" style="width:50px;height:50px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- start row -->
