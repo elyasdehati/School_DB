@@ -24,6 +24,7 @@ use App\Models\ClassType;
 use App\Models\District;
 use App\Models\Infastractor;
 use App\Models\Language;
+use App\Models\ProjectStatus;
 use App\Models\Province;
 use App\Models\Residence;
 use App\Models\Status;
@@ -57,7 +58,7 @@ class ProjectsController extends Controller
     }
 
     public function EditProject($id){
-        $statuses = Status::all();
+        $statuses = ProjectStatus::all();
         $project = Project::find($id);
         $thematicAreas = ThematicArea::all();
         $provinces = Province::with('districts')->get();
