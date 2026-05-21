@@ -274,7 +274,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-4 mb-2 disability-box">
                             <label>Disability Type</label>
                             <input type="text" name="disability_type" class="form-control">
                         </div>
@@ -446,7 +446,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-4 mb-2">
+                            <div class="col-md-4 mb-2 disability-box">
                                 <label>Disability Type</label>
                                 <input type="text" name="disability_type" class="form-control" value="{{ $item->disability_type }}">
                             </div>
@@ -488,5 +488,30 @@
         </div>
     </div>
 @endforeach
+
+<script>
+function toggleDisability(select) {
+    let box = select.closest('.row').querySelector('.disability-box');
+
+    if (select.value == "1") {
+        box.style.opacity = "0.4";
+        box.style.pointerEvents = "none";
+        box.querySelector('input').disabled = true;
+    } else {
+        box.style.opacity = "1";
+        box.style.pointerEvents = "auto";
+        box.querySelector('input').disabled = false;
+    }
+}
+
+// on load
+document.querySelectorAll('select[name="is_disabled"]').forEach(function (el) {
+    toggleDisability(el);
+
+    el.addEventListener('change', function () {
+        toggleDisability(this);
+    });
+});
+</script>
 
 @endsection

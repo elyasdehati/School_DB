@@ -26,7 +26,7 @@
                     style="background: linear-gradient(135deg,#4e73df,#224abe); min-height:130px;">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-4 fw-bold">Total Classes</div>
+                            <div class="fs-4 fw-bold">Classes</div>
                             <h2 class="fw-bold mb-0">{{ $classes }}</h2>
                         </div>
                         <i data-feather="layers" style="width:50px;height:50px;"></i>
