@@ -26,6 +26,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->string('tazkira_number')->nullable();
             $table->integer('year_of_birth')->nullable();
+            $table->integer('age')->nullable();
             $table->enum('gender', ['Male','Female'])->nullable();
             $table->string('teacher_type')->nullable();
             $table->string('qualification')->nullable();

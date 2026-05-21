@@ -1,6 +1,8 @@
 @extends('admin.admin_master')
 @section('admin')
 
+<script src="https://cdn.jsdelivr.net/npm/jalaali-js/dist/jalaali.min.js"></script>
+
 <div class="row">
     <div class="col-md-12">
         <ul class="nav nav-tabs mb-3">
@@ -117,6 +119,7 @@
                             'Active',
                             'Tazkira',
                             'Year Birth',
+                            'Year',
                             'Gender',
                             'Teacher Type',
                             'Qualification',
@@ -142,6 +145,7 @@
                                 $item->is_active ? 'Yes' : 'No',
                                 $item->tazkira_number,
                                 $item->year_of_birth,
+                                $item->age,
                                 $item->gender,
                                 $item->teacher_type,
                                 $item->qualification,
@@ -251,7 +255,13 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Year of Birth</label>
-                            <input type="number" name="year_of_birth" class="form-control" placeholder="Year of Birth">
+                            <input type="number" name="year_of_birth" class="form-control"
+                                oninput="calcAge(this,'add_age')">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label>Age</label>
+                            <input type="number" name="age" id="add_age" class="form-control">
                         </div>
 
                         <div class="col-md-4 mb-2">
@@ -415,7 +425,15 @@
 
                             <div class="col-md-4 mb-2">
                                 <label>Year of Birth</label>
-                                <input type="number" name="year_of_birth" class="form-control" value="{{ $item->year_of_birth }}">
+                                <input type="number" name="year_of_birth" class="form-control"
+                                    value="{{ $item->year_of_birth }}"
+                                    oninput="calcAge(this,'age_{{ $item->id }}')">
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>Age</label>
+                                <input type="number" name="age" id="age_{{ $item->id }}" class="form-control"
+                                    value="{{ $item->age }}">
                             </div>
 
                             <div class="col-md-4 mb-2">
@@ -518,6 +536,37 @@
         </div>
     </div>
 @endforeach
+
+<script>
+    function calcAge(yearInput, ageInputId) {
+        let year = parseInt(yearInput.value);
+        if (!year) return;
+
+        let today = new Date();
+
+        let age;
+
+        // AFG Date
+        if (year >= 1300 && year <= 1500) {
+            let jToday = jalaali.toJalaali(
+                today.getFullYear(),
+                today.getMonth() + 1,
+                today.getDate()
+            );
+
+            age = jToday.jy - year;
+        }
+        // USA Date
+        else if (year >= 1900) {
+            age = today.getFullYear() - year;
+        }
+        else {
+            age = '';
+        }
+
+        document.getElementById(ageInputId).value = age;
+    }
+</script>
 
 @endsection
 
