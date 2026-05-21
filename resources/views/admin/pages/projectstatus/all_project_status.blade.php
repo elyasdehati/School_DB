@@ -59,7 +59,7 @@
                                                             </a>
 
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink{{ $item->id }}">
-                                                                <li><a class="dropdown-item" href="{{ route('edit.status',$item->id) }}">Edit</a></li>
+                                                                <li><a class="dropdown-item" href="{{ route('edit.project.status',$item->id) }}">Edit</a></li>
                                                                 <li>
                                                                     <a href="{{ route('delete.status',$item->id) }}" class="dropdown-item text-danger delete-confirm">
                                                                         Delete

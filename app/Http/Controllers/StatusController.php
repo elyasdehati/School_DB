@@ -81,4 +81,9 @@ class StatusController extends Controller
 
         return redirect()->route('all.project.status');
     }
+
+    public function EditProjectStatus($id){
+        $status = ProjectStatus::findOrFail($id);
+        return view('admin.pages.projectstatus.edit_project_status', compact('status'));
+    }
 }
