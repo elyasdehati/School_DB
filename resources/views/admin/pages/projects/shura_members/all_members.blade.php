@@ -131,7 +131,7 @@
                             'Gender',
                             'Education',
                             'Language',
-                            'Residence',
+                            'Residence Type',
                             'Disabled',
                             'Disability Type',
                             'Role',

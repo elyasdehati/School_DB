@@ -49,10 +49,10 @@
                     <span class="logo-sm">
                         <img src="{{ asset('upload/logo/logo.png') }}" alt="" height="22">
                     </span>
-                    <span class="logo-lg d-flex align-items-center">
-                        <img src="{{ asset('upload/logo/logo.png') }}" alt="" height="45">
+                    <span class="logo-lg d-flex align-items-center mt-2">
+                        <img src="{{ asset('upload/logo/logo.png') }}" alt="" height="60">
 
-                        <span style="margin-left:10px; font-size:18px; font-weight:bold; color:rgb(212, 212, 212);">
+                        <span style="margin-left:20px; font-size:23px; font-weight:bold; color:rgb(212, 212, 212);">
                             WDIO
                         </span>
                     </span>

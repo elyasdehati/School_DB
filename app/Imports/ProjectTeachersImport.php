@@ -22,8 +22,6 @@ class ProjectTeachersImport implements ToCollection, WithHeadingRow
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
-
-            // 🔥 ADD: normalize Yes/No + 1/0 + true/false
             $isActive = in_array(strtolower($row['is_active'] ?? ''), ['yes','1','true']) ? 1 : 0;
             $coreTraining = in_array(strtolower($row['core_training'] ?? ''), ['yes','1','true']) ? 1 : 0;
             $refresherTraining = in_array(strtolower($row['refresher_training'] ?? ''), ['yes','1','true']) ? 1 : 0;
@@ -31,7 +29,7 @@ class ProjectTeachersImport implements ToCollection, WithHeadingRow
             ProjectTeacher::create([
                 'project_id' => $this->project_id,
                 'serial_number' => $row['serial_number'] ?? null,
-                'cbe_list' => $row['cbe_list'] ?? null,
+                'class_code' => $row['class_id'] ?? null,
                 'province_id' => Province::where('name', $row['province'])->first()?->id,
                 'district_id' => District::where('name', $row['district'])->first()?->id,
                 'village' => $row['village'] ?? null,

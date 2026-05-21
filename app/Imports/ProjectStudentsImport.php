@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Models\Province;
 use App\Models\District;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class ProjectStudentsImport implements ToModel, WithHeadingRow
 {
@@ -31,7 +32,7 @@ class ProjectStudentsImport implements ToModel, WithHeadingRow
             'district_id' => $district?->id,
             'village' => $row['village'] ?? null,
             'asas_no' => $row['asas_no'] ?? null,
-            'enrollment_date' => $row['enrollment_date'] ?? null,
+            'enrollment_date' => isset($row['enrollment_date'])? Date::excelToDateTimeObject($row['enrollment_date'])->format('Y-m-d'): null,
             'first_name' => $row['first_name'] ?? null,
             'last_name' => $row['last_name'] ?? null,
             'father_name' => $row['father_name'] ?? null,

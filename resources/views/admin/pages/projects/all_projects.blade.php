@@ -35,7 +35,6 @@
                                                 <th>Name</th>
                                                 <th>Date</th>
                                                 <th>Province</th>
-                                                <th>District</th>
                                                 <th>Thematic Area</th>
                                                 <th>Donnor</th>
                                                 <th>Status</th>
@@ -56,13 +55,6 @@
                                                         }}
                                                     </td>
 
-                                                    <td>
-                                                        {{
-                                                            \App\Models\District::whereIn('id', json_decode($item->district ?? '[]'))
-                                                            ->pluck('name')
-                                                            ->implode(', ')
-                                                        }}
-                                                    </td>
                                                     <td>{{ $item->thematic_area }}</td>
                                                     <td>{{ $item->donor }}</td>
                                                     <td>

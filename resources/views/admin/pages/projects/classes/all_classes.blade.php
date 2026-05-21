@@ -144,7 +144,7 @@
                 <div class="card-body">
 
                     @php
-                        $headers = ['Class Id','Class Name','grades','Class Type','Province','District','Village','Latitude','Longitude','Climate','Infrastructure','Boys Enrolled','Girls Enrolled','Total Enrolled','Demographic','Language','Establishment Date','Start Time','End Time','Shift','Is Cluster','Female Teachers','Male Teachers','Total Teachers','Is the Class Closed','Closure Date','Closure Reason','Female SMS Members','MaleSMS Members','SMS Members','Has Hub School','Hub School Name','Hub Distance KM','SIP Completed','Remarks','Class Status', 'Action'];
+                        $headers = ['Class Id','Class Name','grades','Class Type','Province','District','Village','Latitude','Longitude','Climate','Infrastructure','Boys Enrolled','Girls Enrolled','Total Enrolled','Demographic','Language','Start Time','End Time','Shift','Is Cluster','Female Teachers','Male Teachers','Total Teachers','Is the Class Closed','Closure Date','Closure Reason','Female SMS Members','MaleSMS Members','SMS Members','Has Hub School','Hub School Name','Hub Distance KM','SIP Completed','Remarks','Class Status', 'Action'];
 
                         $rows = [];
 
@@ -167,8 +167,6 @@
                                 $item->total_enrolled,
                                 $item->demographic,
                                 $item->language,
-                                // $item->class_status,
-                                $item->establishment_date,
                                 $item->start_time,
                                 $item->end_time,
                                 $item->shift,

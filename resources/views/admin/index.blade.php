@@ -18,99 +18,97 @@
             </div>
         </div>
 
-        
-
-        <div class="row g-3">
+        <div class="row g-4 mb-3">
 
             <!-- Total Classes -->
-            <div class="col-md-6 col-xl-3">
-                <div class="card text-white border-0 shadow-sm rounded-4 equal-card"
-                    style="background: linear-gradient(135deg,#4e73df,#224abe);">
+            <div class="col-md-6 col-xl-4">
+                <div class="card text-white border-0 shadow-sm rounded-4 equal-card h-100"
+                    style="background: linear-gradient(135deg,#4e73df,#224abe); min-height:130px;">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-14">Total Classes</div>
-                            <h3 class="fw-bold mb-0">{{ $classes }}</h3>
+                            <div class="fs-5 fw-bold">Total Classes</div>
+                            <h2 class="fw-bold mb-0">{{ $classes }}</h2>
                         </div>
-                        <i data-feather="layers" style="width:40px;height:40px;"></i>
+                        <i data-feather="layers" style="width:50px;height:50px;"></i>
                     </div>
                 </div>
             </div>
 
             <!-- Teachers -->
-            <div class="col-md-6 col-xl-3">
-                <div class="card text-white border-0 shadow-sm rounded-4 equal-card"
-                    style="background: linear-gradient(135deg,#1cc88a,#13855c);">
+            <div class="col-md-6 col-xl-4">
+                <div class="card text-white border-0 shadow-sm rounded-4 equal-card h-100"
+                    style="background: linear-gradient(135deg,#1cc88a,#13855c); min-height:130px;">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center h-100">
                             <div>
-                                <div class="fs-14">Total Teachers: {{ $totalTeachers }}</div>
-                                <div>Male: {{ $maleTeachers }}</div>
-                                <div>Female: {{ $femaleTeachers }}</div>
+                                <div class="fs-5 fw-bold">Total Teachers: <span class="h2 fw-bold">{{ $totalTeachers }}</span></div>
+                                <div class="fw-bold">Male: <span class="fs-5">{{ $maleTeachers }}</span></div>
+                                <div class="fw-bold">Female: <span class="fs-5">{{ $femaleTeachers }}</span></div>
                             </div>
-                            <i data-feather="users" style="width:40px;height:40px;"></i>
+                            <i data-feather="users" style="width:50px;height:50px;"></i>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Students -->
-            <div class="col-md-6 col-xl-3">
-                <div class="card text-white border-0 shadow-sm rounded-4 equal-card"
-                    style="background: linear-gradient(135deg,#36b9cc,#1a7a8c);">
+            <div class="col-md-6 col-xl-4">
+                <div class="card text-white border-0 shadow-sm rounded-4 equal-card h-100"
+                    style="background: linear-gradient(135deg,#36b9cc,#1a7a8c); min-height:130px;">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center h-100">
                             <div>
-                                <div class="fs-14">Total Students: {{ $totalStudents }}</div>
-                                <div>Male: {{ $maleStudents }}</div>
-                                <div>Female: {{ $femaleStudents }}</div>
+                                <div class="fs-5 fw-bold">Total Students: <span class="h2 fw-bold">{{ $totalStudents }}</span></div>
+                                <div class="fw-bold">Male: <span class="fs-5">{{ $maleStudents }}</span></div>
+                                <div class="fw-bold">Female: <span class="fs-5">{{ $femaleStudents }}</span></div>
                             </div>
-                            <i data-feather="user-check" style="width:40px;height:40px;"></i>
+                            <i data-feather="user-check" style="width:50px;height:50px;"></i>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Shura -->
-            <div class="col-md-6 col-xl-3">
-                <div class="card text-white border-0 shadow-sm rounded-4 equal-card"
-                    style="background: linear-gradient(135deg,#f6c23e,#dda20a);">
+            <div class="col-md-6 col-xl-4">
+                <div class="card text-white border-0 shadow-sm rounded-4 equal-card h-100"
+                    style="background: linear-gradient(135deg,#f6c23e,#dda20a); min-height:130px;">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-14">Shura</div>
-                            <h3 class="fw-bold mb-0">{{ $shura }}</h3>
+                            <div class="fs-5 fw-bold">Shura</div>
+                            <h2 class="fw-bold mb-0">{{ $shura }}</h2>
                         </div>
-                        <i data-feather="home" style="width:40px;height:40px;"></i>
+                        <i data-feather="home" style="width:50px;height:50px;"></i>
                     </div>
                 </div>
             </div>
 
             <!-- Shura Members -->
-            <div class="col-md-6 col-xl-3">
-                <div class="card text-white border-0 shadow-sm rounded-4 equal-card"
-                    style="background: linear-gradient(135deg,#e74a3b,#be2617);">
+            <div class="col-md-6 col-xl-4">
+                <div class="card text-white border-0 shadow-sm rounded-4 equal-card h-100"
+                    style="background: linear-gradient(135deg,#e74a3b,#be2617); min-height:130px;">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center h-100">
                             <div>
-                                <div class="fs-14">Total Shura Members: {{ $totalShuraMembers }}</div>
-                                <div>Male: {{ $maleShura }}</div>
-                                <div>Female: {{ $femaleShura }}</div>
+                                <div class="fs-5 fw-bold">Total Shura Members: <span class="h2 fw-bold">{{ $totalShuraMembers }}</span></div>
+                                <div class="fw-bold">Male: <span class="fs-5">{{ $maleShura }}</span></div>
+                                <div class="fw-bold">Female: <span class="fs-5">{{ $femaleShura }}</span></div>
                             </div>
-                            <i data-feather="users" style="width:40px;height:40px;"></i>
+                            <i data-feather="users" style="width:50px;height:50px;"></i>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Trainings -->
-            <div class="col-md-6 col-xl-3">
-                <div class="card text-white border-0 shadow-sm rounded-4 equal-card"
-                    style="background: linear-gradient(135deg,#6f42c1,#4e2a84);">
+            <div class="col-md-6 col-xl-4">
+                <div class="card text-white border-0 shadow-sm rounded-4 equal-card h-100"
+                    style="background: linear-gradient(135deg,#6f42c1,#4e2a84); min-height:130px;">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-14">Active Trainings</div>
-                            <h3 class="fw-bold mb-0">{{ $trainings }}</h3>
+                            <div class="fs-5 fw-bold">Active Trainings</div>
+                            <h2 class="fw-bold mb-0">{{ $trainings }}</h2>
                         </div>
-                        <i data-feather="book-open" style="width:40px;height:40px;"></i>
+                        <i data-feather="book-open" style="width:50px;height:50px;"></i>
                     </div>
                 </div>
             </div>
