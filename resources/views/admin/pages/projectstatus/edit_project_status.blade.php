@@ -9,7 +9,7 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('update.status', $status->id) }}" method="POST">
+                <form action="{{ route('update.project.status', $status->id) }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="form-group col-lg-6 mb-3">

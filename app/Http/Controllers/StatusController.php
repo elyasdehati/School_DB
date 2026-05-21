@@ -86,4 +86,19 @@ class StatusController extends Controller
         $status = ProjectStatus::findOrFail($id);
         return view('admin.pages.projectstatus.edit_project_status', compact('status'));
     }
+
+    public function UpdateProjectStatus(Request $request, $id){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'color' => 'required|string|max:20',
+        ]);
+
+        $status = ProjectStatus::findOrFail($id);
+        $status->update([
+            'name' => $request->name,
+            'color' => $request->color,
+        ]);
+
+        return redirect()->route('all.project.status');
+    }
 }
