@@ -67,4 +67,18 @@ class StatusController extends Controller
     public function AddProjectStatus(){
         return view('admin.pages.projectstatus.add_project_status');
     }
+
+    public function StoreProjectStatus(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'color' => 'required|string|max:20',
+        ]);
+
+        ProjectStatus::create([
+            'name' => $request->name,
+            'color' => $request->color,
+        ]);
+
+        return redirect()->route('all.project.status');
+    }
 }
