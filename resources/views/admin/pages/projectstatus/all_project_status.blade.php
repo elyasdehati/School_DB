@@ -12,7 +12,7 @@
                     </div>
 
                     <div class="text-end">
-                        <a href="{{ route('add.status') }}" class="btn btn-secondary">Add Project Status</a>
+                        <a href="{{ route('add.project.status') }}" class="btn btn-secondary">Add Project Status</a>
                     </div>
                 </div>
             </div>

@@ -63,4 +63,8 @@ class StatusController extends Controller
         $pstatus = ProjectStatus::all();
         return view('admin.pages.projectstatus.all_project_status', compact('pstatus'));
     }
+    
+    public function AddProjectStatus(){
+        return view('admin.pages.projectstatus.add_project_status');
+    }
 }
