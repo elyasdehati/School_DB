@@ -31,7 +31,9 @@ class DashboardController extends Controller
         $femaleShura = $shuraMembers->where('gender', 'Female')->count();
         $totalShuraMembers = $shuraMembers->count();
 
-        $trainings = Training::where('status_id', 1)->count();
+        $trainings = Training::whereHas('status', function ($q) {
+            $q->where('name', 'Active');
+        })->count();
 
         return view('admin.index', compact(
             'classes',

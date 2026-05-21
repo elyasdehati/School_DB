@@ -8,11 +8,11 @@
             <div class="card-header">
                 <div class="d-flex align-items-sm-center flex-sm-row flex-column">
                     <div class="flex-grow-1">
-                        <h5 class="mb-0">All Infastractor</h5>
+                        <h5 class="mb-0">All Infrastructure </h5>
                     </div>
 
                     <div class="text-end">
-                        <a href="{{ route('add.infas') }}" class="btn btn-secondary">Add Infastractor</a>
+                        <a href="{{ route('add.infas') }}" class="btn btn-secondary">Add Infrastructure </a>
                     </div>
                 </div>
             </div>

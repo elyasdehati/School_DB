@@ -26,7 +26,7 @@
                     style="background: linear-gradient(135deg,#4e73df,#224abe); min-height:130px;">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-5 fw-bold">Total Classes</div>
+                            <div class="fs-4 fw-bold">Total Classes</div>
                             <h2 class="fw-bold mb-0">{{ $classes }}</h2>
                         </div>
                         <i data-feather="layers" style="width:50px;height:50px;"></i>
@@ -41,10 +41,21 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center h-100">
                             <div>
-                                <div class="fs-5 fw-bold">Total Teachers: <span class="h2 fw-bold">{{ $totalTeachers }}</span></div>
-                                <div class="fw-bold">Male: <span class="fs-5">{{ $maleTeachers }}</span></div>
-                                <div class="fw-bold">Female: <span class="fs-5">{{ $femaleTeachers }}</span></div>
+                                <div class="d-flex align-items-center gap-2 fw-bold mb-2"
+                                    style="font-size:22px;">
+                                    Teachers:
+                                    <span>{{ $totalTeachers }}</span>
+                                </div>
+
+                                <div style="font-size:14px;">
+                                    Male: <span class="ms-1">{{ $maleTeachers }}</span>
+                                </div>
+
+                                <div style="font-size:14px;">
+                                    Female: <span class="ms-1">{{ $femaleTeachers }}</span>
+                                </div>
                             </div>
+
                             <i data-feather="users" style="width:50px;height:50px;"></i>
                         </div>
                     </div>
@@ -58,10 +69,21 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center h-100">
                             <div>
-                                <div class="fs-5 fw-bold">Total Students: <span class="h2 fw-bold">{{ $totalStudents }}</span></div>
-                                <div class="fw-bold">Male: <span class="fs-5">{{ $maleStudents }}</span></div>
-                                <div class="fw-bold">Female: <span class="fs-5">{{ $femaleStudents }}</span></div>
+                                <div class="d-flex align-items-center gap-2 fw-bold mb-2"
+                                    style="font-size:22px;">
+                                    Students:
+                                    <span>{{ $totalStudents }}</span>
+                                </div>
+
+                                <div style="font-size:14px;">
+                                    Male: <span class="ms-1">{{ $maleStudents }}</span>
+                                </div>
+
+                                <div style="font-size:14px;">
+                                    Female: <span class="ms-1">{{ $femaleStudents }}</span>
+                                </div>
                             </div>
+
                             <i data-feather="user-check" style="width:50px;height:50px;"></i>
                         </div>
                     </div>
@@ -74,7 +96,7 @@
                     style="background: linear-gradient(135deg,#f6c23e,#dda20a); min-height:130px;">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-5 fw-bold">Shura</div>
+                            <div class="fs-4 fw-bold">Shura</div>
                             <h2 class="fw-bold mb-0">{{ $shura }}</h2>
                         </div>
                         <i data-feather="home" style="width:50px;height:50px;"></i>
@@ -89,10 +111,21 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center h-100">
                             <div>
-                                <div class="fs-5 fw-bold">Total Shura Members: <span class="h2 fw-bold">{{ $totalShuraMembers }}</span></div>
-                                <div class="fw-bold">Male: <span class="fs-5">{{ $maleShura }}</span></div>
-                                <div class="fw-bold">Female: <span class="fs-5">{{ $femaleShura }}</span></div>
+                                <div class="d-flex align-items-center gap-2 fw-bold mb-2"
+                                    style="font-size:22px;">
+                                    Shura Members:
+                                    <span>{{ $totalShuraMembers }}</span>
+                                </div>
+
+                                <div style="font-size:14px;">
+                                    Male: <span class="ms-1">{{ $maleShura }}</span>
+                                </div>
+
+                                <div style="font-size:14px;">
+                                    Female: <span class="ms-1">{{ $femaleShura }}</span>
+                                </div>
                             </div>
+
                             <i data-feather="users" style="width:50px;height:50px;"></i>
                         </div>
                     </div>
@@ -105,7 +138,7 @@
                     style="background: linear-gradient(135deg,#6f42c1,#4e2a84); min-height:130px;">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-5 fw-bold">Active Trainings</div>
+                            <div class="fs-4 fw-bold">Trainings</div>
                             <h2 class="fw-bold mb-0">{{ $trainings }}</h2>
                         </div>
                         <i data-feather="book-open" style="width:50px;height:50px;"></i>

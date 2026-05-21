@@ -125,7 +125,7 @@
 
                             <li>
                                 <a href="{{ route('all.infas') }}" class="{{ request()->routeIs('all.infas') ? 'active' : '' }}">
-                                    <span class="px-2"> Infastractor </span>
+                                    <span class="px-2"> Infrastructure  </span>
                                 </a>
                             </li>
 

@@ -5,7 +5,7 @@
     <div class="container-xxl">
         <div class="card mt-1">
             <div class="card-header">
-                <h5 class="mb-0">Edit Infastractor</h5>
+                <h5 class="mb-0">Edit Infrastructure</h5>
             </div>
 
             <div class="card-body">
