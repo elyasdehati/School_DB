@@ -101,4 +101,11 @@ class StatusController extends Controller
 
         return redirect()->route('all.project.status');
     }
+
+    public function DeleteProjectStatus($id){
+        $status = ProjectStatus::findOrFail($id);
+        $status->delete();
+
+        return redirect()->route('all.project.status');
+    }
 }
