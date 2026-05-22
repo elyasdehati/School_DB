@@ -130,6 +130,12 @@ class TrainingController extends Controller
         return view('admin.pages.projects.training_participant.all_participant', compact('project', 'part', 'provinces', 'districts', 'trainings'));
     }
 
+    public function getParticipantDistricts($province_id){
+        $districts = District::where('province_id', $province_id)->get();
+
+        return response()->json($districts);
+    }
+
     public function StoreTrainingParticipant(Request $request, $project_id){
         TrainingParticipant::create([
             'project_id' => $project_id,

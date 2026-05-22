@@ -568,7 +568,7 @@ class ProjectsController extends Controller
         return back()->with('success', 'Shura deleted successfully');
     }
 
-    // --------------- All Project Shura ---------------
+    // --------------- All Project Shura Members ---------------
     public function AllProjectsShuraMembers($id){
         $project = Project::findOrFail($id);
         $shura = ProjectShura::where('project_id', $id)->get();

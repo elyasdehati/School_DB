@@ -512,6 +512,33 @@ document.querySelectorAll('select[name="is_disabled"]').forEach(function (el) {
         toggleDisability(this);
     });
 });
+
+document.addEventListener('change', function (e) {
+    if (e.target.name === 'province_id') {
+
+        let provinceId = e.target.value;
+        let form = e.target.closest('form');
+        let districtSelect = form.querySelector('[name="district_id"]');
+
+        districtSelect.innerHTML = '<option>Loading...</option>';
+
+        fetch('/get-participant-districts/' + provinceId)
+            .then(res => res.text())
+            .then(text => {
+                let data = JSON.parse(text); // safe check
+
+                districtSelect.innerHTML = '<option value="">-- Select --</option>';
+
+                data.forEach(d => {
+                    districtSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`;
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                districtSelect.innerHTML = '<option>Error loading</option>';
+            });
+    }
+});
 </script>
 
 @endsection
