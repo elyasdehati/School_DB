@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->string('serial_number')->nullable();
-            $table->foreignId('class_id')->nullable()->constrained('project_classes')->nullOnDelete();
+            $table->string('class_id')->nullable();
             $table->unsignedBigInteger('province_id')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();
             $table->string('village')->nullable();

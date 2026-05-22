@@ -29,7 +29,7 @@ class ProjectTeachersExport implements FromCollection, WithHeadings
             ->map(function ($item) {
                 return [
                     'serial_number' => $item->serial_number,
-                    'class_id' => $item->class_code,
+                    'class_id' => $item->class?->class_id,
 
                     'province' => $item->province?->name,
                     'district' => $item->district?->name,
@@ -46,6 +46,7 @@ class ProjectTeachersExport implements FromCollection, WithHeadings
 
                     'tazkira_number' => $item->tazkira_number,
                     'year_of_birth' => $item->year_of_birth,
+                    'age' => $item->age,
                     'gender' => $item->gender,
                     'teacher_type' => $item->teacher_type,
                     'qualification' => $item->qualification,
@@ -73,6 +74,7 @@ class ProjectTeachersExport implements FromCollection, WithHeadings
             'is_active',
             'tazkira_number',
             'year_of_birth',
+            'age',
             'gender',
             'teacher_type',
             'qualification',

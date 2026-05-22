@@ -35,7 +35,7 @@ class ProjectShurasImport implements ToCollection, WithHeadingRow
                 'district_id' => $district?->id,
                 'village' => $row['village'] ?? null,
                 'shura_name' => $row['shura_name'] ?? null,
-                'shura_establishment_date' => !empty($row['establishment_date'])? date('Y-m-d', strtotime($row['establishment_date'])): null,
+                'shura_establishment_date' => !empty($row['establishment_date'])? (is_numeric($row['establishment_date'])? Date::excelToDateTimeObject($row['establishment_date'])->format('Y-m-d'): date('Y-m-d', strtotime($row['establishment_date']))): null,
                 'status' => $row['status'] ?? 'Active',
                 'status_change_date' => !empty($row['status_change_date'])
                     ? (is_numeric($row['status_change_date'])
@@ -48,7 +48,8 @@ class ProjectShurasImport implements ToCollection, WithHeadingRow
 
             if (!empty($row['classes'])) {
                 $classNames = array_map('trim', explode(',', $row['classes']));
-                $classIds = ProjectClass::whereIn('class_name', $classNames)->pluck('id')->toArray();
+                $classIds = ProjectClass::whereIn('class_id', $classNames)->pluck('id')->toArray();
+
                 $shura->classes()->attach($classIds);
             }
         }

@@ -221,7 +221,7 @@
 
                             <select name="class_id" class="form-control" required>
                                 @foreach($classes as $class)
-                                    <option value="{{ $class->id }}">
+                                    <option value="{{ $class->class_id }}">
                                         {{ $class->class_name }}
                                     </option>
                                 @endforeach
@@ -390,8 +390,8 @@
 
                                 <select name="class_id" class="form-control" required>
                                     @foreach($classes as $class)
-                                        <option value="{{ $class->id }}"
-                                            {{ $item->class_id == $class->id ? 'selected' : '' }}>
+                                        <option value="{{ $class->class_id }}"
+                                            {{ $item->class_id == $class->class_id   ? 'selected' : '' }}>
                                             {{ $class->class_name }}
                                         </option>
                                     @endforeach

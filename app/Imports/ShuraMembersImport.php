@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use App\Models\ShuraMember;
+use App\Models\ProjectShura;
 
 class ShuraMembersImport implements ToCollection, WithHeadingRow
 {
@@ -21,15 +22,17 @@ class ShuraMembersImport implements ToCollection, WithHeadingRow
     {
         foreach ($collection as $row) {
 
+            $shura = ProjectShura::where('sno', $row['shura_sno'] ?? null)->first();
+
             ShuraMember::create([
                 'project_id' => $this->project_id,
-                'shura_id' => $row['shura_sno'] ?? null,
+                'shura_id' => $shura?->id,
                 'first_name' => $row['first_name'] ?? null,
                 'last_name' => $row['last_name'] ?? null,
                 'father_name' => $row['father_name'] ?? null,
                 'tazkira_no' => $row['tazkira_no'] ?? null,
                 'year_of_birth' => $row['year_of_birth'] ?? null,
-                'age' => $row['age'] ?? null,
+                'age' => is_numeric($row['age'])? $row['age']: (1405 - ($row['year_of_birth'] ?? 0)),
                 'gender' => $row['gender'] ?? null,
                 'education_level' => $row['education_level'] ?? null,
                 'language' => $row['language'] ?? null,

@@ -38,7 +38,7 @@ class ProjectShurasExport implements FromCollection, WithHeadings
                     'village' => $item->village,
                     'shura_name' => $item->shura_name,
                     'establishment_date' => $item->shura_establishment_date,
-                    'classes' => implode(', ', $item->classes->pluck('class_name')->toArray()),
+                    'classes' => implode(', ', $item->classes->pluck('class_id')->toArray()),
                     'status' => $item->status,
                     'status_change_date' => $item->status_change_date,
                     'status_change_reason' => $item->status_change_reason,
