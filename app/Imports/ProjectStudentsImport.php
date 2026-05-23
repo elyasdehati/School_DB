@@ -13,6 +13,8 @@ class ProjectStudentsImport implements ToModel, WithHeadingRow
 {
     private $project_id;
 
+    public $skipped = 0;
+
     private $provinces;
     private $districts;
 
@@ -26,6 +28,16 @@ class ProjectStudentsImport implements ToModel, WithHeadingRow
 
     public function model(array $row)
     {
+
+        $exists = ProjectStudent::where('project_id', $this->project_id)
+            ->where('student_id', $row['student_id'] ?? null)
+            ->first();
+
+        if ($exists) {
+            $this->skipped++;
+            return null;
+        }
+
         return new ProjectStudent([
             'project_id' => $this->project_id,
 

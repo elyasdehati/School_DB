@@ -435,9 +435,11 @@ class ProjectsController extends Controller
             'excel_file' => 'required|mimes:xlsx,xls'
         ]);
 
-        Excel::import(new ProjectStudentsImport($id), $request->file('excel_file'));
+        $import = new ProjectStudentsImport($id);
 
-        return redirect()->back()->with('success', 'Students imported successfully');
+        Excel::import($import, $request->file('excel_file'));
+
+        return redirect()->back()->with('success', 'Students imported successfully. Skipped duplicates: ' . $import->skipped);
     }
 
     // -----  Export -------
