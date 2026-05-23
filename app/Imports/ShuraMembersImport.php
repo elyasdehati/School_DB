@@ -13,6 +13,8 @@ class ShuraMembersImport implements ToCollection, WithHeadingRow
 {
     private $project_id;
 
+    public $skipped = 0;
+
     public function __construct($project_id)
     {
         $this->project_id = $project_id;
@@ -21,6 +23,17 @@ class ShuraMembersImport implements ToCollection, WithHeadingRow
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
+
+            $exists = ShuraMember::where('project_id', $this->project_id)
+                ->where('first_name', $row['first_name'] ?? null)
+                ->where('last_name', $row['last_name'] ?? null)
+                ->where('father_name', $row['father_name'] ?? null)
+                ->first();
+
+            if ($exists) {
+                $this->skipped++;
+                continue;
+            }
 
             $shura = ProjectShura::where('sno', $row['shura_sno'] ?? null)->first();
 
