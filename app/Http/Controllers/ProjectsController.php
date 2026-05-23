@@ -165,9 +165,13 @@ class ProjectsController extends Controller
             'excel_file' => 'required|mimes:xlsx,xls'
         ]);
 
-        Excel::import(new ProjectTeachersImport($id), $request->file('excel_file'));
+        $import = new ProjectTeachersImport($id);
 
-        return back()->with('success', 'Teachers imported successfully');
+        Excel::import($import, $request->file('excel_file'));
+
+        return back()->with('success',
+            'Teachers imported successfully. Skipped: ' . $import->skipped
+        );
     }
 
     public function exportTeachers($id, $type){

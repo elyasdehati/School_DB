@@ -15,6 +15,8 @@ class ProjectTeachersImport implements ToCollection, WithHeadingRow
 {
     private $project_id;
 
+    public $skipped = 0;
+
     public function __construct($project_id)
     {
         $this->project_id = $project_id;
@@ -23,6 +25,18 @@ class ProjectTeachersImport implements ToCollection, WithHeadingRow
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
+
+            $exists = ProjectTeacher::where('project_id', $this->project_id)
+                ->where('class_id', $row['class_id'] ?? null)
+                ->where('first_name', $row['first_name'] ?? null)
+                ->where('last_name', $row['last_name'] ?? null)
+                ->first();
+
+            if ($exists) {
+                $this->skipped++;
+                continue;
+            }
+
             $isActive = in_array(strtolower($row['is_active'] ?? ''), ['yes','1','true']) ? 1 : 0;
             $coreTraining = in_array(strtolower($row['core_training'] ?? ''), ['yes','1','true']) ? 1 : 0;
             $refresherTraining = in_array(strtolower($row['refresher_training'] ?? ''), ['yes','1','true']) ? 1 : 0;
