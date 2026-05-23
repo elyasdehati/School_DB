@@ -297,8 +297,14 @@ class ProjectsController extends Controller
         $request->validate([
             'excel_file' => 'required|mimes:xlsx,xls'
         ]);
-        Excel::import(new ProjectClassesImport($id), $request->file('excel_file'));
-        return back()->with('success', 'Classes imported successfully');
+
+        $import = new ProjectClassesImport($id);
+
+        Excel::import($import, $request->file('excel_file'));
+
+        return back()->with('success',
+            'Import completed. Skipped duplicates: ' . $import->skipped
+        );
     }
 
     public function exportClasses($id, $type){

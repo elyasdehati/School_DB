@@ -13,23 +13,28 @@ class ProjectStudentsImport implements ToModel, WithHeadingRow
 {
     private $project_id;
 
+    private $provinces;
+    private $districts;
+
     public function __construct($project_id)
     {
         $this->project_id = $project_id;
+
+        $this->provinces = Province::pluck('id', 'name');
+        $this->districts = District::pluck('id', 'name');
     }
 
     public function model(array $row)
     {
-        $province = Province::where('name', $row['province'] ?? null)->first();
-        $district = District::where('name', $row['district'] ?? null)->first();
-
         return new ProjectStudent([
             'project_id' => $this->project_id,
 
             'student_id' => $row['student_id'] ?? null,
             'class_id' => $row['class_id'] ?? null,
-            'province_id' => $province?->id,
-            'district_id' => $district?->id,
+
+            'province_id' => $this->provinces[$row['province'] ?? ''] ?? null,
+            'district_id' => $this->districts[$row['district'] ?? ''] ?? null,
+
             'village' => $row['village'] ?? null,
             'asas_no' => $row['asas_no'] ?? null,
             'enrollment_date' => isset($row['enrollment_date'])? Date::excelToDateTimeObject($row['enrollment_date'])->format('Y-m-d'): null,

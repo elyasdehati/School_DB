@@ -16,6 +16,8 @@ class ProjectClassesImport implements ToCollection, WithHeadingRow
 {
     private $project_id;
 
+    public $skipped = 0;
+
     public function __construct($project_id)
     {
         $this->project_id = $project_id;
@@ -44,6 +46,15 @@ class ProjectClassesImport implements ToCollection, WithHeadingRow
             $province = Province::where('name', $row['province'] ?? null)->first();
             $district = District::where('name', $row['district'] ?? null)->first();
             $status = \App\Models\Status::where('name', $row['class_status'] ?? null)->first();
+
+            $exists = \App\Models\ProjectClass::where('project_id', $this->project_id)
+                ->where('class_id', $row['class_id'] ?? null)
+                ->first();
+
+            if ($exists) {
+                $this->skipped++;
+                continue;
+            }
 
             ProjectClass::create([
                 'project_id' => $this->project_id,
