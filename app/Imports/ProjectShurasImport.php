@@ -17,6 +17,8 @@ class ProjectShurasImport implements ToCollection, WithHeadingRow
 {
     private $project_id;
 
+    public $skipped = 0;
+
     public function __construct($project_id)
     {
         $this->project_id = $project_id;
@@ -25,6 +27,16 @@ class ProjectShurasImport implements ToCollection, WithHeadingRow
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
+
+            $exists = ProjectShura::where('project_id', $this->project_id)
+                ->where('shura_name', $row['shura_name'] ?? null)
+                ->first();
+
+            if ($exists) {
+                $this->skipped++;
+                continue;
+            }
+
             $province = Province::where('name', $row['province'] ?? null)->first();
             $district = District::where('name', $row['district'] ?? null)->first();
 

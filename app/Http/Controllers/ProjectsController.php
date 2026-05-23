@@ -537,8 +537,13 @@ class ProjectsController extends Controller
             'excel_file' => 'required|mimes:xlsx,xls'
         ]);
 
-        Excel::import(new ProjectShurasImport($id), $request->file('excel_file'));
-        return back()->with('success', 'Shura imported successfully');
+        $import = new ProjectShurasImport($id);
+
+        Excel::import($import, $request->file('excel_file'));
+
+        return back()->with('success',
+            'Shura imported successfully. Skipped duplicates: ' . $import->skipped
+        );
     }
 
     // Export
