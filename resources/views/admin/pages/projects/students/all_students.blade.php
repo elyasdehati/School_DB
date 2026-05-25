@@ -170,7 +170,9 @@
                                 $item->disability_type,
                                 $item->guardian_phone,
                                 $item->guardian_relation,
-                                $item->status,
+                                '<span class="badge" style="background-color: '.$item->statuses?->color.';">
+                                    '.$item->statuses?->name.'
+                                </span>',
                                 $item->remarks,
                                 '<div class="dropdown dropstart dropend dropup">
                                     <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
@@ -377,27 +379,14 @@
                         <div class="col-md-4 mb-2">
                             <label>Status</label>
                             <select name="status" class="form-control">
-                                <option>Active</option>
-                                <option>Inactive</option>
-                                <option>Handed Over</option>
-                                <option>Transited</option>
+                                <option value="">-- Select --</option>
+                                @foreach($statuse as $status)
+                                    <option value="{{ $status->id }}">
+                                        {{ $status->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
-
-                        {{-- <div class="col-md-4 mb-2">
-                            <label>Status Change Date</label>
-                            <input type="date" name="status_change_date" class="form-control">
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <label>Status Change Reason</label>
-                            <select name="status_change_reason" class="form-control">
-                                <option>Active</option>
-                                <option>Inactive</option>
-                                <option>Handed Over</option>
-                                <option>Transited</option>
-                            </select>
-                        </div> --}}
 
                         <div class="col-md-4 mb-2">
                             <label>Remarks</label>
@@ -596,10 +585,13 @@
                             <div class="col-md-4 mb-2">
                                 <label>Status</label>
                                 <select name="status" class="form-control">
-                                    <option value="Active" {{ $item->status == 'Active' ? 'selected' : '' }}>Active</option>
-                                    <option value="Inactive" {{ $item->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
-                                    <option value="Handed Over" {{ $item->status == 'Handed Over' ? 'selected' : '' }}>Handed Over</option>
-                                    <option value="Transited" {{ $item->status == 'Transited' ? 'selected' : '' }}>Transited</option>
+                                    <option value="">-- Select --</option>
+                                    @foreach($statuse as $status)
+                                        <option value="{{ $status->id }}"
+                                            {{ $item->status == $status->id ? 'selected' : '' }}>
+                                            {{ $status->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 

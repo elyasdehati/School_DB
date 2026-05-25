@@ -23,4 +23,8 @@ class ProjectStudent extends Model
     public function district(){
         return $this->belongsTo(District::class);
     }
+
+    public function statuses(){
+        return $this->belongsTo(Status::class, 'status');
+    }
 }

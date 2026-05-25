@@ -386,12 +386,13 @@ class ProjectsController extends Controller
         $districts = District::all();
         $languages = Language::all();
         $res = Residence::all();
+        $statuse = Status::all();
 
         $lastStudent = ProjectStudent::latest()->first();
         $nextNumber = $lastStudent ? $lastStudent->id + 1 : 1;
         $nextStudentId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
-        return view('admin.pages.projects.students.all_students', compact('project', 'classes', 'std', 'nextStudentId', 'provinces', 'districts', 'languages', 'res'));
+        return view('admin.pages.projects.students.all_students', compact('project', 'classes', 'std', 'nextStudentId', 'provinces', 'districts', 'languages', 'res', 'statuse'));
     }
 
     public function getStudentDistricts($province_id){

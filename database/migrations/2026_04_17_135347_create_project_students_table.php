@@ -34,7 +34,8 @@ return new class extends Migration
             $table->string('disability_type')->nullable();
             $table->string('guardian_phone')->nullable();
             $table->string('guardian_relation')->nullable();
-            $table->enum('status', ['Active', 'Inactive', 'Handed Over', 'Drop Out', 'Transited'])->default('Active');
+            // $table->enum('status', ['Active', 'Inactive', 'Handed Over', 'Drop Out', 'Transited'])->default('Active');
+            $table->foreignId('status')->nullable()->constrained('statuses')->nullOnDelete();
             $table->text('remarks')->nullable();
             $table->timestamps();
 
