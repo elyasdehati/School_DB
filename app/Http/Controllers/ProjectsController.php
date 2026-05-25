@@ -229,7 +229,7 @@ class ProjectsController extends Controller
         $districts = District::all();
         $languages = Language::all();
         $classtype = ClassType::all();
-        $statuses = Status::all();
+        $statuses = ProjectStatus::all();
         $infrastructures = Infastractor::all();
 
         $lastClass = ProjectClass::latest()->first();
@@ -596,8 +596,9 @@ class ProjectsController extends Controller
         $members = ShuraMember::whereIn('shura_id', $shura->pluck('sno'))->get();
         $languages = Language::all();
         $res = Residence::all();
+        $statuse = Status::all();
 
-        return view('admin.pages.projects.shura_members.all_members', compact('project','shura','members', 'languages', 'res'));
+        return view('admin.pages.projects.shura_members.all_members', compact('project','shura','members', 'languages', 'res', 'statuse'));
     }
 
     public function StoreProjectShuraMembers(Request $request, $id){

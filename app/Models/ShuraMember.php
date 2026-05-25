@@ -11,4 +11,8 @@ class ShuraMember extends Model
     public function shura(){
         return $this->belongsTo(ProjectShura::class, 'shura_id', 'sno');
     }
+
+    public function statuses(){
+        return $this->belongsTo(Status::class, 'status');
+    }
 }

@@ -21,7 +21,7 @@ class Training extends Model
     }
 
     public function status(){
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(ProjectStatus::class);
     }
 
     public function participants(){

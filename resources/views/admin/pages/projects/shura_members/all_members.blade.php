@@ -175,7 +175,9 @@
                                 $item->disability_type,
                                 $item->role,
                                 $item->phone,
-                                $item->status ? 'Active' : 'Inactive',
+                                '<span class="badge" style="background-color: '.$item->statuses?->color.';">
+                                    '.$item->statuses?->name.'
+                                </span>',
                                 $item->remarks,
                                 '<div class="dropdown dropstart dropend dropup">
                                     <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
@@ -349,8 +351,12 @@
                         <div class="col-md-4 mb-2">
                             <label>Status</label>
                             <select name="status" class="form-control">
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                                <option value="">-- Select --</option>
+                                @foreach($statuse as $status)
+                                    <option value="{{ $status->id }}">
+                                        {{ $status->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -513,8 +519,13 @@
                             <div class="col-md-4 mb-2">
                                 <label>Status</label>
                                 <select name="status" class="form-control">
-                                    <option value="1" {{ $item->status == 1 ? 'selected' : '' }}>Active</option>
-                                    <option value="0" {{ $item->status == 0 ? 'selected' : '' }}>Inactive</option>
+                                    <option value="">-- Select --</option>
+                                    @foreach($statuse as $status)
+                                        <option value="{{ $status->id }}"
+                                            {{ $item->status == $status->id ? 'selected' : '' }}>
+                                            {{ $status->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 

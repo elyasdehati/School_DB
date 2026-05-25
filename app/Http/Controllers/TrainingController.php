@@ -6,6 +6,7 @@ use App\Exports\TrainingExport;
 use App\Imports\TrainingImport;
 use App\Models\District;
 use App\Models\Project;
+use App\Models\ProjectStatus;
 use App\Models\Province;
 use App\Models\Status;
 use App\Models\Training;
@@ -21,7 +22,7 @@ class TrainingController extends Controller
 
         $provinces = Province::all();
         $districts = District::all();
-        $statuses = Status::all();
+        $statuses = ProjectStatus::all();
 
         return view('admin.pages.projects.training.all_training', compact('project', 'train', 'provinces', 'districts', 'statuses'));
     }

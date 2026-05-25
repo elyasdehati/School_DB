@@ -29,7 +29,8 @@ return new class extends Migration
             $table->string('disability_type')->nullable();
             $table->string('role')->nullable();
             $table->string('phone')->nullable();
-            $table->boolean('status')->default(1);
+            // $table->boolean('status')->default(1);
+            $table->foreignId('status')->nullable()->constrained('statuses')->nullOnDelete();
             $table->text('remarks')->nullable();
             $table->timestamps();
 
