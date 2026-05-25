@@ -86,20 +86,17 @@
             <div class="col-md-6 col-xl-3">
                 <div class="card text-white border-0 shadow-sm rounded-4 equal-card"
                     style="background: linear-gradient(135deg,#e74a3b,#be2617);">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <div class="fs-14">Total Shura Members: {{ $totalShuraMembers }}</div>
-                                <div>Male: {{ $maleShura }}</div>
-                                <div>Female: {{ $femaleShura }}</div>
-                            </div>
-                            <i data-feather="users" style="width:40px;height:40px;"></i>
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-14">Total Shura Members</div>
+                            <h3 class="fw-bold mb-0">{{ $totalShuraMembers }}</h3>
                         </div>
+                        <i data-feather="home" style="width:40px;height:40px;"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- Shura -->
+            <!-- Training Participants -->
             <div class="col-md-6 col-xl-3">
                 <div class="card text-white border-0 shadow-sm rounded-4 equal-card"
                     style="background: linear-gradient(135deg,#1e3a8a,#0f172a);">
