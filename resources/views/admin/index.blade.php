@@ -52,18 +52,16 @@
             </div>
 
             <!-- Students -->
+
             <div class="col-md-6 col-xl-3">
                 <div class="card text-white border-0 shadow-sm rounded-4 equal-card"
                     style="background: linear-gradient(135deg,#36b9cc,#1a7a8c);">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <div class="fs-14">Total Students: {{ $totalStudents }}</div>
-                                <div>Male: {{ $maleStudents }}</div>
-                                <div>Female: {{ $femaleStudents }}</div>
-                            </div>
-                            <i data-feather="user-check" style="width:40px;height:40px;"></i>
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-14">Students</div>
+                            <h3 class="fw-bold mb-0">{{ $totalStudents }}</h3>
                         </div>
+                        <i data-feather="home" style="width:40px;height:40px;"></i>
                     </div>
                 </div>
             </div>
@@ -88,7 +86,7 @@
                     style="background: linear-gradient(135deg,#e74a3b,#be2617);">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-14">Total Shura Members</div>
+                            <div class="fs-14">Shura Members</div>
                             <h3 class="fw-bold mb-0">{{ $totalShuraMembers }}</h3>
                         </div>
                         <i data-feather="home" style="width:40px;height:40px;"></i>
