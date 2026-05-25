@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('father_name')->nullable();
             $table->date('starting_date')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->foreignId('is_active')->nullable()->constrained('statuses')->nullOnDelete();
+            // $table->boolean('is_active')->default(true);
             $table->string('tazkira_number')->nullable();
             $table->integer('year_of_birth')->nullable();
             $table->integer('age')->nullable();

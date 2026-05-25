@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="form-group col-lg-6 mb-3">
                             <label for="name">Title</label>
-                            <input class="form-control" placeholder="Enter a Status" required="" name="name" type="text" id="name">
+                            <input class="form-control" placeholder="Enter a Thematic Area" required="" name="name" type="text" id="name">
                             
                         </div>
                         

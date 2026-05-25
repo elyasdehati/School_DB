@@ -130,7 +130,6 @@
                             'Last Name',
                             'Father Name',
                             'Starting Date',
-                            'Active',
                             'Tazkira',
                             'Year Birth',
                             'Year',
@@ -140,6 +139,7 @@
                             'Phone',
                             'Core Training',
                             'Refresher Training',
+                            'Active',
                             'Action'
                         ];
 
@@ -156,7 +156,6 @@
                                 $item->last_name,
                                 $item->father_name,
                                 $item->starting_date,
-                                $item->is_active ? 'Yes' : 'No',
                                 $item->tazkira_number,
                                 $item->year_of_birth,
                                 $item->age,
@@ -166,6 +165,9 @@
                                 $item->phone,
                                 $item->core_training ? 'Yes' : 'No',
                                 $item->refresher_training ? 'Yes' : 'No',
+                                '<span class="badge" style="background-color: '.$item->status?->color.';">
+                                    '.$item->status?->name.'
+                                </span>',
                                 '<div class="dropdown dropstart dropend dropup">
                                     <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
                                     id="dropdownMenuLink'.$item->id.'"
@@ -336,10 +338,13 @@
                         </div>
 
                         <div class="col-md-4 mb-2">
-                            <label>Is Active?</label>
+                            <label>Is Active</label>
                             <select name="is_active" class="form-control">
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
+                                @foreach($statuses as $status)
+                                    <option value="{{ $status->id }}">
+                                        {{ $status->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -516,8 +521,12 @@
                             <div class="col-md-4 mb-2">
                                 <label>Is Active?</label>
                                 <select name="is_active" class="form-control">
-                                    <option value="1" {{ $item->is_active == 1 ? 'selected' : '' }}>Yes</option>
-                                    <option value="0" {{ $item->is_active == 0 ? 'selected' : '' }}>No</option>
+                                    @foreach($statuses as $status)
+                                        <option value="{{ $status->id }}"
+                                            {{ $item->is_active == $status->id ? 'selected' : '' }}>
+                                            {{ $status->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 

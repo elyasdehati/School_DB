@@ -23,4 +23,7 @@ class ProjectTeacher extends Model
     public function class(){
         return $this->belongsTo(ProjectClass::class, 'class_id', 'class_id');
     }
+    public function status(){
+        return $this->belongsTo(Status::class, 'is_active');
+    }
 }

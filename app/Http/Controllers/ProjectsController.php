@@ -115,12 +115,13 @@ class ProjectsController extends Controller
         $provinces = Province::all();
         $districts = District::all();
         $classes = ProjectClass::where('project_id', $id)->get();
+        $statuses = Status::all();
 
         $lastTeacher = ProjectTeacher::latest()->first();
         $nextNumber = $lastTeacher ? $lastTeacher->id + 1 : 1;
         $nextSerial = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
-        return view('admin.pages.projects.teachers.all_teachers',compact('project', 'teachers', 'nextSerial', 'provinces', 'districts', 'classes'));
+        return view('admin.pages.projects.teachers.all_teachers',compact('project', 'teachers', 'nextSerial', 'provinces', 'districts', 'classes', 'statuses'));
     }
 
     public function StoreProjectTeacher(Request $request, $id){
@@ -144,7 +145,8 @@ class ProjectsController extends Controller
             'last_name' => $request->last_name,
             'father_name' => $request->father_name,
             'starting_date' => $request->starting_date,
-            'is_active' => $request->is_active ?? 0,
+            // 'is_active' => $request->is_active ?? 0,
+            'is_active' => $request->is_active,
             'tazkira_number' => $request->tazkira_number,
             'year_of_birth' => $request->year_of_birth,
             'age' => $request->age,
@@ -195,7 +197,8 @@ class ProjectsController extends Controller
             'last_name' => $request->last_name,
             'father_name' => $request->father_name,
             'starting_date' => $request->starting_date,
-            'is_active' => $request->is_active ?? 0,
+            // 'is_active' => $request->is_active ?? 0,
+            'is_active' => $request->is_active,
             'tazkira_number' => $request->tazkira_number,
             'year_of_birth' => $request->year_of_birth,
             'age' => $request->age,
