@@ -90,6 +90,20 @@
                 </div>
             </div>
 
+            <!-- Trainings -->
+            <div class="col-md-6 col-xl-3">
+                <div class="card text-white border-0 shadow-sm rounded-4 equal-card"
+                    style="background: linear-gradient(135deg,#6f42c1,#4e2a84);">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-14">Active Trainings</div>
+                            <h3 class="fw-bold mb-0">{{ $trainings }}</h3>
+                        </div>
+                        <i data-feather="book-open" style="width:40px;height:40px;"></i>
+                    </div>
+                </div>
+            </div>
+
             <!-- Training Participants -->
             <div class="col-md-6 col-xl-3">
                 <div class="card text-white border-0 shadow-sm rounded-4 equal-card"
