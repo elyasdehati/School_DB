@@ -504,15 +504,16 @@ class ProjectsController extends Controller
     public function AllProjectsShura($id){
         $project = Project::findOrFail($id);
         $classes = ProjectClass::where('project_id', $id)->get();
-        $shura = ProjectShura::with('classes')->where('project_id', $id)->get();
+        $shura = ProjectShura::with(['classes', 'status'])->where('project_id', $id)->get();
 
         $provinces = Province::all();
         $districts = District::all();
+        $statuses = Status::all();
 
         $lastShura = ProjectShura::latest('id')->first();
         $nextSno = $lastShura ? str_pad(((int)$lastShura->sno) + 1, 3, '0', STR_PAD_LEFT) : '001';
 
-        return view('admin.pages.projects.shura.all_shura', compact('project','classes','shura','nextSno', 'provinces', 'districts'));
+        return view('admin.pages.projects.shura.all_shura', compact('project','classes','shura','nextSno', 'provinces', 'districts', 'statuses'));
     }
 
     public function getShuraDistricts($province_id){
@@ -529,7 +530,7 @@ class ProjectsController extends Controller
             'district_id' => $request->district_id,
             'village' => $request->village,
             'shura_establishment_date' => $request->shura_establishment_date,
-            'status' => $request->status,
+            'status_id' => $request->status_id,
             'status_change_date' => $request->status_change_date,
             'status_change_reason' => $request->status_change_reason,
             'remarks' => $request->remarks,
@@ -577,7 +578,7 @@ class ProjectsController extends Controller
             'district_id' => $request->district_id,
             'village' => $request->village,
             'shura_establishment_date' => $request->shura_establishment_date,
-            'status' => $request->status,
+            'status_id' => $request->status_id,
             'status_change_date' => $request->status_change_date,
             'status_change_reason' => $request->status_change_reason,
             'remarks' => $request->remarks,

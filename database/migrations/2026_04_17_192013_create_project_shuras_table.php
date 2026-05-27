@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('village')->nullable();
             $table->string('shura_name')->nullable();
             $table->date('shura_establishment_date')->nullable();
-            $table->enum('status', ['Active', 'Inactive'])->default('Active');
+            $table->foreignId('status_id')->nullable()->constrained('project_statuses')->nullOnDelete();
             $table->date('status_change_date')->nullable();
             $table->string('status_change_reason')->nullable();
             $table->text('remarks')->nullable();

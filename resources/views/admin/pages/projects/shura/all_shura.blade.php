@@ -142,10 +142,10 @@
                             'Shura Name',
                             'Establishment Date',
                             'Classes',
-                            'Status',
                             'Status Change Date',
                             'Status Change Reason',
                             'Remarks',
+                            'Status',
                             'Action'
                         ];
 
@@ -161,10 +161,12 @@
                                 $item->shura_name,
                                 $item->shura_establishment_date,
                                 implode(', ', $item->classes->pluck('class_name')->toArray()),
-                                $item->status,
                                 $item->status_change_date,
                                 $item->status_change_reason,
                                 $item->remarks,
+                                '<span class="badge" style="background-color: '.$item->status?->color.';">
+                                    '.$item->status?->name.'
+                                </span>',
                                 '<div class="dropdown dropstart dropend dropup">
                                     <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
                                     id="dropdownMenuLink'.$item->id.'"
@@ -277,9 +279,14 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Status</label>
-                            <select name="status" class="form-control status-select">
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
+                            <select name="status_id" class="form-control">
+                                <option value="">-- Select --</option>
+
+                                @foreach($statuses as $status)
+                                    <option value="{{ $status->id }}">
+                                        {{ $status->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -399,9 +406,13 @@
 
                             <div class="col-md-4 mb-2">
                                 <label>Status</label>
-                                <select name="status" class="form-control">
-                                    <option value="Active" {{ $item->status == 'Active' ? 'selected' : '' }}>Active</option>
-                                    <option value="Inactive" {{ $item->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
+                                <select name="status_id" class="form-control">
+                                    @foreach($statuses as $status)
+                                        <option value="{{ $status->id }}"
+                                            {{ $item->status_id == $status->id ? 'selected' : '' }}>
+                                            {{ $status->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -476,7 +487,7 @@
         function toggleStatusFields() {
             if (!status) return;
 
-            if (status.value === "Active") {
+            if (selectedText  === "Active") {
                 extras.forEach(el => {
                     el.style.opacity = "0.4";
                     el.querySelector('input').disabled = true;

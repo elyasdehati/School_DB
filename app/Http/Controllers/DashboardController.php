@@ -25,7 +25,9 @@ class DashboardController extends Controller
         $femaleStudents = $students->where('gender', 'Girl')->count();
         $totalStudents = $students->count();
 
-        $shura = ProjectShura::where('status', 'Active')->count();
+        $shura = ProjectShura::whereHas('status', function ($q) {
+            $q->where('name', 'Active');
+        })->count();
 
         $shuraMembers = ShuraMember::where('status', 1)->get();
         $maleShura = $shuraMembers->where('gender', 'Male')->count();

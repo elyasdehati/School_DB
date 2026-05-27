@@ -23,4 +23,8 @@ class ProjectShura extends Model
     public function district(){
         return $this->belongsTo(District::class);
     }
+
+    public function status(){
+        return $this->belongsTo(Status::class);
+    }
 }
