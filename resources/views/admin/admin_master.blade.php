@@ -145,6 +145,22 @@
                 });
             });
         </script>
+        <script>
+            $(document).ready(function () {
+
+                if ($.fn.DataTable.isDataTable('#datatable')) {
+                    $('#datatable').DataTable().destroy();
+                }
+
+                $('#datatable').DataTable({
+                    scrollX: true,
+                    scrollY: '60vh',
+                    scrollCollapse: true,
+                    paging: true
+                });
+
+            });
+        </script>
         @stack('scripts')
     </body>
 </html>
