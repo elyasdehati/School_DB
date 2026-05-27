@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->date('registration_date')->nullable();
-            $table->string('class_id')->nullable();
+            $table->string('class_id')->unique();
             $table->string('class_code')->nullable();
             $table->string('class_name')->nullable();
             $table->json('grades')->nullable();

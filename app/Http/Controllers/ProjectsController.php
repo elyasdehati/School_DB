@@ -252,6 +252,7 @@ class ProjectsController extends Controller
         $classId = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
         $request->validate([
+            'class_id' => 'required|unique:project_classes,class_id',
             'class_name' => 'required',
             'grades' => 'required',
         ]);
@@ -325,6 +326,12 @@ class ProjectsController extends Controller
 
     public function UpdateProjectClass(Request $request, $id){
         $class = ProjectClass::findOrFail($id);
+
+        $request->validate([
+            'class_id' => 'required|unique:project_classes,class_id',
+            'class_name' => 'required',
+            'grades' => 'required',
+        ]);
 
         $class->update([
             'registration_date' => $request->registration_date,
