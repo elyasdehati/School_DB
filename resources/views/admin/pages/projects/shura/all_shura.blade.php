@@ -481,29 +481,28 @@
 <script>
     document.querySelectorAll('form').forEach(function (form) {
 
-        const status = form.querySelector('select[name="status"]');
+        const status = form.querySelector('select[name="status_id"]');
         const extras = form.querySelectorAll('.status-extra');
 
+        if (!status) return;
+
         function toggleStatusFields() {
-            if (!status) return;
 
-            if (selectedText  === "Active") {
-                extras.forEach(el => {
-                    el.style.opacity = "0.4";
-                    el.querySelector('input').disabled = true;
+            let selectedText = status.options[status.selectedIndex].text.trim();
+
+            extras.forEach(el => {
+
+                el.style.opacity = (selectedText === "Active") ? "0.4" : "1";
+
+                el.querySelectorAll('input, textarea, select').forEach(input => {
+                    input.disabled = (selectedText === "Active");
                 });
-            } else {
-                extras.forEach(el => {
-                    el.style.opacity = "1";
-                    el.querySelector('input').disabled = false;
-                });
-            }
+
+            });
         }
 
-        if (status) {
-            status.addEventListener('change', toggleStatusFields);
-            toggleStatusFields();
-        }
+        status.addEventListener('change', toggleStatusFields);
+        toggleStatusFields();
 
     });
 
