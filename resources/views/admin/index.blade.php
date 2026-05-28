@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <ul class="nav nav-tabs mb-3">
+        <ul class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" 
                 href="{{ route('dashboard') }}">
@@ -247,105 +247,89 @@
             </div>
 
             <div class="col-md-6 col-xl-4">
-                <div class="card overflow-hidden">
+    <div class="card overflow-hidden">
 
-                    <div class="card-header">
-                        <div class="d-flex align-items-center">
-                            <div class="border border-dark rounded-2 me-2 widget-icons-sections">
-                                <i data-feather="tablet" class="widgets-icons"></i>
-                            </div>
-                            <h5 class="card-title mb-0">Best Traffic Source</h5>
-                        </div>
-                    </div>
-
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-traffic mb-0">
-                                <tbody>
-                                    <thead>
-                                        <tr>
-                                            <th>Network</th>
-                                            <th colspan="2">Visitors</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tr>
-                                        <td>Instagram</td>
-                                        <td>3,550</td>
-                                        <td class="w-50">
-                                            <div class="progress progress-md mt-0">
-                                                <div class="progress-bar bg-danger" style="width: 80.0%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Facebook</td>
-                                        <td>1,245</td>
-                                        <td class="w-50">
-                                            <div class="progress progress-md mt-0">
-                                                <div class="progress-bar bg-primary" style="width: 55.9%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Twitter</td>
-                                        <td>1,798</td>
-                                        <td class="w-50">
-                                            <div class="progress progress-md mt-0">
-                                                <div class="progress-bar bg-secondary" style="width: 67.0%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>YouTube</td>
-                                        <td>986</td>
-                                        <td class="w-50">
-                                            <div class="progress progress-md mt-0">
-                                                <div class="progress-bar bg-success" style="width: 38.72%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Pinterest</td>
-                                        <td>854</td>
-                                        <td class="w-50">
-                                            <div class="progress progress-md mt-0">
-                                                <div class="progress-bar bg-danger" style="width: 45.08%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Linkedin</td>
-                                        <td>650</td>
-                                        <td class="w-50">
-                                            <div class="progress progress-md mt-0">
-                                                <div class="progress-bar bg-warning" style="width: 68.0%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Nextdoor</td>
-                                        <td>420</td>
-                                        <td class="w-50">
-                                            <div class="progress progress-md mt-0">
-                                                <div class="progress-bar bg-info" style="width: 56.4%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
+        <div class="card-header">
+            <div class="d-flex align-items-center">
+                <div class="border border-dark rounded-2 me-2 widget-icons-sections">
+                    <i data-feather="tablet" class="widgets-icons"></i>
                 </div>
+                <h5 class="card-title mb-0">Project Progress Timeline</h5>
             </div>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-traffic mb-0">
+                    <tbody>
+
+                        @foreach($projectsProgress as $project)
+
+                        @php
+                            if($project->progress <= 25){
+                                $color = 'bg-danger';
+                            }elseif($project->progress <= 50){
+                                $color = 'bg-warning';
+                            }elseif($project->progress <= 75){
+                                $color = 'bg-info';
+                            }else{
+                                $color = 'bg-success';
+                            }
+                        @endphp
+
+                        <tr>
+                            <td style="min-width: 350px;">
+
+                                {{-- Project Name --}}
+                                <div class="fw-bold mb-2">
+                                    {{ $project->name }}
+                                </div>
+
+                                {{-- Dates --}}
+                                <div class="d-flex justify-content-between mb-1">
+                                    <small class="text-muted">
+                                        {{ \Carbon\Carbon::parse($project->start_date)->format('d M Y') }}
+                                    </small>
+
+                                    <small class="text-muted">
+                                        {{ \Carbon\Carbon::parse($project->end_date)->format('d M Y') }}
+                                    </small>
+                                </div>
+
+                                {{-- Progress --}}
+                                <div class="d-flex align-items-center gap-2">
+                                    
+                                    <small class="fw-bold text-primary" style="min-width: 45px;">
+                                        {{ $project->progress }}%
+                                    </small>
+
+                                    <div class="progress mb-3 flex-grow-1"
+                                        style="height: 12px; border-radius: 10px; background: #e9ecef;">
+
+                                        <div class="progress-bar {{ $color }}"
+                                            role="progressbar"
+                                            style="
+                                                width: {{ $project->progress }}%;
+                                                border-radius: 0 10px 10px 0;
+                                            ">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+                        </tr>
+
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
         </div>
         <!-- End Monthly Sales -->
 
@@ -526,11 +510,11 @@
             },
             colors: ['#0035c5'],
             plotOptions: {
-    bar: {
-        borderRadius: 10,
-        borderRadiusApplication: 'end' // 👈 فقط بالا (Top) رادیوس می‌ده
-    }
-},
+                bar: {
+                    borderRadius: 10,
+                    borderRadiusApplication: 'end' // 👈 فقط بالا (Top) رادیوس می‌ده
+                }
+            },
             xaxis: {
                 categories: @json($chartLabels)
             }

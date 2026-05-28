@@ -60,10 +60,32 @@ class DashboardController extends Controller
                 + $project->shura_members_count;
         });
 
+        // project progress
+        $projectsProgress = \App\Models\Project::get()->map(function ($project) {
+
+            $start = \Carbon\Carbon::parse($project->start_date);
+            $end = \Carbon\Carbon::parse($project->end_date);
+            $today = \Carbon\Carbon::today();
+
+            $totalDays = $start->diffInDays($end);
+
+            $passedDays = $start->diffInDays(
+                $today > $end ? $end : $today
+            );
+
+            $progress = $totalDays > 0
+                ? round(($passedDays / $totalDays) * 100)
+                : 0;
+
+            $project->progress = min($progress, 100);
+
+            return $project;
+        });
+
         return view('admin.index', compact(
             'classes','totalTeachers','totalStudents',
             'shura','totalShuraMembers', 'trainings', 'totalParticipants',
-            'chartLabels','chartData'
+            'chartLabels','chartData','projectsProgress'
         ));
     }
 }
