@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <div class="row g-3">
+        <div class="row g-2">
 
             <!-- Total Classes -->
             <div class="col-md-6 col-xl-3">
