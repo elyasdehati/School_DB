@@ -17,10 +17,14 @@ class Project extends Model
     }
 
     public function students(){
-        return $this->hasMany(ProjectClass::class);
+        return $this->hasMany(ProjectStudent::class);
     }
 
     public function status(){
         return $this->belongsTo(ProjectStatus::class);
+    }
+
+    public function shuraMembers(){
+        return $this->hasMany(ShuraMember::class);
     }
 }

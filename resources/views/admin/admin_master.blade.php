@@ -85,7 +85,7 @@
 
         <!-- Widgets Init Js -->
         @if(request()->routeIs('dashboard'))
-            <script src="{{ asset('backend/assets/js/pages/analytics-dashboard.init.js') }}"></script>
+            {{-- <script src="{{ asset('backend/assets/js/pages/analytics-dashboard.init.js') }}"></script> --}}
         @endif
 
         {{-- <script src="{{ asset('backend/assets/js/code.js') }}"></script>

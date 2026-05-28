@@ -16,13 +16,15 @@ class DashboardController extends Controller
         $classes = ProjectClass::count();
 
         $teachers = ProjectTeacher::where('is_active', 1)->get();
-        $maleTeachers = $teachers->where('gender', 'Male')->count();
-        $femaleTeachers = $teachers->where('gender', 'Female')->count();
+        // $maleTeachers = $teachers->where('gender', 'Male')->count();
+        // $femaleTeachers = $teachers->where('gender', 'Female')->count();
         $totalTeachers = $teachers->count();
 
-        $students = ProjectStudent::where('status', 'Active')->get();
-        $maleStudents = $students->where('gender', 'Boy')->count();
-        $femaleStudents = $students->where('gender', 'Girl')->count();
+        $students = ProjectStudent::whereHas('statuses', function ($q) {
+            $q->where('name', 'Active');
+        })->get();
+        // $maleStudents = $students->where('gender', 'Boy')->count();
+        // $femaleStudents = $students->where('gender', 'Girl')->count();
         $totalStudents = $students->count();
 
         $shura = ProjectShura::whereHas('status', function ($q) {
@@ -30,8 +32,8 @@ class DashboardController extends Controller
         })->count();
 
         $shuraMembers = ShuraMember::where('status', 1)->get();
-        $maleShura = $shuraMembers->where('gender', 'Male')->count();
-        $femaleShura = $shuraMembers->where('gender', 'Female')->count();
+        // $maleShura = $shuraMembers->where('gender', 'Male')->count();
+        // $femaleShura = $shuraMembers->where('gender', 'Female')->count();
         $totalShuraMembers = $shuraMembers->count();
 
         $trainings = Training::whereHas('status', function ($q) {
@@ -39,16 +41,29 @@ class DashboardController extends Controller
         })->count();
 
         $participants = TrainingParticipant::get();
-        $maleParticipants = $participants->where('gender', 'Male')->count();
-        $femaleParticipants = $participants->where('gender', 'Female')->count();
+        // $maleParticipants = $participants->where('gender', 'Male')->count();
+        // $femaleParticipants = $participants->where('gender', 'Female')->count();
         $totalParticipants = $participants->count();
 
+        // chart data
+        $projects = \App\Models\Project::withCount([
+            'teachers',
+            'students',
+            'shuraMembers'
+        ])->get();
+
+        $chartLabels = $projects->pluck('name');
+
+        $chartData = $projects->map(function($project){
+            return $project->teachers_count
+                + $project->students_count
+                + $project->shura_members_count;
+        });
+
         return view('admin.index', compact(
-            'classes',
-            'maleTeachers','femaleTeachers','totalTeachers',
-            'maleStudents','femaleStudents','totalStudents',
-            'shura',
-            'maleShura','femaleShura','totalShuraMembers', 'trainings', 'maleParticipants','femaleParticipants','totalParticipants',
+            'classes','totalTeachers','totalStudents',
+            'shura','totalShuraMembers', 'trainings', 'totalParticipants',
+            'chartLabels','chartData'
         ));
     }
 }

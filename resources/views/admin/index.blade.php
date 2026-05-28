@@ -235,12 +235,12 @@
                             <div class="border border-dark rounded-2 me-2 widget-icons-sections">
                                 <i data-feather="bar-chart" class="widgets-icons"></i>
                             </div>
-                            <h5 class="card-title mb-0">Monthly Sales</h5>
+                            <h5 class="card-title mb-0">Project Bar Chart</h5>
                         </div>
                     </div>
 
                     <div class="card-body">
-                        <div id="monthly-sales" class="apex-charts"></div>
+                        <div id="project-chart" class="apex-charts"></div>
                     </div>
                     
                 </div>
@@ -511,5 +511,39 @@
 
     </div> <!-- container-fluid -->
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var options = {
+            series: [{
+                name: 'Total',
+                data: @json($chartData)
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            colors: ['#0035c5'],
+            plotOptions: {
+    bar: {
+        borderRadius: 10,
+        borderRadiusApplication: 'end' // 👈 فقط بالا (Top) رادیوس می‌ده
+    }
+},
+            xaxis: {
+                categories: @json($chartLabels)
+            }
+        };
+
+        var chart = new ApexCharts(
+            document.querySelector("#project-chart"),
+            options
+        );
+
+        chart.render();
+
+    });
+</script>
 
 @endsection
