@@ -7,6 +7,19 @@
     }
 </style>
 
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" 
+                href="{{ route('dashboard') }}">
+                    <i class="bi bi-speedometer2 me-1"></i> Widgets
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
 <div class="content">
 
     <!-- Start Content-->
@@ -26,8 +39,8 @@
                     style="background: linear-gradient(135deg,#4e73df,#224abe);">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-14">Total Classes</div>
-                            <h3 class="fw-bold mb-0">{{ $classes }}</h3>
+                            <div class="fs-18 fw-bold">Classes</div>
+                            <h3 class="fw-bold mb-0" style="opacity: .9">{{ $classes }}</h3>
                         </div>
                         <i data-feather="layers" style="width:40px;height:40px;"></i>
                     </div>
@@ -40,8 +53,8 @@
                     style="background: linear-gradient(135deg,#1cc88a,#13855c);">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-14">Teachers</div>
-                            <h3 class="fw-bold mb-0">{{ $totalTeachers }}</h3>
+                            <div class="fs-18 fw-bold">Teachers</div>
+                            <h3 class="fw-bold mb-0" style="opacity: .9">{{ $totalTeachers }}</h3>
                         </div>
                         <i data-feather="home" style="width:40px;height:40px;"></i>
                     </div>
@@ -54,8 +67,8 @@
                     style="background: linear-gradient(135deg,#36b9cc,#1a7a8c);">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-14">Students</div>
-                            <h3 class="fw-bold mb-0">{{ $totalStudents }}</h3>
+                            <div class="fs-18 fw-bold">Students</div>
+                            <h3 class="fw-bold mb-0" style="opacity: .9">{{ $totalStudents }}</h3>
                         </div>
                         <i data-feather="home" style="width:40px;height:40px;"></i>
                     </div>
@@ -68,8 +81,8 @@
                     style="background: linear-gradient(135deg,#f6c23e,#dda20a);">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-14">Shura</div>
-                            <h3 class="fw-bold mb-0">{{ $shura }}</h3>
+                            <div class="fs-18 fw-bold">Shura</div>
+                            <h3 class="fw-bold mb-0" style="opacity: .9">{{ $shura }}</h3>
                         </div>
                         <i data-feather="home" style="width:40px;height:40px;"></i>
                     </div>
@@ -82,8 +95,8 @@
                     style="background: linear-gradient(135deg,#e74a3b,#be2617);">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-14">Shura Members</div>
-                            <h3 class="fw-bold mb-0">{{ $totalShuraMembers }}</h3>
+                            <div class="fs-18 fw-bold">Shura Members</div>
+                            <h3 class="fw-bold mb-0" style="opacity: .9">{{ $totalShuraMembers }}</h3>
                         </div>
                         <i data-feather="home" style="width:40px;height:40px;"></i>
                     </div>
@@ -96,8 +109,8 @@
                     style="background: linear-gradient(135deg,#6f42c1,#4e2a84);">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-14">Trainings</div>
-                            <h3 class="fw-bold mb-0">{{ $trainings }}</h3>
+                            <div class="fs-18 fw-bold">Trainings</div>
+                            <h3 class="fw-bold mb-0" style="opacity: .9">{{ $trainings }}</h3>
                         </div>
                         <i data-feather="book-open" style="width:40px;height:40px;"></i>
                     </div>
@@ -110,8 +123,8 @@
                     style="background: linear-gradient(135deg,#1e3a8a,#0f172a);">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
-                            <div class="fs-14">Training Participants</div>
-                            <h3 class="fw-bold mb-0">{{ $totalParticipants }}</h3>
+                            <div class="fs-18 fw-bold">Participants</div>
+                            <h3 class="fw-bold mb-0" style="opacity: .9">{{ $totalParticipants }}</h3>
                         </div>
                         <i data-feather="home" style="width:40px;height:40px;"></i>
                     </div>
