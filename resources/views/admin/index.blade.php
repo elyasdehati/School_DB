@@ -33,7 +33,7 @@
 
         <div class="row g-2">
 
-            <!-- Total Classes -->
+            <!-- Classes -->
             <div class="col-md-6 col-xl-3">
                 <div class="card text-white border-0 shadow-sm rounded-4 equal-card"
                     style="background: linear-gradient(135deg,#4e73df,#224abe);">
@@ -133,98 +133,6 @@
 
         </div>
 
-        <!-- start row -->
-        {{-- <div class="row">
-            <div class="col-md-12 col-xl-12">
-                <div class="row g-3">
-
-                    <div class="col-md-6 col-xl-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="fs-14 mb-1">Website Traffic</div>
-                                </div>
-
-                                <div class="d-flex align-items-baseline mb-2">
-                                    <div class="fs-22 mb-0 me-2 fw-semibold text-black">91.6K</div>
-                                    <div class="me-auto">
-                                        <span class="text-primary d-inline-flex align-items-center">
-                                            15%
-                                            <i data-feather="trending-up" class="ms-1" style="height: 22px; width: 22px;"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div id="website-visitors" class="apex-charts"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-xl-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="fs-14 mb-1">Conversion rate</div>
-                                </div>
-
-                                <div class="d-flex align-items-baseline mb-2">
-                                    <div class="fs-22 mb-0 me-2 fw-semibold text-black">15%</div>
-                                    <div class="me-auto">
-                                        <span class="text-danger d-inline-flex align-items-center">
-                                            10%
-                                            <i data-feather="trending-down" class="ms-1" style="height: 22px; width: 22px;"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div id="conversion-visitors" class="apex-charts"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-xl-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="fs-14 mb-1">Session duration</div>
-                                </div>
-
-                                <div class="d-flex align-items-baseline mb-2">
-                                    <div class="fs-22 mb-0 me-2 fw-semibold text-black">90 Sec</div>
-                                    <div class="me-auto">
-                                        <span class="text-success d-inline-flex align-items-center">
-                                            25%
-                                            <i data-feather="trending-up" class="ms-1" style="height: 22px; width: 22px;"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div id="session-visitors" class="apex-charts"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-xl-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="fs-14 mb-1">Active Users</div>
-                                </div>
-
-                                <div class="d-flex align-items-baseline mb-2">
-                                    <div class="fs-22 mb-0 me-2 fw-semibold text-black">2,986</div>
-                                    <div class="me-auto">
-                                        <span class="text-success d-inline-flex align-items-center">
-                                            4%
-                                            <i data-feather="trending-up" class="ms-1" style="height: 22px; width: 22px;"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div id="active-users" class="apex-charts"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- end sales -->
-        </div> <!-- end row --> --}}
-
         <!-- Start Monthly Sales -->
         <div class="row">
             <div class="col-md-6 col-xl-8">
@@ -247,89 +155,89 @@
             </div>
 
             <div class="col-md-6 col-xl-4">
-    <div class="card overflow-hidden">
+                <div class="card overflow-hidden">
 
-        <div class="card-header">
-            <div class="d-flex align-items-center">
-                <div class="border border-dark rounded-2 me-2 widget-icons-sections">
-                    <i data-feather="tablet" class="widgets-icons"></i>
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <div class="border border-dark rounded-2 me-2 widget-icons-sections">
+                                <i data-feather="tablet" class="widgets-icons"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Project Progress Timeline</h5>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-traffic mb-0">
+                                <tbody>
+
+                                    @foreach($projectsProgress as $project)
+
+                                    @php
+                                        if($project->progress <= 25){
+                                            $color = 'bg-danger';
+                                        }elseif($project->progress <= 50){
+                                            $color = 'bg-warning';
+                                        }elseif($project->progress <= 75){
+                                            $color = 'bg-info';
+                                        }else{
+                                            $color = 'bg-success';
+                                        }
+                                    @endphp
+
+                                    <tr>
+                                        <td style="min-width: 350px;">
+
+                                            {{-- Project Name --}}
+                                            <div class="fw-bold mb-2">
+                                                {{ $project->name }}
+                                            </div>
+
+                                            {{-- Dates --}}
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <small class="text-muted">
+                                                    {{ \Carbon\Carbon::parse($project->start_date)->format('d M Y') }}
+                                                </small>
+
+                                                <small class="text-muted">
+                                                    {{ \Carbon\Carbon::parse($project->end_date)->format('d M Y') }}
+                                                </small>
+                                            </div>
+
+                                            {{-- Progress --}}
+                                            <div class="d-flex align-items-center gap-2">
+                                                
+                                                <small class="fw-bold text-primary" style="min-width: 45px;">
+                                                    {{ $project->progress }}%
+                                                </small>
+
+                                                <div class="progress mb-3 flex-grow-1"
+                                                    style="height: 12px; border-radius: 10px; background: #e9ecef;">
+
+                                                    <div class="progress-bar {{ $color }}"
+                                                        role="progressbar"
+                                                        style="
+                                                            width: {{ $project->progress }}%;
+                                                            border-radius: 0 10px 10px 0;
+                                                        ">
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+                                    </tr>
+
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
-                <h5 class="card-title mb-0">Project Progress Timeline</h5>
             </div>
-        </div>
-
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-traffic mb-0">
-                    <tbody>
-
-                        @foreach($projectsProgress as $project)
-
-                        @php
-                            if($project->progress <= 25){
-                                $color = 'bg-danger';
-                            }elseif($project->progress <= 50){
-                                $color = 'bg-warning';
-                            }elseif($project->progress <= 75){
-                                $color = 'bg-info';
-                            }else{
-                                $color = 'bg-success';
-                            }
-                        @endphp
-
-                        <tr>
-                            <td style="min-width: 350px;">
-
-                                {{-- Project Name --}}
-                                <div class="fw-bold mb-2">
-                                    {{ $project->name }}
-                                </div>
-
-                                {{-- Dates --}}
-                                <div class="d-flex justify-content-between mb-1">
-                                    <small class="text-muted">
-                                        {{ \Carbon\Carbon::parse($project->start_date)->format('d M Y') }}
-                                    </small>
-
-                                    <small class="text-muted">
-                                        {{ \Carbon\Carbon::parse($project->end_date)->format('d M Y') }}
-                                    </small>
-                                </div>
-
-                                {{-- Progress --}}
-                                <div class="d-flex align-items-center gap-2">
-                                    
-                                    <small class="fw-bold text-primary" style="min-width: 45px;">
-                                        {{ $project->progress }}%
-                                    </small>
-
-                                    <div class="progress mb-3 flex-grow-1"
-                                        style="height: 12px; border-radius: 10px; background: #e9ecef;">
-
-                                        <div class="progress-bar {{ $color }}"
-                                            role="progressbar"
-                                            style="
-                                                width: {{ $project->progress }}%;
-                                                border-radius: 0 10px 10px 0;
-                                            ">
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </td>
-                        </tr>
-
-                        @endforeach
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-    </div>
-</div>
         </div>
         <!-- End Monthly Sales -->
 
@@ -512,7 +420,7 @@
             plotOptions: {
                 bar: {
                     borderRadius: 10,
-                    borderRadiusApplication: 'end' // 👈 فقط بالا (Top) رادیوس می‌ده
+                    borderRadiusApplication: 'end'
                 }
             },
             xaxis: {
