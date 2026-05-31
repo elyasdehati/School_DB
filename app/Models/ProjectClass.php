@@ -16,8 +16,12 @@ class ProjectClass extends Model
         return $this->belongsTo(Project::class);
     }
 
+    // public function students(){
+    //     return $this->hasMany(ProjectClass::class, 'class_id');
+    // }
+
     public function students(){
-        return $this->hasMany(ProjectClass::class, 'class_id');
+        return $this->hasMany(ProjectStudent::class, 'class_id');
     }
 
     public function shuras(){
@@ -33,6 +37,6 @@ class ProjectClass extends Model
     }
 
     public function status(){
-        return $this->belongsTo(ProjectStatus::class);
+        return $this->belongsTo(Status::class);
     }
 }

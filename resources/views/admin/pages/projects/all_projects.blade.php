@@ -59,7 +59,7 @@
                                                     <td>{{ $item->donor }}</td>
                                                     <td>
                                                         @if($item->status)
-                                                            <span style="background-color: {{ $item->status->color }}; color:#000; padding:5px 10px; border-radius:6px;">
+                                                            <span style="background-color: {{ $item->status->color }}; color:#fff; padding:5px 10px; border-radius:6px;">
                                                                 {{ $item->status->name }}
                                                             </span>
                                                         @endif

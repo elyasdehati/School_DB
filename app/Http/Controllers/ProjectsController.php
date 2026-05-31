@@ -229,7 +229,7 @@ class ProjectsController extends Controller
         $districts = District::all();
         $languages = Language::all();
         $classtype = ClassType::all();
-        $statuses = ProjectStatus::all();
+        $statuses = Status::all();
         $infrastructures = Infastractor::all();
 
         $lastClass = ProjectClass::latest()->first();
@@ -328,7 +328,7 @@ class ProjectsController extends Controller
         $class = ProjectClass::findOrFail($id);
 
         $request->validate([
-            'class_id' => 'required|unique:project_classes,class_id',
+            'class_id' => 'required|unique:project_classes,class_id,' . $id,
             'class_name' => 'required',
             'grades' => 'required',
         ]);

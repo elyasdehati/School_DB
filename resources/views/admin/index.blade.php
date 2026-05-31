@@ -186,7 +186,7 @@
                                     @endphp
 
                                     <tr>
-                                        <td style="min-width: 350px;">
+                                        <td style="min-width: 330px;">
 
                                             {{-- Project Name --}}
                                             <div class="fw-bold mb-2">
