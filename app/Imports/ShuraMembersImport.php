@@ -35,11 +35,12 @@ class ShuraMembersImport implements ToCollection, WithHeadingRow
                 continue;
             }
 
-            $shura = ProjectShura::where('sno', $row['shura_sno'] ?? null)->first();
+            $shura = ProjectShura::where('sno', trim($row['shura_sno'] ?? ''))->first();
+            $status = \App\Models\Status::where('name', $row['status'] ?? null)->first();
 
             ShuraMember::create([
                 'project_id' => $this->project_id,
-                'shura_id' => $shura?->id,
+                'shura_id' => $shura?->sno,
                 'first_name' => $row['first_name'] ?? null,
                 'last_name' => $row['last_name'] ?? null,
                 'father_name' => $row['father_name'] ?? null,
@@ -54,7 +55,7 @@ class ShuraMembersImport implements ToCollection, WithHeadingRow
                 'disability_type' => $row['disability_type'] ?? null,
                 'role' => $row['role'] ?? null,
                 'phone' => $row['phone'] ?? null,
-                'status' => (strtolower($row['status'] ?? '') === 'active') ? 1 : 0,
+                'status' => $status?->id,
                 'remarks' => $row['remarks'] ?? null,
             ]);
         }

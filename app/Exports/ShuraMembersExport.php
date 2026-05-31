@@ -26,7 +26,7 @@ class ShuraMembersExport implements FromCollection, WithHeadings
             return collect([]);
         }
 
-        return ShuraMember::with(['shura.project'])
+        return ShuraMember::with(['shura.project', 'statuses'])
             ->where('project_id', $this->project_id)
             ->get()
             ->map(function ($item) {
@@ -47,7 +47,7 @@ class ShuraMembersExport implements FromCollection, WithHeadings
                     'disability_type' => $item->disability_type,
                     'role' => $item->role,
                     'phone' => $item->phone,
-                    'status' => $item->status ? 'Active' : 'Inactive',
+                    'status' => $item->statuses?->name ?? '',
                     'remarks' => $item->remarks,
                 ];
             });
