@@ -23,7 +23,7 @@ class ProjectTeachersExport implements FromCollection, WithHeadings
             return collect([]);
         }
 
-        return ProjectTeacher::with(['province','district'])
+        return ProjectTeacher::with(['province','district','status'])
             ->where('project_id', $this->project_id)
             ->get()
             ->map(function ($item) {
@@ -42,7 +42,7 @@ class ProjectTeachersExport implements FromCollection, WithHeadings
                     'starting_date' => $item->starting_date,
 
                     // boolean → Yes / No
-                    'is_active' => $item->is_active ? 'Yes' : 'No',
+                    'is_active' => $item->status?->name,
 
                     'tazkira_number' => $item->tazkira_number,
                     'year_of_birth' => $item->year_of_birth,

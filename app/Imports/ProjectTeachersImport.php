@@ -37,7 +37,7 @@ class ProjectTeachersImport implements ToCollection, WithHeadingRow
                 continue;
             }
 
-            $isActive = in_array(strtolower($row['is_active'] ?? ''), ['yes','1','true']) ? 1 : 0;
+            $status = \App\Models\Status::where('name', $row['is_active'] ?? null)->first();
             $coreTraining = in_array(strtolower($row['core_training'] ?? ''), ['yes','1','true']) ? 1 : 0;
             $refresherTraining = in_array(strtolower($row['refresher_training'] ?? ''), ['yes','1','true']) ? 1 : 0;
 
@@ -49,7 +49,6 @@ class ProjectTeachersImport implements ToCollection, WithHeadingRow
                 $age = $currentYear - $yearOfBirth;
             }
 
-            // FIX: numeric safety (added)
             $yearOfBirth = is_numeric($yearOfBirth) ? (int) $yearOfBirth : null;
             $age = is_numeric($age) ? (int) $age : null;
 
@@ -72,7 +71,8 @@ class ProjectTeachersImport implements ToCollection, WithHeadingRow
                     )
                     : null,
 
-                'is_active' => $isActive,
+                'is_active' => $status?->id,
+
                 'tazkira_number' => $row['tazkira_number'] ?? null,
                 'year_of_birth' => $yearOfBirth,
                 'age' => $age,

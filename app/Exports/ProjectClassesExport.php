@@ -23,7 +23,7 @@ class ProjectClassesExport implements FromCollection, WithHeadings
             return collect([]);
         }
 
-        return ProjectClass::with(['province','district'])
+        return ProjectClass::with(['province','district','status'])
             ->where('project_id', $this->project_id)
             ->get()
             ->map(function ($item) {

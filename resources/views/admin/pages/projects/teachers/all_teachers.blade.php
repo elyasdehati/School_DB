@@ -132,7 +132,7 @@
                             'Starting Date',
                             'Tazkira',
                             'Year Birth',
-                            'Year',
+                            'Age',
                             'Gender',
                             'Teacher Type',
                             'Qualification',

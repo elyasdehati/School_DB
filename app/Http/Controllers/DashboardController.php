@@ -13,7 +13,9 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function index(){
-        $classes = ProjectClass::count();
+        $classes = ProjectClass::whereHas('status', function ($q) {
+            $q->where('name', 'Active');
+        })->count();
 
         $teachers = ProjectTeacher::where('is_active', 1)->get();
         // $maleTeachers = $teachers->where('gender', 'Male')->count();
