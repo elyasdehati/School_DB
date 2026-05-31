@@ -39,6 +39,7 @@ class ProjectShurasImport implements ToCollection, WithHeadingRow
 
             $province = Province::where('name', $row['province'] ?? null)->first();
             $district = District::where('name', $row['district'] ?? null)->first();
+            $statusId = \App\Models\Status::where('name', $row['status'] ?? null)->first()?->id;
 
             $shura = ProjectShura::create([
                 'project_id' => $this->project_id,
@@ -48,7 +49,7 @@ class ProjectShurasImport implements ToCollection, WithHeadingRow
                 'village' => $row['village'] ?? null,
                 'shura_name' => $row['shura_name'] ?? null,
                 'shura_establishment_date' => !empty($row['establishment_date'])? (is_numeric($row['establishment_date'])? Date::excelToDateTimeObject($row['establishment_date'])->format('Y-m-d'): date('Y-m-d', strtotime($row['establishment_date']))): null,
-                'status' => $row['status'] ?? 'Active',
+                'status_id' => $statusId,
                 'status_change_date' => !empty($row['status_change_date'])
                     ? (is_numeric($row['status_change_date'])
                         ? Date::excelToDateTimeObject($row['status_change_date'])->format('Y-m-d')

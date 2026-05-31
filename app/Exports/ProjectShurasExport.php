@@ -26,7 +26,7 @@ class ProjectShurasExport implements FromCollection, WithHeadings
             return collect([]);
         }
 
-        return ProjectShura::with(['province','district','classes','project'])
+        return ProjectShura::with(['province','district','classes','project','status'])
             ->where('project_id', $this->project_id)
             ->get()
             ->map(function ($item) {
@@ -39,7 +39,7 @@ class ProjectShurasExport implements FromCollection, WithHeadings
                     'shura_name' => $item->shura_name,
                     'establishment_date' => $item->shura_establishment_date,
                     'classes' => implode(', ', $item->classes->pluck('class_id')->toArray()),
-                    'status' => $item->status,
+                    'status' => $item->status?->name,
                     'status_change_date' => $item->status_change_date,
                     'status_change_reason' => $item->status_change_reason,
                     'remarks' => $item->remarks,
