@@ -38,6 +38,8 @@ class ProjectStudentsImport implements ToModel, WithHeadingRow
             return null;
         }
 
+        $statusId = \App\Models\Status::where('name', $row['status'] ?? null)->first()?->id;
+
         return new ProjectStudent([
             'project_id' => $this->project_id,
 
@@ -49,7 +51,9 @@ class ProjectStudentsImport implements ToModel, WithHeadingRow
 
             'village' => $row['village'] ?? null,
             'asas_no' => $row['asas_no'] ?? null,
-            'enrollment_date' => isset($row['enrollment_date'])? Date::excelToDateTimeObject($row['enrollment_date'])->format('Y-m-d'): null,
+            
+            'enrollment_date' => !empty($row['enrollment_date'])? (is_numeric($row['enrollment_date'])? Date::excelToDateTimeObject($row['enrollment_date'])->format('Y-m-d'): $row['enrollment_date']) : null,
+            
             'first_name' => $row['first_name'] ?? null,
             'last_name' => $row['last_name'] ?? null,
             'father_name' => $row['father_name'] ?? null,
@@ -63,7 +67,7 @@ class ProjectStudentsImport implements ToModel, WithHeadingRow
             'disability_type' => $row['disability_type'] ?? null,
             'guardian_phone' => $row['guardian_phone'] ?? null,
             'guardian_relation' => $row['guardian_relation'] ?? null,
-            'status' => $row['status'] ?? 'Active',
+            'status' => $statusId,
             'remarks' => $row['remarks'] ?? null,
         ]);
     }

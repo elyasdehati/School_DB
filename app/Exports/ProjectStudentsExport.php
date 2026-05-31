@@ -23,7 +23,7 @@ class ProjectStudentsExport implements FromCollection, WithHeadings
             return collect([]);
         }
 
-        return ProjectStudent::with(['province','district','class'])
+        return ProjectStudent::with(['province','district','class','statuses'])
             ->where('project_id', $this->project_id)
             ->get()
             ->map(function ($item) {
@@ -48,7 +48,7 @@ class ProjectStudentsExport implements FromCollection, WithHeadings
                     'disability_type' => $item->disability_type,
                     'guardian_phone' => $item->guardian_phone,
                     'guardian_relation' => $item->guardian_relation,
-                    'status' => $item->status,
+                    'status' => $item->statuses?->name,
                     'remarks' => $item->remarks,
                 ];
             });
