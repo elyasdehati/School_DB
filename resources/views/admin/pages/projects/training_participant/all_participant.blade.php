@@ -74,7 +74,7 @@
                         </div>
 
                         <div class="text-end me-2">
-                            <form action="{{ route('import.training', $project->id) }}" method="POST" enctype="multipart/form-data" class="d-inline">
+                            <form action="{{ route('import.training.participant', $project->id) }}" method="POST" enctype="multipart/form-data" class="d-inline">
                                 @csrf
                                 <input type="file" name="excel_file" class="form-control form-control-sm d-inline" style="width:220px;">
                                 <button type="submit" class="btn btn-success btn-sm">
@@ -493,7 +493,7 @@
     function toggleDisability(select) {
         let box = select.closest('.row').querySelector('.disability-box');
 
-        if (select.value == "1") {
+        if (select.value == "0") {
             box.style.opacity = "0.4";
             box.style.pointerEvents = "none";
             box.querySelector('input').disabled = true;

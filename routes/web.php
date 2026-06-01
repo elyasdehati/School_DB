@@ -117,8 +117,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/training/participant/{id}', 'DeleteTrainingParticipant')->name('delete.training.participant');
         Route::get('/get-participant-districts/{province_id}',  'getParticipantDistricts');
 
-        // Route::post('/import/training/{id}', 'ImportProjectTraining')->name('import.training');
-        Route::get('/export/training/{id}/{type}', 'ExportTrainingParticipant')->name('export.training.participant');
+        Route::post('/import/training/participants/{id}', 'ImportTrainingParticipant')->name('import.training.participant');
+        Route::get('/export/training/participants/{id}/{type}', 'ExportTrainingParticipant')->name('export.training.participant');
     });
 
     // All Provinces Catalog

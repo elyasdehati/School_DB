@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\TrainingExport;
 use App\Exports\TrainingParticipantsExport;
 use App\Imports\TrainingImport;
+use App\Imports\TrainingParticipantsImport;
 use App\Models\District;
 use App\Models\Project;
 use App\Models\Province;
@@ -194,6 +195,21 @@ class TrainingController extends Controller
             $withData
                 ? 'training_participants.xlsx'
                 : 'training_participants_template.xlsx'
+        );
+    }
+
+    public function ImportTrainingParticipant(Request $request, $id){
+        $request->validate([
+            'excel_file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        $import = new TrainingParticipantsImport($id);
+
+        Excel::import($import, $request->file('excel_file'));
+
+        return back()->with(
+            'success',
+            'Participants imported successfully. Skipped duplicates: ' . $import->skipped
         );
     }
 
