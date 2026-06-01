@@ -82,12 +82,12 @@
                                 </button>
                             </form>
 
-                            <a href="{{ route('export.training', [$project->id, 'template']) }}" 
+                            <a href="{{ route('export.training.participant', [$project->id, 'template']) }}"
                             class="btn btn-info btn-sm">
                                 Download Template
                             </a>
 
-                            <a href="{{ route('export.training', [$project->id, 'data']) }}"
+                            <a href="{{ route('export.training.participant', [$project->id, 'data']) }}"
                             class="btn btn-primary btn-sm">
                                 Export Data
                             </a>
@@ -490,55 +490,55 @@
 @endforeach
 
 <script>
-function toggleDisability(select) {
-    let box = select.closest('.row').querySelector('.disability-box');
+    function toggleDisability(select) {
+        let box = select.closest('.row').querySelector('.disability-box');
 
-    if (select.value == "1") {
-        box.style.opacity = "0.4";
-        box.style.pointerEvents = "none";
-        box.querySelector('input').disabled = true;
-    } else {
-        box.style.opacity = "1";
-        box.style.pointerEvents = "auto";
-        box.querySelector('input').disabled = false;
+        if (select.value == "1") {
+            box.style.opacity = "0.4";
+            box.style.pointerEvents = "none";
+            box.querySelector('input').disabled = true;
+        } else {
+            box.style.opacity = "1";
+            box.style.pointerEvents = "auto";
+            box.querySelector('input').disabled = false;
+        }
     }
-}
 
-// on load
-document.querySelectorAll('select[name="is_disabled"]').forEach(function (el) {
-    toggleDisability(el);
+    // on load
+    document.querySelectorAll('select[name="is_disabled"]').forEach(function (el) {
+        toggleDisability(el);
 
-    el.addEventListener('change', function () {
-        toggleDisability(this);
+        el.addEventListener('change', function () {
+            toggleDisability(this);
+        });
     });
-});
 
-document.addEventListener('change', function (e) {
-    if (e.target.name === 'province_id') {
+    document.addEventListener('change', function (e) {
+        if (e.target.name === 'province_id') {
 
-        let provinceId = e.target.value;
-        let form = e.target.closest('form');
-        let districtSelect = form.querySelector('[name="district_id"]');
+            let provinceId = e.target.value;
+            let form = e.target.closest('form');
+            let districtSelect = form.querySelector('[name="district_id"]');
 
-        districtSelect.innerHTML = '<option>Loading...</option>';
+            districtSelect.innerHTML = '<option>Loading...</option>';
 
-        fetch('/get-participant-districts/' + provinceId)
-            .then(res => res.text())
-            .then(text => {
-                let data = JSON.parse(text); // safe check
+            fetch('/get-participant-districts/' + provinceId)
+                .then(res => res.text())
+                .then(text => {
+                    let data = JSON.parse(text); // safe check
 
-                districtSelect.innerHTML = '<option value="">-- Select --</option>';
+                    districtSelect.innerHTML = '<option value="">-- Select --</option>';
 
-                data.forEach(d => {
-                    districtSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`;
+                    data.forEach(d => {
+                        districtSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`;
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                    districtSelect.innerHTML = '<option>Error loading</option>';
                 });
-            })
-            .catch(err => {
-                console.log(err);
-                districtSelect.innerHTML = '<option>Error loading</option>';
-            });
-    }
-});
+        }
+    });
 </script>
 
 @endsection

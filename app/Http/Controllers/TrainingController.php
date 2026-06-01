@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Exports\TrainingExport;
+use App\Exports\TrainingParticipantsExport;
 use App\Imports\TrainingImport;
 use App\Models\District;
 use App\Models\Project;
-use App\Models\ProjectStatus;
 use App\Models\Province;
 use App\Models\Status;
 use App\Models\Training;
@@ -22,7 +22,7 @@ class TrainingController extends Controller
 
         $provinces = Province::all();
         $districts = District::all();
-        $statuses = ProjectStatus::all();
+        $statuses = Status::all();
 
         return view('admin.pages.projects.training.all_training', compact('project', 'train', 'provinces', 'districts', 'statuses'));
     }
@@ -184,6 +184,17 @@ class TrainingController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Participant added successfully');
+    }
+
+    public function ExportTrainingParticipant($project_id, $type){
+        $withData = $type === 'data';
+
+        return Excel::download(
+            new TrainingParticipantsExport($project_id, $withData),
+            $withData
+                ? 'training_participants.xlsx'
+                : 'training_participants_template.xlsx'
+        );
     }
 
     public function DeleteTrainingParticipant($id){
