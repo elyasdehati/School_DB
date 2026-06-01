@@ -42,7 +42,7 @@
                             <div class="fs-18 fw-bold">Classes</div>
                             <h3 class="fw-bold mb-0" style="opacity: .9">{{ $classes }}</h3>
                         </div>
-                        <i data-feather="layers" style="width:40px;height:40px;"></i>
+                        <i data-feather="home" style="width:40px;height:40px;"></i>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                             <div class="fs-18 fw-bold">Teachers</div>
                             <h3 class="fw-bold mb-0" style="opacity: .9">{{ $totalTeachers }}</h3>
                         </div>
-                        <i data-feather="home" style="width:40px;height:40px;"></i>
+                        <i class="fa-solid fa-chalkboard-user" style="font-size:35px;"></i>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@
                             <div class="fs-18 fw-bold">Students</div>
                             <h3 class="fw-bold mb-0" style="opacity: .9">{{ $totalStudents }}</h3>
                         </div>
-                        <i data-feather="home" style="width:40px;height:40px;"></i>
+                        <i data-feather="user" style="width:40px;height:40px;"></i>
                     </div>
                 </div>
             </div>
@@ -98,7 +98,7 @@
                             <div class="fs-18 fw-bold">Shura Members</div>
                             <h3 class="fw-bold mb-0" style="opacity: .9">{{ $totalShuraMembers }}</h3>
                         </div>
-                        <i data-feather="home" style="width:40px;height:40px;"></i>
+                        <i class="fa-solid fa-users" style="font-size:35px;"></i>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                             <div class="fs-18 fw-bold">Trainings</div>
                             <h3 class="fw-bold mb-0" style="opacity: .9">{{ $trainings }}</h3>
                         </div>
-                        <i data-feather="book-open" style="width:40px;height:40px;"></i>
+                        <i class="fa-solid fa-graduation-cap" style="font-size:35px;"></i>
                     </div>
                 </div>
             </div>
@@ -126,7 +126,7 @@
                             <div class="fs-18 fw-bold">Participants</div>
                             <h3 class="fw-bold mb-0" style="opacity: .9">{{ $totalParticipants }}</h3>
                         </div>
-                        <i data-feather="home" style="width:40px;height:40px;"></i>
+                        <i data-feather="user" style="width:40px;height:40px;"></i>
                     </div>
                 </div>
             </div>
