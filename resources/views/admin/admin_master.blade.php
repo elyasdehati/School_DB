@@ -31,7 +31,7 @@
 
         <!-- Icons -->
         <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-
+        <link rel="stylesheet" href="{{ asset('backend/assets/css/app.css') }}">
     </head>
 
     <!-- body start -->

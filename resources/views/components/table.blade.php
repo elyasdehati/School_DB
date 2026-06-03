@@ -19,3 +19,19 @@
         </tbody>
     </table>
 </div>
+
+{{-- <script>
+"use strict";
+$(document).ready(function(){
+
+    $("#datatable").DataTable({
+        paging: true,
+        lengthChange: true,
+        pageLength: 25,
+        lengthMenu: [10, 25, 50, 100],
+        scrollX: true,
+        autoWidth: false
+    });
+
+});
+</script> --}}
