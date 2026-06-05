@@ -16,6 +16,13 @@
                     <i class="bi bi-speedometer2 me-1"></i> Widgets
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.beneficiary') ? 'active' : '' }}" 
+                href="{{ route('all.beneficiary') }}">
+                    <i class="bi bi-people-fill me-1"></i> Beneficiary
+                </a>
+            </li>
         </ul>
     </div>
 </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Beneficiary;
 use App\Http\Controllers\ClassTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InfastractorController;
@@ -119,6 +120,16 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/import/training/participants/{id}', 'ImportTrainingParticipant')->name('import.training.participant');
         Route::get('/export/training/participants/{id}/{type}', 'ExportTrainingParticipant')->name('export.training.participant');
+    });
+
+    // All Provinces Catalog
+    Route::controller(Beneficiary::class)->group(function () {
+        Route::get('/all/beneficiary', 'AllBeneficiary')->name('all.beneficiary');
+        // Route::get('/add/province', 'AddProvince')->name('add.province');
+        // Route::post('/store/province', 'StoreProvince')->name('store.province');
+        // Route::get('/edit/province/{id}', 'EditProvince')->name('edit.province');
+        // Route::post('/update/province/{id}', 'UpdateProvince')->name('update.province');
+        // Route::get('/delete/province/{id}', 'DeleteProvince')->name('delete.province');
     });
 
     // All Provinces Catalog
