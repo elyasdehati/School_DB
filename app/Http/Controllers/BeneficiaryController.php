@@ -1,0 +1,93 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Project;
+use App\Models\ProjectStudent;
+use App\Models\ProjectTeacher;
+use App\Models\ProjectClass;
+use App\Models\ShuraMember;
+
+class BeneficiaryController extends Controller
+{
+    public function AllBeneficiary()
+    {
+        $projects = Project::orderBy('name')->get();
+
+        return view('admin.pages.beneficiary.all_beneficiary', compact('projects'));
+    }
+
+    public function projectData(Request $request)
+    {
+        $projectId = $request->project_id;
+
+        $students = ProjectStudent::query();
+        $teachers = ProjectTeacher::query();
+        $classes  = ProjectClass::query();
+        $sms      = ShuraMember::query();
+
+        if ($projectId) {
+            $students->where('project_id', $projectId);
+            $teachers->where('project_id', $projectId);
+            $classes->where('project_id', $projectId);
+            $sms->where('project_id', $projectId);
+        }
+
+        $classTypes = (clone $classes)
+            ->selectRaw('class_type, COUNT(*) as total')
+            ->groupBy('class_type')
+            ->get();
+
+        $teachersByClassType = ProjectTeacher::query()
+            ->join('project_classes', 'project_teachers.class_id', '=', 'project_classes.class_id')
+            ->when($projectId, function ($q) use ($projectId) {
+                $q->where('project_teachers.project_id', $projectId);
+            })
+            ->selectRaw("
+                project_classes.class_type,
+                SUM(CASE WHEN project_teachers.gender='Male' THEN 1 ELSE 0 END) as male,
+                SUM(CASE WHEN project_teachers.gender='Female' THEN 1 ELSE 0 END) as female
+            ")
+            ->groupBy('project_classes.class_type')
+            ->get();
+
+        $studentsByClassType = ProjectStudent::query()
+            ->join('project_classes', 'project_students.class_id', '=', 'project_classes.class_id')
+            ->when($projectId, function ($q) use ($projectId) {
+                $q->where('project_students.project_id', $projectId);
+            })
+            ->selectRaw("
+                project_classes.class_type,
+                SUM(CASE WHEN project_students.gender='Boy' THEN 1 ELSE 0 END) as boys,
+                SUM(CASE WHEN project_students.gender='Girl' THEN 1 ELSE 0 END) as girls
+            ")
+            ->groupBy('project_classes.class_type')
+            ->get();
+
+        return response()->json([
+
+            'students' => [
+                'boys' => (clone $students)->where('gender', 'Boy')->count(),
+                'girls' => (clone $students)->where('gender', 'Girl')->count(),
+            ],
+
+            'teachers' => [
+                'male' => (clone $teachers)->where('gender', 'Male')->count(),
+                'female' => (clone $teachers)->where('gender', 'Female')->count(),
+            ],
+
+            'class_types' => $classTypes,
+
+            'teachers_by_class_type' => $teachersByClassType,
+
+            'students_by_class_type' => $studentsByClassType,
+
+            'sms_members' => [
+                'male' => (clone $sms)->where('gender', 'Male')->count(),
+                'female' => (clone $sms)->where('gender', 'Female')->count(),
+            ],
+
+        ]);
+    }
+}
