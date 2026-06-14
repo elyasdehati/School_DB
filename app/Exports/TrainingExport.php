@@ -26,7 +26,7 @@ class TrainingExport implements FromCollection, WithHeadings
             return collect([]);
         }
 
-        return Training::with(['project','province','districts','status'])
+        return Training::with(['project','province','districts','status','trainingType'])
             ->where('project_id', $this->project_id)
             ->get()
             ->map(function ($item) {
@@ -37,7 +37,7 @@ class TrainingExport implements FromCollection, WithHeadings
                     'districts' => $item->districts->pluck('name')->implode(', '),
                     'village' => $item->village,
                     'venue' => $item->training_venue,
-                    'type' => $item->training_type,
+                    'type' => $item->trainingType?->name,
                     'topic' => $item->training_topic,
                     'start_date' => $item->training_start_date,
                     'end_date' => $item->training_end_date,
