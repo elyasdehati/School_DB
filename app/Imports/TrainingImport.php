@@ -8,6 +8,7 @@ use App\Models\Training;
 use App\Models\Project;
 use App\Models\Province;
 use App\Models\Status;
+use App\Models\TrainingType;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class TrainingImport implements ToCollection, WithHeadingRow
@@ -19,6 +20,7 @@ class TrainingImport implements ToCollection, WithHeadingRow
             $project = Project::where('name', $row['project'] ?? null)->first();
             $province = Province::where('name', $row['province'] ?? null)->first();
             $status = Status::where('name', $row['status'] ?? null)->first();
+            $trainingType = TrainingType::where('name', $row['type'] ?? null)->first();
 
             $training = Training::create([
                 'project_id' => $project?->id,
@@ -26,7 +28,7 @@ class TrainingImport implements ToCollection, WithHeadingRow
 
                 'village' => $row['village'] ?? null,
                 'training_venue' => $row['venue'] ?? null,
-                'training_type' => $row['type'] ?? null,
+                'training_type_id' => $trainingType?->id,
                 'training_topic' => $row['topic'] ?? null,
 
                 'training_start_date' => $row['start_date'] ?? null,
