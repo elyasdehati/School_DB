@@ -7,19 +7,19 @@ use App\Models\Project;
 use App\Models\ProjectStudent;
 use App\Models\ProjectTeacher;
 use App\Models\ProjectClass;
+use App\Models\ProjectShura;
 use App\Models\ShuraMember;
+use App\Models\Training;
+use App\Models\TrainingParticipant;
 
 class BeneficiaryController extends Controller
 {
-    public function AllBeneficiary()
-    {
+    public function AllBeneficiary(){
         $projects = Project::orderBy('name')->get();
-
         return view('admin.pages.beneficiary.all_beneficiary', compact('projects'));
     }
 
-    public function projectData(Request $request)
-    {
+    public function projectData(Request $request){
         $projectId = $request->project_id;
 
         $students = ProjectStudent::query();
@@ -78,16 +78,76 @@ class BeneficiaryController extends Controller
             ],
 
             'class_types' => $classTypes,
-
             'teachers_by_class_type' => $teachersByClassType,
-
             'students_by_class_type' => $studentsByClassType,
-
             'sms_members' => [
                 'male' => (clone $sms)->where('gender', 'Male')->count(),
                 'female' => (clone $sms)->where('gender', 'Female')->count(),
             ],
 
         ]);
+    }
+
+    public function AllBeneficiarySummary(){
+        $projects = Project::withCount([
+            'teachers',
+            'students',
+            'shuraMembers',
+            'shuras',
+            'trainings',
+            'trainingParticipants',
+        ])->get();
+
+        foreach ($projects as $project) {
+
+            // Students
+            $project->boys_students = ProjectStudent::where('project_id', $project->id)
+                ->where('gender', 'Boy')
+                ->count();
+
+            $project->girls_students = ProjectStudent::where('project_id', $project->id)
+                ->where('gender', 'Girl')
+                ->count();
+
+            // Teachers
+            $project->male_teachers = ProjectTeacher::where('project_id', $project->id)
+                ->where('gender', 'Male')
+                ->count();
+
+            $project->female_teachers = ProjectTeacher::where('project_id', $project->id)
+                ->where('gender', 'Female')
+                ->count();
+
+            // Shura Members
+            $project->male_shura_members = ShuraMember::where('project_id', $project->id)
+                ->where('gender', 'Male')
+                ->count();
+
+            $project->female_shura_members = ShuraMember::where('project_id', $project->id)
+                ->where('gender', 'Female')
+                ->count();
+        }
+
+        $projectsCount = Project::count();
+        $teachersCount = ProjectTeacher::count();
+        $studentsCount = ProjectStudent::count();
+        $shurasCount = ProjectShura::count();
+        $shuraMembersCount = ShuraMember::count();
+        $trainingsCount = Training::count();
+        $trainingParticipantsCount = TrainingParticipant::count();
+
+        return view(
+            'admin.pages.projects.ben_summary.all_summary',
+            compact(
+                'projects',
+                'projectsCount',
+                'teachersCount',
+                'studentsCount',
+                'shurasCount',
+                'shuraMembersCount',
+                'trainingsCount',
+                'trainingParticipantsCount'
+            )
+        );
     }
 }

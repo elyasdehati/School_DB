@@ -127,6 +127,8 @@ Route::middleware('auth')->group(function () {
     Route::controller(BeneficiaryController::class)->group(function () {
         Route::get('/all/beneficiary', 'AllBeneficiary')->name('all.beneficiary');
         Route::get('/beneficiary/project-data', 'projectData')->name('beneficiary.project.data');
+
+        Route::get('/all/beneficiary/summary', 'AllBeneficiarySummary')->name('all.beneficiary.summary');
     });
 
     // All Provinces Catalog

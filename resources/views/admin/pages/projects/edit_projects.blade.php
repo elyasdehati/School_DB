@@ -76,6 +76,13 @@
                     <i class="bi bi-people"></i> Training Participant
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.beneficiary.summary') ? 'active' : '' }}" 
+                href="{{ route('all.beneficiary.summary', $project->id) }}">
+                    <i class="bi bi-people"></i> Beneficiary Summary
+                </a>
+            </li>
         </ul>
     </div>
 </div>
