@@ -13,6 +13,7 @@ use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\ThematicAreaController;
 use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\TrainingTypeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -169,6 +170,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/thematic/area/{id}', 'EditThematicArea')->name('edit.thematic.area');
         Route::post('/update/thematic/area/{id}', 'UpdateThematicArea')->name('update.thematic.area');
         Route::get('/delete/thematic/area/{id}', 'DeleteThematicArea')->name('delete.thematic.area');
+    });
+
+    // All Thematic Area Catalog
+    Route::controller(TrainingTypeController::class)->group(function () {
+        Route::get('/all/trainings/type', 'AllTrainingType')->name('all.training.type');
+        // Route::get('/add/thematic/area', 'AddThematicArea')->name('add.thematic.area');
+        // Route::post('/store/thematic/area', 'StoreThematicArea')->name('store.thematic.area');
+        // Route::get('/edit/thematic/area/{id}', 'EditThematicArea')->name('edit.thematic.area');
+        // Route::post('/update/thematic/area/{id}', 'UpdateThematicArea')->name('update.thematic.area');
+        // Route::get('/delete/thematic/area/{id}', 'DeleteThematicArea')->name('delete.thematic.area');
     });
 
      // All Residence Type Catalog

@@ -130,6 +130,12 @@
                             </li>
 
                             <li>
+                                <a href="{{ route('all.training.type') }}" class="{{ request()->routeIs('all.training.type') ? 'active' : '' }}">
+                                    <span class="px-2"> Training Type  </span>
+                                </a>
+                            </li>
+
+                            <li>
                                 <a href="{{ route('all.status') }}" class="{{ request()->routeIs('all.status') ? 'active' : '' }}">
                                     <span class="px-2"> Status </span>
                                 </a>
