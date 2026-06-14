@@ -23,4 +23,9 @@ class TrainingTypeController extends Controller
 
         return redirect()->route('all.training.type');
     }
+
+    public function EditTrainingType($id){
+        $all_types = TrainingType::findOrFail($id);
+        return view('admin.pages.training_type.edit_training', compact('all_types'));
+    }
 }
