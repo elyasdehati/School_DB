@@ -12,7 +12,7 @@
                     </div>
 
                     <div class="text-end">
-                        <a href="{{ route('add.thematic.area') }}" class="btn btn-secondary">Add Training Type</a>
+                        <a href="{{ route('add.training.type') }}" class="btn btn-secondary">Add Training Type</a>
                     </div>
                 </div>
             </div>

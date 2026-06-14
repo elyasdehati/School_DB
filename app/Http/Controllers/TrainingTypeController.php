@@ -11,4 +11,8 @@ class TrainingTypeController extends Controller
         $all_types = TrainingType::all();
         return view('admin.pages.training_type.all_training', compact('all_types'));
     }
+
+    public function AddTrainingType(){
+        return view('admin.pages.training_type.add_training');
+    }
 }

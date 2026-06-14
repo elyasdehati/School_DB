@@ -172,10 +172,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/thematic/area/{id}', 'DeleteThematicArea')->name('delete.thematic.area');
     });
 
-    // All Thematic Area Catalog
+    // All Training Type Catalog
     Route::controller(TrainingTypeController::class)->group(function () {
         Route::get('/all/trainings/type', 'AllTrainingType')->name('all.training.type');
-        // Route::get('/add/thematic/area', 'AddThematicArea')->name('add.thematic.area');
+        Route::get('/add/training/types', 'AddTrainingType')->name('add.training.type');
         // Route::post('/store/thematic/area', 'StoreThematicArea')->name('store.thematic.area');
         // Route::get('/edit/thematic/area/{id}', 'EditThematicArea')->name('edit.thematic.area');
         // Route::post('/update/thematic/area/{id}', 'UpdateThematicArea')->name('update.thematic.area');
