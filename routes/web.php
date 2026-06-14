@@ -179,7 +179,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/store/trainings/type', 'StoreTrainingType')->name('store.training.type');
         Route::get('/edit/trainings/type/{id}', 'EditTrainingType')->name('edit.training.type');
         Route::post('/update/trainings/type/{id}', 'UpdateTrainingType')->name('update.training.type');
-        // Route::get('/delete/thematic/area/{id}', 'DeleteThematicArea')->name('delete.thematic.area');
+        Route::get('/delete/trainings/type/{id}', 'DeleteTrainingType')->name('delete.training.type');
     });
 
      // All Residence Type Catalog

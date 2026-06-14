@@ -38,4 +38,11 @@ class TrainingTypeController extends Controller
 
         return redirect()->route('all.training.type');
     }
+
+    public function DeleteTrainingType($id){
+        $all_types = TrainingType::findOrFail($id);
+        $all_types->delete();
+
+        return redirect()->route('all.training.type');
+    }
 }

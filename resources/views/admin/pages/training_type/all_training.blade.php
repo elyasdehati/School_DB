@@ -55,7 +55,7 @@
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink{{ $item->id }}">
                                                                 <li><a class="dropdown-item" href="{{ route('edit.training.type',$item->id) }}">Edit</a></li>
                                                                 <li>
-                                                                    <a href="{{ route('delete.thematic.area',$item->id) }}" class="dropdown-item text-danger delete-confirm">
+                                                                    <a href="{{ route('delete.training.type',$item->id) }}" class="dropdown-item text-danger delete-confirm">
                                                                         Delete
                                                                     </a>
                                                                 </li>
