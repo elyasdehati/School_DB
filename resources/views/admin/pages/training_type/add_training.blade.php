@@ -9,7 +9,7 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('store.thematic.area') }}" method="POST">
+                <form action="{{ route('store.training.type') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="form-group col-lg-6 mb-3">

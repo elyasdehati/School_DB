@@ -15,4 +15,12 @@ class TrainingTypeController extends Controller
     public function AddTrainingType(){
         return view('admin.pages.training_type.add_training');
     }
+
+    public function StoreTrainingType(Request $request){
+        TrainingType::create([
+            'name' => $request->name
+        ]);
+
+        return redirect()->route('all.training.type');
+    }
 }

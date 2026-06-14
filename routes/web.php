@@ -176,7 +176,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(TrainingTypeController::class)->group(function () {
         Route::get('/all/trainings/type', 'AllTrainingType')->name('all.training.type');
         Route::get('/add/training/types', 'AddTrainingType')->name('add.training.type');
-        // Route::post('/store/thematic/area', 'StoreThematicArea')->name('store.thematic.area');
+        Route::post('/store/trainings/type', 'StoreTrainingType')->name('store.training.type');
         // Route::get('/edit/thematic/area/{id}', 'EditThematicArea')->name('edit.thematic.area');
         // Route::post('/update/thematic/area/{id}', 'UpdateThematicArea')->name('update.thematic.area');
         // Route::get('/delete/thematic/area/{id}', 'DeleteThematicArea')->name('delete.thematic.area');
