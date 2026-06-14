@@ -27,4 +27,8 @@ class Training extends Model
     public function participants(){
         return $this->hasMany(TrainingParticipant::class);
     }
+
+    public function trainingType(){
+        return $this->belongsTo(TrainingType::class);
+    }
 }

@@ -12,6 +12,7 @@ use App\Models\Province;
 use App\Models\Status;
 use App\Models\Training;
 use App\Models\TrainingParticipant;
+use App\Models\TrainingType;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -24,8 +25,9 @@ class TrainingController extends Controller
         $provinces = Province::all();
         $districts = District::all();
         $statuses = Status::all();
+        $trainingTypes = TrainingType::all();
 
-        return view('admin.pages.projects.training.all_training', compact('project', 'train', 'provinces', 'districts', 'statuses'));
+        return view('admin.pages.projects.training.all_training', compact('project', 'train', 'provinces', 'districts', 'statuses', 'trainingTypes'));
     }
 
     public function getTrainingDistricts($province_id){
@@ -40,7 +42,7 @@ class TrainingController extends Controller
             'province_id' => $request->province_id,
             'village' => $request->village,
             'training_venue' => $request->training_venue,
-            'training_type' => $request->training_type,
+            'training_type_id' => $request->training_type_id,
             'training_topic' => $request->training_topic,
             'training_start_date' => $request->training_start_date,
             'training_end_date' => $request->training_end_date,
@@ -71,7 +73,7 @@ class TrainingController extends Controller
             'province_id' => $request->province_id,
             'village' => $request->village,
             'training_venue' => $request->training_venue,
-            'training_type' => $request->training_type,
+            'training_type_id' => $request->training_type_id,
             'training_topic' => $request->training_topic,
             'training_start_date' => $request->training_start_date,
             'training_end_date' => $request->training_end_date,

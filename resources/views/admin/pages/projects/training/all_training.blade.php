@@ -170,7 +170,7 @@
                                 $item->districts->pluck('name')->implode(', '),
                                 $item->village,
                                 $item->training_venue,
-                                $item->training_type,
+                                $item->trainingType?->name,
                                 $item->training_topic,
                                 $item->training_start_date,
                                 $item->training_end_date,
@@ -290,11 +290,14 @@
 
                         <div class="col-md-4 mb-2">
                             <label for="training_type">Training Type</label>
-                            <select class="form-control" name="training_type" id="training_type">
+                            <select class="form-control" name="training_type_id">
                                 <option value="">-- Select --</option>
-                                <option value="Core Training" {{ old('training_type') == 'Core Training' ? 'selected' : '' }}>Core Training</option>
-                                <option value="Refresher Training" {{ old('training_type') == 'Refresher Training' ? 'selected' : '' }}>Refresher Training</option>
-                                <option value="GRM" {{ old('training_type') == 'GRM' ? 'selected' : '' }}>GRM</option>
+
+                                @foreach($trainingTypes as $type)
+                                    <option value="{{ $type->id }}">
+                                        {{ $type->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -456,23 +459,15 @@
                             <div class="col-md-4 mb-2">
                                 <label>Training Type</label>
 
-                                <select class="form-control" name="training_type">
+                                <select class="form-control" name="training_type_id">
                                     <option value="">-- Select --</option>
 
-                                    <option value="Core Training"
-                                        {{ $item->training_type == 'Core Training' ? 'selected' : '' }}>
-                                        Core Training
-                                    </option>
-
-                                    <option value="Refresher Training"
-                                        {{ $item->training_type == 'Refresher Training' ? 'selected' : '' }}>
-                                        Refresher Training
-                                    </option>
-
-                                    <option value="GRM"
-                                        {{ $item->training_type == 'GRM' ? 'selected' : '' }}>
-                                        GRM
-                                    </option>
+                                    @foreach($trainingTypes as $type)
+                                        <option value="{{ $type->id }}"
+                                            {{ $item->training_type_id == $type->id ? 'selected' : '' }}>
+                                            {{ $type->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 

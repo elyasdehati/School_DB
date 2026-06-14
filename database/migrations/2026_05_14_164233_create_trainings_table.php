@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('province_id')->nullable()->constrained('provinces')->nullOnDelete();
             $table->string('village')->nullable();
             $table->string('training_venue')->nullable();
-            $table->string('training_type')->nullable();
+            $table->foreignId('training_type_id')->nullable()->constrained('training_types')->nullOnDelete();
             $table->string('training_topic')->nullable();
             $table->date('training_start_date')->nullable();
             $table->date('training_end_date')->nullable();
