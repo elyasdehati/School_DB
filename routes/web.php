@@ -178,7 +178,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/add/training/types', 'AddTrainingType')->name('add.training.type');
         Route::post('/store/trainings/type', 'StoreTrainingType')->name('store.training.type');
         Route::get('/edit/trainings/type/{id}', 'EditTrainingType')->name('edit.training.type');
-        // Route::post('/update/thematic/area/{id}', 'UpdateThematicArea')->name('update.thematic.area');
+        Route::post('/update/trainings/type/{id}', 'UpdateTrainingType')->name('update.training.type');
         // Route::get('/delete/thematic/area/{id}', 'DeleteThematicArea')->name('delete.thematic.area');
     });
 

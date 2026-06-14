@@ -28,4 +28,14 @@ class TrainingTypeController extends Controller
         $all_types = TrainingType::findOrFail($id);
         return view('admin.pages.training_type.edit_training', compact('all_types'));
     }
+
+    public function UpdateTrainingType(Request $request, $id){
+        $all_types = TrainingType::findOrFail($id);
+
+        $all_types->update([
+            'name' => $request->name
+        ]);
+
+        return redirect()->route('all.training.type');
+    }
 }

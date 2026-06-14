@@ -5,11 +5,11 @@
     <div class="container-xxl">
         <div class="card mt-1">
             <div class="card-header">
-                <h5 class="mb-0">Edit Thematic Area</h5>
+                <h5 class="mb-0">Edit Training Type</h5>
             </div>
 
             <div class="card-body">
-                <form action="{{ route('update.thematic.area',$all_types->id) }}" method="POST">
+                <form action="{{ route('update.training.type',$all_types->id) }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="form-group col-lg-6 mb-3">
