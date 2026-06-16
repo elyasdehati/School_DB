@@ -88,66 +88,170 @@ class BeneficiaryController extends Controller
         ]);
     }
 
-    public function AllBeneficiarySummary(){
-        $projects = Project::withCount([
-            'teachers',
-            'students',
-            'shuraMembers',
-            'shuras',
-            'trainings',
-            'trainingParticipants',
-        ])->get();
+    // public function AllBeneficiarySummary(){
+    //     $projects = Project::withCount([
+    //         'teachers',
+    //         'students',
+    //         'shuraMembers',
+    //         'shuras',
+    //         'trainings',
+    //         'trainingParticipants',
+    //     ])->get();
 
-        foreach ($projects as $project) {
+    //     foreach ($projects as $project) {
 
-            // Students
-            $project->boys_students = ProjectStudent::where('project_id', $project->id)
-                ->where('gender', 'Boy')
-                ->count();
+    //         // Students
+    //         $project->boys_students = ProjectStudent::where('project_id', $project->id)
+    //             ->where('gender', 'Boy')
+    //             ->count();
 
-            $project->girls_students = ProjectStudent::where('project_id', $project->id)
-                ->where('gender', 'Girl')
-                ->count();
+    //         $project->girls_students = ProjectStudent::where('project_id', $project->id)
+    //             ->where('gender', 'Girl')
+    //             ->count();
 
-            // Teachers
-            $project->male_teachers = ProjectTeacher::where('project_id', $project->id)
-                ->where('gender', 'Male')
-                ->count();
+    //         // Teachers
+    //         $project->male_teachers = ProjectTeacher::where('project_id', $project->id)
+    //             ->where('gender', 'Male')
+    //             ->count();
 
-            $project->female_teachers = ProjectTeacher::where('project_id', $project->id)
-                ->where('gender', 'Female')
-                ->count();
+    //         $project->female_teachers = ProjectTeacher::where('project_id', $project->id)
+    //             ->where('gender', 'Female')
+    //             ->count();
 
-            // Shura Members
-            $project->male_shura_members = ShuraMember::where('project_id', $project->id)
-                ->where('gender', 'Male')
-                ->count();
+    //         // Shura Members
+    //         $project->male_shura_members = ShuraMember::where('project_id', $project->id)
+    //             ->where('gender', 'Male')
+    //             ->count();
 
-            $project->female_shura_members = ShuraMember::where('project_id', $project->id)
-                ->where('gender', 'Female')
-                ->count();
+    //         $project->female_shura_members = ShuraMember::where('project_id', $project->id)
+    //             ->where('gender', 'Female')
+    //             ->count();
+    //     }
+
+    //     $projectsCount = Project::count();
+    //     $teachersCount = ProjectTeacher::count();
+    //     $studentsCount = ProjectStudent::count();
+    //     $shurasCount = ProjectShura::count();
+    //     $shuraMembersCount = ShuraMember::count();
+    //     $trainingsCount = Training::count();
+    //     $trainingParticipantsCount = TrainingParticipant::count();
+
+    //     return view(
+    //         'admin.pages.projects.ben_summary.all_summary',
+    //         compact(
+    //             'projects',
+    //             'projectsCount',
+    //             'teachersCount',
+    //             'studentsCount',
+    //             'shurasCount',
+    //             'shuraMembersCount',
+    //             'trainingsCount',
+    //             'trainingParticipantsCount'
+    //         )
+    //     );
+    // }
+    public function ProjectBeneficiarySummary(Project $project){
+        $classes = ProjectClass::with(['province', 'district'])
+            ->where('project_id', $project->id)
+            ->orderBy('province_id')
+            ->orderBy('district_id')
+            ->get();
+
+        $reportData = [];
+
+        foreach ($classes->groupBy('province_id') as $provinceId => $provinceClasses) {
+
+            $provinceName = optional($provinceClasses->first()->province)->name ?? 'N/A';
+
+            foreach ($provinceClasses->groupBy('district_id') as $districtId => $districtClasses) {
+
+                $districtName = optional($districtClasses->first()->district)->name ?? 'N/A';
+
+                // کلاس‌ها
+                $totalClasses = $districtClasses->count();
+
+                // Students (No Disability)
+                $boysNoDisability = ProjectStudent::where('project_id', $project->id)
+                    ->where('district_id', $districtId)
+                    ->where('gender', 'Boy')
+                    ->where('is_disabled', 0)
+                    ->count();
+
+                $girlsNoDisability = ProjectStudent::where('project_id', $project->id)
+                    ->where('district_id', $districtId)
+                    ->where('gender', 'Girl')
+                    ->where('is_disabled', 0)
+                    ->count();
+
+                // Students (Disability)
+                $boysDisability = ProjectStudent::where('project_id', $project->id)
+                    ->where('district_id', $districtId)
+                    ->where('gender', 'Boy')
+                    ->where('is_disabled', 1)
+                    ->count();
+
+                $girlsDisability = ProjectStudent::where('project_id', $project->id)
+                    ->where('district_id', $districtId)
+                    ->where('gender', 'Girl')
+                    ->where('is_disabled', 1)
+                    ->count();
+
+                // Teachers
+                $maleTeachers = ProjectTeacher::where('project_id', $project->id)
+                    ->where('class_id', $districtClasses->pluck('id'))
+                    ->where('gender', 'Male')
+                    ->count();
+
+                $femaleTeachers = ProjectTeacher::where('project_id', $project->id)
+                    ->where('class_id', $districtClasses->pluck('id'))
+                    ->where('gender', 'Female')
+                    ->count();
+
+                // Shuras (SMS)
+                $totalSms = ProjectShura::where('project_id', $project->id)
+                    ->where('district_id', $districtId)
+                    ->count();
+
+                // Shura Members (اصلاح شده و دقیق)
+                $shuraIds = ProjectShura::where('project_id', $project->id)
+                    ->where('district_id', $districtId)
+                    ->pluck('id');
+
+                $maleSmsMembers = ShuraMember::where('project_id', $project->id)
+                    ->where('gender', 'Male')
+                    ->whereIn('shura_id', $shuraIds)
+                    ->count();
+
+                $femaleSmsMembers = ShuraMember::where('project_id', $project->id)
+                    ->where('gender', 'Female')
+                    ->whereIn('shura_id', $shuraIds)
+                    ->count();
+
+                $reportData[] = [
+                    'province' => $provinceName,
+                    'district' => $districtName,
+
+                    'total_classes' => $totalClasses,
+
+                    'boys_no_disability' => $boysNoDisability,
+                    'girls_no_disability' => $girlsNoDisability,
+
+                    'boys_disability' => $boysDisability,
+                    'girls_disability' => $girlsDisability,
+
+                    'male_teachers' => $maleTeachers,
+                    'female_teachers' => $femaleTeachers,
+
+                    'total_sms' => $totalSms,
+                    'male_sms_members' => $maleSmsMembers,
+                    'female_sms_members' => $femaleSmsMembers,
+                ];
+            }
         }
-
-        $projectsCount = Project::count();
-        $teachersCount = ProjectTeacher::count();
-        $studentsCount = ProjectStudent::count();
-        $shurasCount = ProjectShura::count();
-        $shuraMembersCount = ShuraMember::count();
-        $trainingsCount = Training::count();
-        $trainingParticipantsCount = TrainingParticipant::count();
 
         return view(
             'admin.pages.projects.ben_summary.all_summary',
-            compact(
-                'projects',
-                'projectsCount',
-                'teachersCount',
-                'studentsCount',
-                'shurasCount',
-                'shuraMembersCount',
-                'trainingsCount',
-                'trainingParticipantsCount'
-            )
+            compact('project', 'reportData')
         );
     }
 }

@@ -78,8 +78,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('all.beneficiary.summary') ? 'active' : '' }}" 
-                href="{{ route('all.beneficiary.summary', $project->id) }}">
+                <a class="nav-link {{ request()->routeIs('beneficiary.project.summary') ? 'active' : '' }}" 
+                href="{{ route('beneficiary.project.summary', $project->id) }}">
                     <i class="bi bi-people"></i> Beneficiary Summary
                 </a>
             </li>
