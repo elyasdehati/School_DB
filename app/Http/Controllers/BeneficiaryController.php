@@ -212,7 +212,7 @@ class BeneficiaryController extends Controller
                     ->where('district_id', $districtId)
                     ->count();
 
-                // Shura Members (اصلاح شده و دقیق)
+                // Shura Members 
                 $shuraIds = ProjectShura::where('project_id', $project->id)
                     ->where('district_id', $districtId)
                     ->pluck('id');

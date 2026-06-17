@@ -49,8 +49,8 @@
                             <th colspan="2">SMS Members</th>
                         </tr>
                         <tr>
-                            <th colspan="2">Without Disability</th>
-                            <th colspan="2">Disability</th>
+                            <th colspan="2">Normal</th>
+                            <th colspan="2">Disable</th>
                             <th rowspan="2" class="align-middle">Male</th>
                             <th rowspan="2" class="align-middle">Female</th>
                             <th rowspan="2" class="align-middle">Male</th>
