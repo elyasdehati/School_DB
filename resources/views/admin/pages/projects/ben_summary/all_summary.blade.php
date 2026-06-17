@@ -2,16 +2,85 @@
 @section('admin')
 
 <style>
-.table tfoot td{
-    padding: 4px 8px !important;
-    vertical-align: middle !important;
-    line-height: 1.2;
-}
+    .table tfoot td{
+        padding: 4px 8px !important;
+        vertical-align: middle !important;
+        line-height: 1.2;
+    }
 
-.table tfoot tr{
-    height: 30px;
-}
+    .table tfoot tr{
+        height: 30px;
+    }
 </style>
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('edit.project') ? 'active' : '' }}" 
+                href="{{ route('edit.project',$project->id) }}">
+                    <i class="bi bi-pencil-square me-1"></i> Detail
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.projects.class') ? 'active' : '' }}" 
+                href="{{ route('all.projects.class', $project->id) }}">
+                    <i class="bi bi-easel2 me-1"></i> Classes
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.projects.teachers') ? 'active' : '' }}" 
+                href="{{ route('all.projects.teachers', $project->id) }}">
+                    <i class="bi bi-person-video3 me-1"></i> Teachers
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.projects.students') ? 'active' : '' }}" 
+                href="{{ route('all.projects.students', $project->id) }}">
+                    <i class="bi bi-people-fill me-1"></i> Students
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.projects.shura') ? 'active' : '' }}" 
+                href="{{ route('all.projects.shura', $project->id) }}">
+                    <i class="bi bi-building"></i> Shura
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.projects.shura.members') ? 'active' : '' }}" 
+                href="{{ route('all.projects.shura.members', $project->id) }}">
+                    <i class="bi bi-person-lines-fill"></i> Shura Members
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.training') ? 'active' : '' }}" 
+                href="{{ route('all.training', $project->id) }}">
+                    <i class="bi bi-clipboard2-check-fill"></i> Training
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.training.participant') ? 'active' : '' }}" 
+                href="{{ route('all.training.participant', $project->id) }}">
+                    <i class="bi bi-people"></i> Training Participant
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('beneficiary.project.summary') ? 'active' : '' }}" 
+                href="{{ route('beneficiary.project.summary', $project->id) }}">
+                    <i class="bi bi-people-fill me-1"></i> Beneficiary Summary
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <div class="content">
 
