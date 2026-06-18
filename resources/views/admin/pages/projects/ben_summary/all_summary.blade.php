@@ -99,7 +99,7 @@
                 <small class="text-muted">{{ $project->name }}</small>
             </div>
 
-            <a href="#" class="btn btn-success">
+            <a href="{{ route('beneficiary.project.export', $project->id) }}" class="btn btn-success">
                 <i class="bi bi-file-earmark-excel"></i> Export Excel
             </a>
         </div>
