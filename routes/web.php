@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Beneficiary;
 use App\Http\Controllers\BeneficiaryController;
+use App\Http\Controllers\BeneficiarySummaryController;
 use App\Http\Controllers\ClassTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InfastractorController;
@@ -131,6 +132,11 @@ Route::middleware('auth')->group(function () {
         // Route::get('/all/beneficiary/summary', 'AllBeneficiarySummary')->name('all.beneficiary.summary');
         Route::get('/beneficiary/project/{project}','ProjectBeneficiarySummary')->name('beneficiary.project.summary');
         Route::get('/beneficiary/project/{project}/export', 'ExportBeneficiarySummary')->name('beneficiary.project.export');
+    });
+
+    // All Beneficiary
+    Route::controller(BeneficiarySummaryController::class)->group(function () {
+        Route::get('/all/beneficiary/summary', 'AllBeneficiarySummary')->name('all.beneficiary.summary');
     });
 
     // All Provinces Catalog

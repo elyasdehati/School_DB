@@ -20,7 +20,14 @@
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('all.beneficiary') ? 'active' : '' }}" 
                 href="{{ route('all.beneficiary') }}">
-                    <i class="bi bi-people-fill me-1"></i> Beneficiary
+                    <i class="bi bi-people"></i> Beneficiary
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('all.beneficiary.summary') ? 'active' : '' }}" 
+                href="{{ route('all.beneficiary.summary') }}">
+                    <i class="bi bi-people-fill me-1"></i> Beneficiary Summary
                 </a>
             </li>
         </ul>
