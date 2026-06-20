@@ -30,8 +30,12 @@
 
 
 <div class="card mt-3">
-    <div class="card-header bg-white">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Beneficiary Summary Report</h5>
+
+        <a href="#" class="btn btn-success">
+            <i class="bi bi-file-earmark-excel me-1"></i> Export Excel
+        </a>
     </div>
 
     <div class="card-body table-responsive">
@@ -55,19 +59,28 @@
 
             <thead class="table-light">
                 <tr>
-                    <th>Project</th>
-                    <th>Province</th>
-                    <th>District</th>
-                    <th>Classes</th>
+                    <th rowspan="3" class="align-middle">Project</th>
+                    <th rowspan="3" class="align-middle">Province</th>
+                    <th rowspan="3" class="align-middle">District</th>
+                    <th rowspan="3" class="align-middle">Total Classes</th>
+                    <th colspan="4" class="align-middle">Students</th>
+                    <th colspan="2" class="align-middle">Teachers</th>
+                    <th rowspan="3" class="align-middle">SMS</th>
+                    <th colspan="2" class="align-middle">SMS Members</th>
+                </tr>
+                <tr>
+                    <th colspan="2" class="align-middle">Normal</th>
+                    <th colspan="2" class="align-middle">Disable</th>
+                    <th rowspan="2" class="align-middle">Male</th>
+                    <th rowspan="2" class="align-middle">Female</th>
+                    <th rowspan="2" class="align-middle">Male</th>
+                    <th rowspan="2" class="align-middle">Female</th>
+                </tr>
+                <tr>
                     <th>Boys</th>
                     <th>Girls</th>
-                    <th>Dis Boys</th>
-                    <th>Dis Girls</th>
-                    <th>Male Teachers</th>
-                    <th>Female Teachers</th>
-                    <th>SMS</th>
-                    <th>SMS Male</th>
-                    <th>SMS Female</th>
+                    <th>Boys</th>
+                    <th>Girls</th>
                 </tr>
             </thead>
 
