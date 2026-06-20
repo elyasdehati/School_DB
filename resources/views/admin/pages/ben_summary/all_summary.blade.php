@@ -33,7 +33,7 @@
     <div class="card-header bg-white d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Beneficiary Summary Report</h5>
 
-        <a href="#" class="btn btn-success">
+        <a href="{{ route('all.beneficiary.summary.export') }}" class="btn btn-success">
             <i class="bi bi-file-earmark-excel me-1"></i> Export Excel
         </a>
     </div>
