@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Province;
 use App\Models\District;
 use Illuminate\Http\Request;
+use App\Services\ActivityLogger;
 
 class Provinces extends Controller
 {
-
-    // -----------  Province ----------
+    // ----------- Province ----------
     public function AllProvinces(){
         $provinces = Province::with('districts')->get();
         return view('admin.pages.provinces.all_provinces', compact('provinces'));
@@ -34,6 +34,11 @@ class Provinces extends Controller
                 ]);
             }
         }
+
+        ActivityLogger::log(
+            'create_province',
+            'Province created: ' . $request->province
+        );
 
         return redirect()->route('all.provinces');
     }
@@ -63,12 +68,22 @@ class Provinces extends Controller
             }
         }
 
+        ActivityLogger::log(
+            'update_province',
+            'Province updated ID: ' . $id
+        );
+
         return redirect()->route('all.provinces');
     }
 
     public function DeleteProvince($id){
         $province = Province::findOrFail($id);
         $province->delete();
+
+        ActivityLogger::log(
+            'delete_province',
+            'Province deleted ID: ' . $id
+        );
 
         return redirect()->route('all.provinces');
     }

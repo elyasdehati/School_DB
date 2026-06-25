@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Language;
 use Illuminate\Http\Request;
+use App\Services\ActivityLogger;
 
 class LanguageController extends Controller
 {
@@ -21,6 +22,11 @@ class LanguageController extends Controller
             'name' => $request->name
         ]);
 
+        ActivityLogger::log(
+            'create_language',
+            'Language created: ' . $request->name
+        );
+
         return redirect()->route('all.language');
     }
 
@@ -36,11 +42,22 @@ class LanguageController extends Controller
             'name' => $request->name
         ]);
 
+        ActivityLogger::log(
+            'update_language',
+            'Language updated ID: ' . $id
+        );
+
         return redirect()->route('all.language');
     }
 
     public function DeleteLanguage($id){
         $language = Language::findOrFail($id);
+
+        ActivityLogger::log(
+            'delete_language',
+            'Language deleted ID: ' . $id
+        );
+
         $language->delete();
 
         return redirect()->route('all.language');
