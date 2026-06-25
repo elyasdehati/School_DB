@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Infastractor;
 use Illuminate\Http\Request;
+use App\Services\ActivityLogger;
 
 class InfastractorController extends Controller
 {
@@ -21,6 +22,11 @@ class InfastractorController extends Controller
             'name' => $request->name
         ]);
 
+        ActivityLogger::log(
+            'create_infastractor',
+            'Infastractor created: ' . $request->name
+        );
+
         return redirect()->route('all.infas');
     }
 
@@ -36,11 +42,22 @@ class InfastractorController extends Controller
             'name' => $request->name
         ]);
 
+        ActivityLogger::log(
+            'update_infastractor',
+            'Infastractor updated ID: ' . $id
+        );
+
         return redirect()->route('all.infas');
     }
 
     public function DeleteInfas($id){
         $infas = Infastractor::findOrFail($id);
+
+        ActivityLogger::log(
+            'delete_infastractor',
+            'Infastractor deleted ID: ' . $id
+        );
+
         $infas->delete();
 
         return redirect()->route('all.infas');
