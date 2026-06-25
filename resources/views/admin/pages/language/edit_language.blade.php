@@ -4,8 +4,11 @@
 <div class="content">
     <div class="container-xxl">
         <div class="card mt-1">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Edit Language</h5>
+                <a href="{{ url()->previous() }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-arrow-left me-1"></i> Back
+                </a>
             </div>
 
             <div class="card-body">

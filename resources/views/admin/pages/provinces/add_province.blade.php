@@ -8,8 +8,11 @@
 <div class="content">
     <div class="container-xxl">
         <div class="card mt-1">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Create Province</h5>
+                <a href="{{ url()->previous() }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-arrow-left me-1"></i> Back
+                </a>
             </div>
 
             <div class="card-body">
@@ -18,18 +21,19 @@
                     <div class="row">
                         <div class="form-group col-lg-6 mb-3">
                             <label for="title">Title</label>
-                            <input class="form-control" placeholder="Title" required="" name="province" type="text" id="title">
-                            
+                            <input class="form-control" placeholder="Title" required name="province" type="text" id="title">
                         </div>
+
                         <div class="form-group col-lg-6 mb-3">
                             <label for="districts">Districts</label>
                             <input type="text" class="form-control" id="district_input" placeholder="Type district and press Enter">
-                            <div id="district_tags"></div>
-                            <input type="hidden" name="districts[]" id="districts">
+                            <div id="district_tags" class="mt-2"></div>
+                            <input type="hidden" name="districts" id="districts">
                         </div>
+
                         <div class="col-md-12 d-flex justify-content-end align-items-center mt-3">
                             <button type="submit" class="btn btn-primary ms-3">
-                                Save 
+                                Save
                             </button>
                         </div>
                     </div>
@@ -41,16 +45,18 @@
 
 <style>
 .tag {
-    display:inline-block;
-    background:#28a745;
-    color:#fff;
-    padding:5px 10px;
-    margin:3px;
-    border-radius:3px;
+    display: inline-block;
+    background: #28a745;
+    color: #fff;
+    padding: 5px 10px;
+    margin: 3px;
+    border-radius: 3px;
+    font-size: 14px;
 }
 .tag span {
-    margin-left:8px;
-    cursor:pointer;
+    margin-left: 8px;
+    cursor: pointer;
+    font-weight: bold;
 }
 </style>
 
@@ -77,7 +83,7 @@ function renderTags(){
     districts.forEach((d, index) => {
         let tag = document.createElement('div');
         tag.classList.add('tag');
-        tag.innerHTML = d + ' <span onclick="removeTag('+index+')">x</span>';
+        tag.innerHTML = d + ' <span onclick="removeTag('+index+')">&times;</span>';
         container.appendChild(tag);
     });
 
