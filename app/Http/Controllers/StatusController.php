@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProjectStatus;
 use App\Models\Status;
 use Illuminate\Http\Request;
+use App\Services\ActivityLogger;
 
 class StatusController extends Controller
 {
@@ -28,6 +29,11 @@ class StatusController extends Controller
             'color' => $request->color,
         ]);
 
+        ActivityLogger::log(
+            'create_status',
+            'Status created: ' . $request->name
+        );
+
         return redirect()->route('all.status');
     }
 
@@ -48,22 +54,33 @@ class StatusController extends Controller
             'color' => $request->color,
         ]);
 
+        ActivityLogger::log(
+            'update_status',
+            'Status updated ID: ' . $id
+        );
+
         return redirect()->route('all.status');
     }
 
     public function DeleteStatus($id){
         $status = Status::findOrFail($id);
+
+        ActivityLogger::log(
+            'delete_status',
+            'Status deleted ID: ' . $id
+        );
+
         $status->delete();
 
         return redirect()->route('all.status');
     }
 
-    // All Project Status
+    // ----------- Project Status ----------
     public function AllProjectStatus(){
         $pstatus = ProjectStatus::all();
         return view('admin.pages.projectstatus.all_project_status', compact('pstatus'));
     }
-    
+
     public function AddProjectStatus(){
         return view('admin.pages.projectstatus.add_project_status');
     }
@@ -78,6 +95,11 @@ class StatusController extends Controller
             'name' => $request->name,
             'color' => $request->color,
         ]);
+
+        ActivityLogger::log(
+            'create_project_status',
+            'Project status created: ' . $request->name
+        );
 
         return redirect()->route('all.project.status');
     }
@@ -99,11 +121,22 @@ class StatusController extends Controller
             'color' => $request->color,
         ]);
 
+        ActivityLogger::log(
+            'update_project_status',
+            'Project status updated ID: ' . $id
+        );
+
         return redirect()->route('all.project.status');
     }
 
     public function DeleteProjectStatus($id){
         $status = ProjectStatus::findOrFail($id);
+
+        ActivityLogger::log(
+            'delete_project_status',
+            'Project status deleted ID: ' . $id
+        );
+
         $status->delete();
 
         return redirect()->route('all.project.status');
