@@ -30,20 +30,13 @@ class ProjectTeachersExport implements FromCollection, WithHeadings
                 return [
                     'serial_number' => $item->serial_number,
                     'class_id' => $item->class?->class_id,
-
                     'province' => $item->province?->name,
                     'district' => $item->district?->name,
-
                     'village' => $item->village,
                     'first_name' => $item->first_name,
                     'last_name' => $item->last_name,
                     'father_name' => $item->father_name,
-
                     'starting_date' => $item->starting_date,
-
-                    // boolean → Yes / No
-                    'is_active' => $item->status?->name,
-
                     'tazkira_number' => $item->tazkira_number,
                     'year_of_birth' => $item->year_of_birth,
                     'age' => $item->age,
@@ -51,10 +44,11 @@ class ProjectTeachersExport implements FromCollection, WithHeadings
                     'teacher_type' => $item->teacher_type,
                     'qualification' => $item->qualification,
                     'phone' => $item->phone,
-
                     // boolean → Yes / No
                     'core_training' => $item->core_training ? 'Yes' : 'No',
                     'refresher_training' => $item->refresher_training ? 'Yes' : 'No',
+                    // boolean → Yes / No
+                    'is_active' => $item->status?->name,
                 ];
             });
     }
@@ -71,7 +65,6 @@ class ProjectTeachersExport implements FromCollection, WithHeadings
             'last_name',
             'father_name',
             'starting_date',
-            'is_active',
             'tazkira_number',
             'year_of_birth',
             'age',
@@ -81,6 +74,7 @@ class ProjectTeachersExport implements FromCollection, WithHeadings
             'phone',
             'core_training',
             'refresher_training',
+            'is_active',
         ];
     }
 }

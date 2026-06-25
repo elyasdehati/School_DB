@@ -45,7 +45,6 @@ class ProjectClassesExport implements FromCollection, WithHeadings
                     'total_enrolled' => $item->total_enrolled,
                     'demographic' => $item->demographic,
                     'language' => $item->language,
-                    'class_status' => $item->status?->name,
                     'start_time' => $item->start_time ? date('G:i', strtotime($item->start_time)) : null,
                     'end_time'   => $item->end_time ? date('G:i', strtotime($item->end_time)) : null,
                     'shift' => $item->shift,
@@ -64,6 +63,7 @@ class ProjectClassesExport implements FromCollection, WithHeadings
                     'hub_distance_km' => $item->hub_distance_km,
                     'sip_completed' => $item->sip_completed ? 'Yes' : 'No',
                     'remarks' => $item->remarks,
+                    'class_status' => $item->status?->name,
                 ];
             });
     }
@@ -88,7 +88,6 @@ class ProjectClassesExport implements FromCollection, WithHeadings
             'total_enrolled',
             'demographic',
             'language',
-            'class_status',
             'start_time',
             'end_time',
             'shift',
@@ -107,6 +106,7 @@ class ProjectClassesExport implements FromCollection, WithHeadings
             'hub_distance_km',
             'sip_completed',
             'remarks',
+            'class_status',
         ];
     }
 }
