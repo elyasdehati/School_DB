@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ThematicArea;
 use Illuminate\Http\Request;
+use App\Services\ActivityLogger;
 
 class ThematicAreaController extends Controller
 {
@@ -21,6 +22,11 @@ class ThematicAreaController extends Controller
             'name' => $request->name
         ]);
 
+        ActivityLogger::log(
+            'create_thematic_area',
+            'Thematic area created: ' . $request->name
+        );
+
         return redirect()->route('all.thematic.area');
     }
 
@@ -36,11 +42,22 @@ class ThematicAreaController extends Controller
             'name' => $request->name
         ]);
 
+        ActivityLogger::log(
+            'update_thematic_area',
+            'Thematic area updated ID: ' . $id
+        );
+
         return redirect()->route('all.thematic.area');
     }
 
     public function DeleteThematicArea($id){
         $themtaic = ThematicArea::findOrFail($id);
+
+        ActivityLogger::log(
+            'delete_thematic_area',
+            'Thematic area deleted ID: ' . $id
+        );
+
         $themtaic->delete();
 
         return redirect()->route('all.thematic.area');
