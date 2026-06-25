@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Residence;
 use Illuminate\Http\Request;
+use App\Services\ActivityLogger;
 
 class ResidenceController extends Controller
 {
@@ -21,6 +22,11 @@ class ResidenceController extends Controller
             'name' => $request->name
         ]);
 
+        ActivityLogger::log(
+            'create_residence',
+            'Residence created: ' . $request->name
+        );
+
         return redirect()->route('all.residence');
     }
 
@@ -30,17 +36,28 @@ class ResidenceController extends Controller
     }
 
     public function UpdateResidence(Request $request, $id){
-        $themtaic = Residence::findOrFail($id);
+        $res = Residence::findOrFail($id);
 
-        $themtaic->update([
+        $res->update([
             'name' => $request->name
         ]);
+
+        ActivityLogger::log(
+            'update_residence',
+            'Residence updated ID: ' . $id
+        );
 
         return redirect()->route('all.residence');
     }
 
     public function DeleteResidence($id){
         $res = Residence::findOrFail($id);
+
+        ActivityLogger::log(
+            'delete_residence',
+            'Residence deleted ID: ' . $id
+        );
+
         $res->delete();
 
         return redirect()->route('all.residence');
