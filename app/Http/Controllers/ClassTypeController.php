@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ClassType;
 use Illuminate\Http\Request;
+use App\Services\ActivityLogger;
 
 class ClassTypeController extends Controller
 {
@@ -21,6 +22,11 @@ class ClassTypeController extends Controller
             'name' => $request->name
         ]);
 
+        ActivityLogger::log(
+            'create_class_type',
+            'Class type created: ' . $request->name
+        );
+
         return redirect()->route('all.class.type');
     }
 
@@ -36,11 +42,22 @@ class ClassTypeController extends Controller
             'name' => $request->name
         ]);
 
+        ActivityLogger::log(
+            'update_class_type',
+            'Class type updated ID: ' . $id
+        );
+
         return redirect()->route('all.class.type');
     }
 
     public function DeleteLanguage($id){
         $classtype = ClassType::findOrFail($id);
+
+        ActivityLogger::log(
+            'delete_class_type',
+            'Class type deleted ID: ' . $id
+        );
+
         $classtype->delete();
 
         return redirect()->route('all.class.type');
