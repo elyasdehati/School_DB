@@ -175,6 +175,11 @@ class ProjectsController extends Controller
             'refresher_training' => $request->refresher_training ?? 0,
         ]);
 
+        ActivityLogger::log(
+            'create_project_teacher',
+            'Teacher created: ' . $request->first_name . ' ' . $request->last_name
+        );
+
         return redirect()->back()->with('success','Teacher added successfully');
     }
 
@@ -185,8 +190,11 @@ class ProjectsController extends Controller
         ]);
 
         $import = new ProjectTeachersImport($id);
-
         Excel::import($import, $request->file('excel_file'));
+        ActivityLogger::log(
+            'import_project_teachers',
+            'Teachers imported for Project ID: ' . $id
+        );
 
         return back()->with('success',
             'Teachers imported successfully. Skipped: ' . $import->skipped
@@ -195,6 +203,11 @@ class ProjectsController extends Controller
 
     public function exportTeachers($id, $type){
         $withData = $type === 'data';
+
+        ActivityLogger::log(
+            'export_project_teachers',
+            'Teachers exported for Project ID: ' . $id
+        );
 
         return Excel::download(
             new ProjectTeachersExport($id, $withData),
@@ -227,11 +240,20 @@ class ProjectsController extends Controller
             'refresher_training' => $request->refresher_training ?? 0,
         ]);
 
+        ActivityLogger::log(
+            'update_project_teacher',
+            'Teacher updated: ' . $teacher->first_name . ' ' . $teacher->last_name
+        );
+
         return back()->with('success','Updated successfully');
     }
 
     public function DeleteProjectTeacher($id){
         $teacher = ProjectTeacher::findOrFail($id);
+        ActivityLogger::log(
+            'delete_project_teacher',
+            'Teacher deleted: ' . $teacher->first_name . ' ' . $teacher->last_name
+        );
         $teacher->delete();
 
         return back()->with('success','Deleted successfully');
