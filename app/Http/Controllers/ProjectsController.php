@@ -627,6 +627,11 @@ class ProjectsController extends Controller
             $shura->classes()->attach($request->class_ids);
         }
 
+        ActivityLogger::log(
+            'create_project_shura',
+            'Shura created: ' . $request->shura_name
+        );
+
         return back()->with('success', 'Shura created successfully');
     }
 
@@ -637,8 +642,11 @@ class ProjectsController extends Controller
         ]);
 
         $import = new ProjectShurasImport($id);
-
         Excel::import($import, $request->file('excel_file'));
+        ActivityLogger::log(
+            'import_project_shura',
+            'Shura imported for Project ID: ' . $id . '. Skipped: ' . $import->skipped
+        );
 
         return back()->with('success',
             'Shura imported successfully. Skipped duplicates: ' . $import->skipped
@@ -648,6 +656,10 @@ class ProjectsController extends Controller
     // Export
     public function exportShura($id, $type){
         $withData = $type === 'data';
+        ActivityLogger::log(
+            'export_project_shura',
+            'Shura exported for Project ID: ' . $id
+        );
 
         return Excel::download(
             new ProjectShurasExport($id, $withData),
@@ -673,12 +685,21 @@ class ProjectsController extends Controller
 
         $shura->classes()->sync($request->class_ids ?? []);
 
+        ActivityLogger::log(
+            'update_project_shura',
+            'Shura updated: ' . $shura->shura_name
+        );
+
         return back()->with('success', 'Shura updated successfully');
     }
 
     public function DeleteProjectShura($id){
         $shura = ProjectShura::findOrFail($id);
         $shura->classes()->detach();
+        ActivityLogger::log(
+            'delete_project_shura',
+            'Shura deleted: ' . $shura->shura_name
+        );
         $shura->delete();
 
         return back()->with('success', 'Shura deleted successfully');
