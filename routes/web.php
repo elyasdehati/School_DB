@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\Beneficiary;
 use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\BeneficiarySummaryController;
@@ -229,6 +230,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/project/status/{id}', 'EditProjectStatus')->name('edit.project.status');
         Route::post('/update/project/status/{id}', 'UpdateProjectStatus')->name('update.project.status');
         Route::get('/delete/project/status/{id}', 'DeleteProjectStatus')->name('delete.project.status');
+    });
+
+    // Projects
+    Route::controller(ActivityLogController::class)->group(function () {
+        Route::get('/all/activity-logs', 'AllActivityLogs')->name('all.activity.logs');
     });
 
 });
