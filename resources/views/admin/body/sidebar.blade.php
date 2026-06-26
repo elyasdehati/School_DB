@@ -152,7 +152,7 @@
 
                 <li>
                     <a href="{{ route('all.activity.logs') }}" class="{{ request()->routeIs('all.activity.logs') ? 'active' : '' }}">
-                        <i data-feather="file-text"></i>
+                        <i data-feather="clock"></i>
                         <span> Activities Log </span>
                     </a>
                 </li>
