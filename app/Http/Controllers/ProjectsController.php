@@ -29,6 +29,7 @@ use App\Models\Province;
 use App\Models\Residence;
 use App\Models\Status;
 use App\Models\ThematicArea;
+use App\Services\ActivityLogger;
 
 class ProjectsController extends Controller
 {
@@ -53,6 +54,11 @@ class ProjectsController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
         ]);
+
+        ActivityLogger::log(
+            'create_project',
+            'Project created: ' . $request->name
+        );
 
         return redirect()->route('all.projects')->with('success','Project created successfully!');
     }
@@ -87,6 +93,11 @@ class ProjectsController extends Controller
             'description' => $request->description,
         ]);
 
+        ActivityLogger::log(
+            'update_project',
+            'Project updated ID: ' . $id
+        );
+
         return redirect()->route('all.projects')->with('success','Project updated successfully!');
     }
 
@@ -97,6 +108,12 @@ class ProjectsController extends Controller
 
     public function DeleteProject($id){
         $project = Project::findOrFail($id);
+
+        ActivityLogger::log(
+            'delete_project',
+            'Project deleted ID: ' . $id
+        );
+
         $project->delete();
 
         return redirect()->route('all.projects')->with('success','Project deleted successfully!');
