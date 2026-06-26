@@ -501,6 +501,11 @@ class ProjectsController extends Controller
             'remarks' => $request->remarks,
         ]);
 
+        ActivityLogger::log(
+            'create_project_student',
+            'Student created: ' . $request->first_name . ' ' . $request->last_name
+        );
+
         return redirect()->back()->with('success','Student Added Successfully');
     }
 
@@ -510,8 +515,12 @@ class ProjectsController extends Controller
         ]);
 
         $import = new ProjectStudentsImport($id);
-
         Excel::import($import, $request->file('excel_file'));
+
+        ActivityLogger::log(
+            'import_project_students',
+            'Students imported for Project ID: ' . $id . '. Skipped: ' . $import->skipped
+        );
 
         return redirect()->back()->with('success', 'Students imported successfully. Skipped duplicates: ' . $import->skipped);
     }
@@ -519,6 +528,11 @@ class ProjectsController extends Controller
     // -----  Export -------
     public function exportStudents($id, $type){
         $withData = $type === 'data';
+
+        ActivityLogger::log(
+            'export_project_students',
+            'Students exported for Project ID: ' . $id
+        );
 
         return Excel::download(
             new ProjectStudentsExport($id, $withData),
@@ -555,11 +569,21 @@ class ProjectsController extends Controller
             'remarks' => $request->remarks,
         ]);
 
+        ActivityLogger::log(
+            'update_project_student',
+            'Student updated: ' . $student->first_name . ' ' . $student->last_name
+        );
+
         return redirect()->back()->with('success', 'Student Updated Successfully');
     }
 
     public function DeleteProjectStudents($id){
-        ProjectStudent::findOrFail($id)->delete();
+        $student = ProjectStudent::findOrFail($id);
+        ActivityLogger::log(
+            'delete_project_student',
+            'Student deleted: ' . $student->first_name . ' ' . $student->last_name
+        );
+        $student->delete();
 
         return redirect()->back()->with('success', 'Student deleted successfully');
     }
