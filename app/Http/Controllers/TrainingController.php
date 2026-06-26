@@ -184,6 +184,11 @@ class TrainingController extends Controller
             'remarks' => $request->remarks,
         ]);
 
+        ActivityLogger::log(
+            'create_training_participant',
+            'Participant created: ' . $request->first_name . ' ' . $request->last_name
+        );
+
         return redirect()->back()->with('success', 'Participant added successfully');
     }
 
@@ -209,11 +214,20 @@ class TrainingController extends Controller
             'remarks' => $request->remarks,
         ]);
 
+        ActivityLogger::log(
+            'update_training_participant',
+            'Participant updated: ' . $participant->first_name . ' ' . $participant->last_name
+        );
+
         return redirect()->back()->with('success', 'Participant added successfully');
     }
 
     public function ExportTrainingParticipant($project_id, $type){
         $withData = $type === 'data';
+        ActivityLogger::log(
+            'export_training_participants',
+            'Training participants exported for Project ID: ' . $project_id
+        );
 
         return Excel::download(
             new TrainingParticipantsExport($project_id, $withData),
@@ -231,6 +245,10 @@ class TrainingController extends Controller
         $import = new TrainingParticipantsImport($id);
 
         Excel::import($import, $request->file('excel_file'));
+        ActivityLogger::log(
+            'import_training_participants',
+            'Training participants imported for Project ID: ' . $id . '. Skipped: ' . $import->skipped
+        );
 
         return back()->with(
             'success',
@@ -240,6 +258,10 @@ class TrainingController extends Controller
 
     public function DeleteTrainingParticipant($id){
         $participant = TrainingParticipant::findOrFail($id);
+        ActivityLogger::log(
+            'delete_training_participant',
+            'Participant deleted: ' . $participant->first_name . ' ' . $participant->last_name
+        );
         $participant->delete();
 
         return redirect()->back()->with('success', 'Participant added successfully');
