@@ -259,7 +259,7 @@ class ProjectsController extends Controller
         return back()->with('success','Deleted successfully');
     }
 
-        // --------------- All Project Classes ---------------
+    // --------------- All Project Classes ---------------
     public function AllProjectsClass($id){
         $project = Project::findOrFail($id);
         $class = ProjectClass::where('project_id', $id)->get();
@@ -337,6 +337,11 @@ class ProjectsController extends Controller
             'remarks' => $request->remarks,
         ]);
 
+        ActivityLogger::log(
+            'create_project_class',
+            'Class created: ' . $request->class_name
+        );
+
         return back()->with('success', 'Class added successfully');
     }
 
@@ -346,8 +351,12 @@ class ProjectsController extends Controller
         ]);
 
         $import = new ProjectClassesImport($id);
-
         Excel::import($import, $request->file('excel_file'));
+        
+        ActivityLogger::log(
+            'import_project_classes',
+            'Classes imported for Project ID: ' . $id . '. Skipped: ' . $import->skipped
+        );
 
         return back()->with('success',
             'Import completed. Skipped duplicates: ' . $import->skipped
@@ -356,6 +365,11 @@ class ProjectsController extends Controller
 
     public function exportClasses($id, $type){
         $withData = $type === 'data';
+
+        ActivityLogger::log(
+            'export_project_classes',
+            'Classes exported for Project ID: ' . $id
+        );
 
         return Excel::download(
             new ProjectClassesExport($id, $withData),
@@ -412,11 +426,21 @@ class ProjectsController extends Controller
             'remarks' => $request->remarks,
         ]);
 
+        ActivityLogger::log(
+            'update_project_class',
+            'Class updated: ' . $class->class_name
+        );
+
         return back()->with('success', 'Class updated successfully');
     }
 
     public function DeleteProjectClass($id){
         $class = ProjectClass::findOrFail($id);
+
+        ActivityLogger::log(
+            'delete_project_class',
+            'Class deleted: ' . $class->class_name
+        );
         $class->delete();
 
         return back()->with('success','Deleted successfully');
