@@ -241,7 +241,7 @@
 
                         <div class="col-md-4 mb-2">
                             <label>Sno</label>
-                            <select name="shura_id" class="form-control">
+                            <select name="shura_id" class="form-control" required>
                                 @foreach($shura as $item)
                                     {{-- <option value="{{ $item->id }}">{{ $item->id }} - {{ $item->shura_name }}</option> --}}
                                     <option value="{{ $item->sno }}">{{ $item->sno }} - {{ $item->shura_name }}</option>
@@ -405,7 +405,7 @@
 
                             <div class="col-md-4 mb-2">
                                 <label>Shura ID</label>
-                                <select name="shura_id" class="form-control">
+                                <select name="shura_id" class="form-control" required>
                                     @foreach($shura as $s)
                                         <option value="{{ $s->sno }}" {{ $item->shura_id == $s->sno ? 'selected' : '' }}>
                                             {{ $s->sno }} - {{ $s->shura_name }}
@@ -608,6 +608,16 @@
             toggleDisability();
         }
 
+    });
+
+    document.querySelectorAll('form').forEach(function(form){
+        form.addEventListener('submit', function(e){
+            let sno = form.querySelector('[name="shura_id"]');
+            if(!sno || sno.value === ''){
+                e.preventDefault();
+                alert('Sno (Shura) is required!');
+            }
+        });
     });
 </script>
 

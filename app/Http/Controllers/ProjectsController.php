@@ -739,6 +739,11 @@ class ProjectsController extends Controller
             'remarks' => $request->remarks,
         ]);
 
+        ActivityLogger::log(
+            'create_project_shura_member',
+            'Shura member created: ' . $request->first_name . ' ' . $request->last_name
+        );
+
         return back()->with('success', 'Member added successfully');
     }
 
@@ -748,8 +753,11 @@ class ProjectsController extends Controller
         ]);
 
         $import = new ShuraMembersImport($id);
-
         Excel::import($import, $request->file('excel_file'));
+        ActivityLogger::log(
+            'import_project_shura_members',
+            'Shura members imported for Project ID: ' . $id . '. Skipped: ' . $import->skipped
+        );
 
         return back()->with(
             'success',
@@ -760,6 +768,10 @@ class ProjectsController extends Controller
     // Export
     public function exportShuraMember($id, $type){
         $withData = $type === 'data';
+        ActivityLogger::log(
+            'export_project_shura_members',
+            'Shura members exported for Project ID: ' . $id
+        );
 
         return Excel::download(
             new ShuraMembersExport($id, $withData),
@@ -790,11 +802,20 @@ class ProjectsController extends Controller
             'remarks' => $request->remarks,
         ]);
 
+        ActivityLogger::log(
+            'update_project_shura_member',
+            'Shura member updated: ' . $member->first_name . ' ' . $member->last_name
+        );
+
         return back()->with('success', 'Member updated successfully');
     }
 
     public function DeleteProjectShuraMembers($id)    {
         $member = ShuraMember::findOrFail($id);
+        ActivityLogger::log(
+            'delete_project_shura_member',
+            'Shura member deleted: ' . $member->first_name . ' ' . $member->last_name
+        );
         $member->delete();
 
         return back()->with('success', 'Member deleted successfully');
