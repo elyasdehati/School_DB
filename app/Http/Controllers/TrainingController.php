@@ -15,6 +15,7 @@ use App\Models\TrainingParticipant;
 use App\Models\TrainingType;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Services\ActivityLogger;
 
 class TrainingController extends Controller
 {
@@ -62,6 +63,11 @@ class TrainingController extends Controller
             $training->districts()->sync($request->district_ids);
         }
 
+        ActivityLogger::log(
+            'create_project_training',
+            'Training created: ' . $request->training_topic
+        );
+
         return redirect()->back()->with('success', 'Training created successfully');
     }
 
@@ -93,11 +99,20 @@ class TrainingController extends Controller
             $training->districts()->sync($request->district_ids ?? []);
         }
 
+        ActivityLogger::log(
+            'update_project_training',
+            'Training updated: ' . $training->training_topic
+        );
+
         return redirect()->back()->with('success', 'Training updated successfully');
     }
 
     public function ExportProjectTraining($project_id, $type){
         $withData = $type === 'data';
+        ActivityLogger::log(
+            'export_project_training',
+            'Training exported for Project ID: ' . $project_id
+        );
 
         return Excel::download(
             new TrainingExport($project_id, $withData),
@@ -110,6 +125,10 @@ class TrainingController extends Controller
                 'excel_file' => 'required|mimes:xlsx,xls'
             ]);
         Excel::import(new TrainingImport($id), $request->file('excel_file'));
+        ActivityLogger::log(
+            'import_project_training',
+            'Training imported for Project ID: ' . $id
+        );
 
         return back()->with('success', 'Imported successfully');
     }
@@ -117,6 +136,10 @@ class TrainingController extends Controller
     public function DeleteProjectTraining($id){
         $training = Training::findOrFail($id);
         $training->districts()->detach();
+        ActivityLogger::log(
+            'delete_project_training',
+            'Training deleted: ' . $training->training_topic
+        );
         $training->delete();
 
         return redirect()->back()->with('success', 'Training deleted successfully');
