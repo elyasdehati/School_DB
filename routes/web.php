@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\Beneficiary;
 use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\BeneficiarySummaryController;
@@ -240,9 +241,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/project/status/{id}', 'DeleteProjectStatus')->name('delete.project.status');
     });
 
-    // Projects
+    // Logger & Backup
     Route::controller(ActivityLogController::class)->group(function () {
         Route::get('/all/activity-logs', 'AllActivityLogs')->name('all.activity.logs');
+    });
+
+    Route::controller(BackupController::class)->group(function () {
+        Route::get('/backup/run', 'BackupRun')->name('backup.run');
+        Route::get('/backup/list', 'list')->name('backup.list');
+        Route::get('/backup/download/{file}', 'download')->name('backup.download');
+        Route::delete('/backup/delete/{file}', 'delete')->name('backup.delete');
     });
 
 });

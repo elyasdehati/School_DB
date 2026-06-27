@@ -156,6 +156,13 @@
                         <span> Activities Log </span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{ route('backup.list') }}" class="{{ request()->routeIs('backup.list') ? 'active' : '' }}">
+                        <i data-feather="database"></i>
+                        <span> Backup </span>
+                    </a>
+                </li>
             </ul>
 
         </div>
