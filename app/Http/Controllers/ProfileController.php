@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
+use App\Services\ActivityLogger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,6 +93,11 @@ class ProfileController extends Controller
 
         $data->save();
 
+        ActivityLogger::log(
+            'update_profile',
+            'User updated profile information'
+        );
+
         return redirect()->back();
     }
     // End Method
@@ -122,6 +128,11 @@ class ProfileController extends Controller
         User::whereId($user->id)->update([
             'password' => Hash::make($request->new_password)
         ]);
+
+        ActivityLogger::log(
+            'change_password',
+            'User changed account password'
+        );
 
         Auth::logout();
 
