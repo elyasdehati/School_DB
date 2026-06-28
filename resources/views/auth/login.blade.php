@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('upload/logo/logo.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
