@@ -11,7 +11,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
         <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
+        <link rel="shortcut icon" href="{{ asset('upload/logo/logo.png') }}">
 
         {{-- Icons link --}}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
